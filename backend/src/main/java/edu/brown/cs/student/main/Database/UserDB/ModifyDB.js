@@ -1,6 +1,5 @@
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import { getDatabase, ref, set, update, remove } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
-
 const validateForm = () => {
     const id = document.querySelector("#form-id").value;
     const username = document.querySelector("#form-username").value;
@@ -31,6 +30,25 @@ const writeToDatabase = (id, username, name, email, profilePic, classYear) => {
     console.log("here")
 }
 
+// This method updates specific fields of data in the database.
+const updateData = (id, username) => {
+    update(ref(database, 'users/' + id), {
+        username: username
+    })
+    console.log("here")
+}
+
+// This method deletes data from the database.
+const deleteData = (id) => {
+    remove(ref(database, 'users/' + id))
+}
+
 document.querySelector('#register').addEventListener("click", () => {
     validateForm();
+})
+document.querySelector('#update').addEventListener("click", () => {
+    updateData(1, "Ostrich");
+})
+document.querySelector('#delete').addEventListener("click", () => {
+    deleteData(4);
 })
