@@ -1,0 +1,11 @@
+.boilerplate-title {
+    background: #F3F7FF;
+    color: black;
+    font-size: 36px;
+    padding: 5px 60px;
+    border-radius: 14px;
+    margin: 0 5px;
+    -webkit-box-decoration-break: clone;
+    -moz-background-inline-policy: clone;
+    box-decoration-break: clone;
+}

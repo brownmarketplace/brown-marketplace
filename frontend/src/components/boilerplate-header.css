@@ -1,0 +1,8 @@
+.boilerplate-header {
+    /* option 1 */
+    /* display: grid;
+    grid-template-columns: 10% 50% 10%; */
+    /* options 2 */
+    display: flex;
+    justify-content: space-around;
+}

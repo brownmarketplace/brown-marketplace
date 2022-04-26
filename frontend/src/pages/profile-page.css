@@ -1,0 +1,39 @@
+.profile-contents {
+    background-color: lightgoldenrodyellow;
+}
+
+.first-profile-section {
+    background-color: lightblue;
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.second-profile-section {
+    background-color: lightgreen;
+}
+
+.profile-picture {
+    background-color: lightpink;
+}
+
+.username {
+    background-color: aquamarine;
+}
+
+.user-info {
+    background-color: teal;
+}
+
+.user-listing-and-referrals {
+    background-color: moccasin;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.user-listing {
+    background-color: lightsalmon;
+}
+
+.user-referred-list {
+    background-color: salmon;
+}
