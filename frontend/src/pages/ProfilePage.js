@@ -3,11 +3,13 @@ import BoilerplateHeader from '../components/BoilerplateHeader'
 import Footer from '../components/Footer'
 import WishList from '../components/WishList'
 import defaultProfilePicture from '../images/pfp.png'
+import { useParams } from "react-router-dom";
 
 import './boilerplate-page.css'
 import './profile-page.css'
 
 function ProfilePage(props) {
+    let params = useParams();
   return (
     <div className="boilerplate">
         <BoilerplateHeader title={props.title} userPicture={props.pfp} showProfile="false"/>
@@ -20,11 +22,11 @@ function ProfilePage(props) {
                 <div>
                     <div className="username">
                         (username)
-                        props.user.username
+                        {params.username}
                     </div>
                     <div className="user-info">
                         (user info)
-                        user.user.userID
+                        props.user.userID
                         email
                         phoneNumber
                         location
