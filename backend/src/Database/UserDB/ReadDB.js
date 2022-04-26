@@ -1,4 +1,4 @@
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import { getDatabase, ref, get, onValue, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
 
 /*
@@ -30,9 +30,20 @@ const readMultipleUserInfo = () => {
     })
 }
 
+// This method reads all the data for users who are sophomores.
+const filterUsersByClassYear = (classYear) => {
+    const q = query(ref(database, 'users/'), orderByChild('classYear'), equalTo(classYear));
+    get(q).then(snapshot => {
+        console.log(snapshot.val())
+    })
+}
+
 document.querySelector('#read').addEventListener("click", () => {
     readOneUserInfo(1);
 })
 document.querySelector('#readAll').addEventListener("click", () => {
     readMultipleUserInfo();
+})
+document.querySelector('#readFiltered').addEventListener("click", () => {
+    filterUsersByClassYear("sophomore");
 })

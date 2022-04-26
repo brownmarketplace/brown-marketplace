@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.Structures;
+package Structures;
 
 import java.util.List;
 
@@ -11,15 +11,13 @@ public class User {
   private String classYear;
   private List<Integer> listings;
   private List<Integer> referrals;
-  private List<Integer> wishingList;
+  private List<Integer> wishList;
   private List<Integer> likedItems;
-  private List<Integer> bookmarkedItems;
   private List<Integer> dislikedItems;
 
   public User(int id, String userName, String actualName, String profilePicUrl, String email,
               String classYear, List<Integer> listings, List<Integer> referrals,
-              List<Integer> wishingList, List<Integer> likedItems, List<Integer> bookmarkedItems,
-              List<Integer> dislikedItems) {
+              List<Integer> wishList, List<Integer> likedItems, List<Integer> dislikedItems) {
     this.id = id;
     this.userName = userName;
     this.actualName = actualName;
@@ -28,9 +26,8 @@ public class User {
     this.classYear = classYear;
     this.listings = listings;
     this.referrals = referrals;
-    this.wishingList = wishingList;
+    this.wishList = wishList;
     this.likedItems = likedItems;
-    this.bookmarkedItems = bookmarkedItems;
     this.dislikedItems = dislikedItems;
   }
 
@@ -98,12 +95,12 @@ public class User {
     this.referrals = referrals;
   }
 
-  public List<Integer> getWishingList() {
-    return this.wishingList;
+  public List<Integer> getWishList() {
+    return this.wishList;
   }
 
-  public void setWishingList(List<Integer> wishingList) {
-    this.wishingList = wishingList;
+  public void setWishList(List<Integer> wishList) {
+    this.wishList = wishList;
   }
 
   public List<Integer> getLikedItems() {
@@ -112,14 +109,6 @@ public class User {
 
   public void setLikedItems(List<Integer> likedItems) {
     this.likedItems = likedItems;
-  }
-
-  public List<Integer> getBookmarkedItems() {
-    return this.bookmarkedItems;
-  }
-
-  public void setBookmarkedItems(List<Integer> bookmarkedItems) {
-    this.bookmarkedItems = bookmarkedItems;
   }
 
   public List<Integer> getDislikedItems() {

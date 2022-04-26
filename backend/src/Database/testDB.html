@@ -6,6 +6,7 @@
 </head>
 <body>
     <p class="title">Database Test</p>
+    <!--testing user database-->
     ID<br />
     <input type="text" id="form-id" /><br />
     Username<br />
@@ -21,10 +22,16 @@
     <button id="register">Register</button>
     <button id="read">Read</button>
     <button id="readAll">ReadAll</button>
+    <button id="readFiltered">Read By Class Year</button>
     <button id="update">Update</button>
     <button id="delete">Delete</button>
-    <script type="module" src="../DBInstance.js"></script>
-    <script type="module" src="ModifyDB.js"></script>
-    <script type="module" src="ReadDB.js"></script>
+    <button id="listing">Add Listing</button>
+    <button id="referral">Add Referral</button>
+    <button id="wishList">Add to Wish List</button>
+    <!--testing product database-->
+
+    <script type="module" src="DBInstance.js"></script>
+    <script type="module" src="UserDB/ReadDB.js"></script>
+    <script type="module" src="UserDB/ModifyDB.js"></script>
 </body>
 </html>
