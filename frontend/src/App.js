@@ -2,6 +2,7 @@ import Home from './pages/Home';
 import BoilerplatePage from './pages/BoilerplatePage'
 import ProfilePage  from './pages/ProfilePage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css'
 
 const App = () => {
   return (

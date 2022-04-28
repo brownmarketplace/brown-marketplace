@@ -1,39 +1,34 @@
 .profile-contents {
-    background-color: lightgoldenrodyellow;
+    margin: 7vw 7vw;
 }
 
 .first-profile-section {
-    background-color: lightblue;
     display: grid;
     grid-template-columns: 30% 70%;
 }
 
 .second-profile-section {
-    background-color: lightgreen;
+    margin-top: 2vw;
 }
 
 .profile-picture {
-    background-color: lightpink;
+    background-color: #E3EBFF;
+    border-radius: 20px;
+    width: 20vw;
+    height: 20vw;
 }
 
 .username {
-    background-color: aquamarine;
+    font-size: 26px;
 }
 
 .user-info {
-    background-color: teal;
+    background-color: #FEFFD7;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 15px;
 }
 
 .user-listing-and-referrals {
-    background-color: moccasin;
     display: grid;
-    grid-template-columns: 50% 50%;
-}
-
-.user-listing {
-    background-color: lightsalmon;
-}
-
-.user-referred-list {
-    background-color: salmon;
 }
