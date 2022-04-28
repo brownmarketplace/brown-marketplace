@@ -1,0 +1,30 @@
+.category-header {
+    /* background-color: yellow; */
+}
+
+.category-title {
+    /* background-color: greenyellow; */
+}
+
+.tag-holder {
+    margin: 0;
+    padding: 0;
+}
+
+.tag-holder li {
+    display: inline-block;
+    padding: 5px;
+}
+.category-contents {
+    background-color: aquamarine;
+}
+
+.product-holder {
+    margin: 0;
+    padding: 0;
+}
+
+.product-holder li {
+    display: inline-block;
+    padding: 5px;
+}

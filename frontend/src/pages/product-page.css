@@ -1,0 +1,53 @@
+.product-contents {
+    background-color: lightgoldenrodyellow;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.product-image {
+    background-color: palevioletred;
+}
+
+.right-column {
+    background-color: lightslategray;
+}
+
+.product-info {
+    background-color: lightsalmon;
+    padding: 10px;
+}
+
+.product-header {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+.product-title {
+    /* background-color: khaki; */
+    color: black;
+    text-align: left;
+    font-size: 24px;
+}
+
+.product-price {
+    /* background-color: firebrick; */
+    color: black;
+    text-align: right;
+    font-size: 24px;
+}
+
+.product-description {
+    /* background-color: violet; */
+    color: black;
+    text-align: left;
+    padding: 2px;
+    font-size: 18px;
+}
+
+.seller-info {
+    background-color: lightcoral;
+    padding: 10px;
+    font-size: 24px;
+}
