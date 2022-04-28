@@ -1,23 +1,27 @@
 import React from 'react'
-import LeavePageButton from './boilerplate-components/LeavePageButton'
+import { Link } from 'react-router-dom'
 import Title from './boilerplate-components/Title'
 import ProfilePageButton from './boilerplate-components/ProfilePageButton'
+import xButton from "../images/back-button.png"
+import pfp from "../images/profile-pic.png"
 import './boilerplate-header.css'
 
 function BoilerplateHeader(props) {
   return (
     <div className="boilerplate-header">
-        <LeavePageButton/>
+        <Link to="/">
+          <img src={xButton} alt="back" className="xButton" />
+        </Link>
         <Title title={props.title}/>
         {props.showProfile &&
-        <ProfilePageButton userPicture={props.userPicture}/>
+        <ProfilePageButton userPicture={pfp}/>
         }
     </div>
   )
 }
 
 BoilerplateHeader.defaultProps = {
-  showProfile: true,
+  showProfile: true
 }
 
 export default BoilerplateHeader

@@ -14,7 +14,7 @@ function WishList(props) {
     return (
         <div className="wish-list-container">
             <div className="wish-list-header">
-                WishList
+                Wishlist
             </div>
             <div style={{ display: "flex" }}>
                 { wishList.map((elt) => {
