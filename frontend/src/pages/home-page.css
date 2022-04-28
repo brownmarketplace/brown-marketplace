@@ -1,0 +1,87 @@
+.home {
+    /* display: flex; */
+    justify-content: space-between;
+    margin: 40px;
+    font-family: 'Imprint MT Shadow';
+}
+
+.home .swipe-container {
+    width: 70%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column ;
+    justify-content: center;
+    align-items: center;
+}
+
+.home .card-container {
+    width: 400px;
+    height: 650px ;
+}
+
+.swipe {
+    position: absolute;
+}
+  
+.card-container {
+    width: 90vw;
+    max-width: 260px;
+    height: 300px;
+}
+
+.card {
+    margin-left: 150px;
+    /* position: relative; */
+    background-color: #fff;
+    /* width: 80vw;
+    max-width: 260px;
+    height: 300px; */
+    /* Same dimensions as the container */ 
+    width: 400px;
+    height: 550px ;
+    /* box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30); */
+    border-radius: 30px;
+    background-size: cover;
+    background-position: center;
+}
+
+.card h3 {
+    position: absolute;
+    bottom: 0;
+    margin: 10px;
+    color: #fff;
+} 
+
+.search-container {
+    position:fixed;
+    left: 37%;
+    width:100%;
+}
+
+#submitsearch{
+    border: 1px solid rgb(138, 134, 134);
+    margin-left: -82px;
+    padding: 5px;
+    border-radius: 19px;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 8px; 
+    padding-top: 4px;
+    display: none;
+    box-shadow: 0 0 1px black;     
+    margin-right:110px;
+  }
+  
+#searchInput {  
+    width: 18%;
+    border: 1px solid #000;
+    border-radius: 30px;
+    font-size: 16px;
+    background-color: white;
+    background-image:url('https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/search-24.png');
+    background-position: 10px 7px;
+    background-repeat: no-repeat;
+    padding: 8px 20px 8px 40px;
+    justify-content: center;
+    align-items: center;
+}

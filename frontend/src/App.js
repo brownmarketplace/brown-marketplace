@@ -7,8 +7,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<BoilerplatePage />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/boiler" element={<BoilerplatePage />} />
         <Route path="/profile" element={<ProfilePage />}>
           <Route path=":username" element={<ProfilePage />} />
         </Route>
