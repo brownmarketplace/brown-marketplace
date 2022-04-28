@@ -14,10 +14,12 @@ public class User {
   private List<Integer> wishList;
   private List<Integer> likedItems;
   private List<Integer> dislikedItems;
+  private List<Integer> purchasedItems;
 
   public User(int id, String userName, String actualName, String profilePicUrl, String email,
               String classYear, List<Integer> listings, List<Integer> referrals,
-              List<Integer> wishList, List<Integer> likedItems, List<Integer> dislikedItems) {
+              List<Integer> wishList, List<Integer> likedItems, List<Integer> dislikedItems,
+              List<Integer> purchasedItems) {
     this.id = id;
     this.userName = userName;
     this.actualName = actualName;
@@ -29,6 +31,7 @@ public class User {
     this.wishList = wishList;
     this.likedItems = likedItems;
     this.dislikedItems = dislikedItems;
+    this.purchasedItems = purchasedItems;
   }
 
   public int getId() {
@@ -117,5 +120,13 @@ public class User {
 
   public void setDislikedItems(List<Integer> dislikedItems) {
     this.dislikedItems = dislikedItems;
+  }
+
+  public List<Integer> getPurchasedItems() {
+    return this.purchasedItems;
+  }
+
+  public void setPurchasedItems(List<Integer> purchasedItems) {
+    this.purchasedItems = purchasedItems;
   }
 }

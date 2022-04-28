@@ -8,24 +8,26 @@ const database = getDatabase();
  */
 const readOneUserInfo = (id) => {
     onValue(ref(database, 'users/' + id), (snapshot) => {
-        console.log(snapshot.val().id);
-        console.log(snapshot.val().username);
-        console.log(snapshot.val().name);
-        console.log(snapshot.val().email);
-        console.log(snapshot.val().profilePic);
-        console.log(snapshot.val().classYear);
+        console.log(snapshot.val())
+        // console.log(snapshot.val().id);
+        // console.log(snapshot.val().username);
+        // console.log(snapshot.val().name);
+        // console.log(snapshot.val().email);
+        // console.log(snapshot.val().profilePic);
+        // console.log(snapshot.val().classYear);
     })
 }
 
 const readMultipleUserInfo = () => {
     onValue(ref(database, 'users'), (snapshot) => {
         snapshot.forEach(function(childSnapshot) {
-            console.log(childSnapshot.val().id);
-            console.log(childSnapshot.val().username);
-            console.log(childSnapshot.val().name);
-            console.log(childSnapshot.val().email);
-            console.log(childSnapshot.val().profilePic);
-            console.log(childSnapshot.val().classYear);
+            console.log(childSnapshot.val())
+            // console.log(childSnapshot.val().id);
+            // console.log(childSnapshot.val().username);
+            // console.log(childSnapshot.val().name);
+            // console.log(childSnapshot.val().email);
+            // console.log(childSnapshot.val().profilePic);
+            // console.log(childSnapshot.val().classYear);
         })
     })
 }

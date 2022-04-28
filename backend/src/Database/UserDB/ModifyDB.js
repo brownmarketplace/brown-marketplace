@@ -61,12 +61,34 @@ const addToWishList = (userID, productID) => {
 }
 
 // This method adds a new product to the user's liked list.
-
+const addToLikedList = (userID, productID) => {
+    console.log("here")
+    const likedListRef = ref(database, 'users/' + userID + '/liked-items');
+    const newLikedListRef = push(likedListRef);
+    set(newLikedListRef, {
+        productID: productID
+    })
+}
 
 // This method adds a new product to the user's bookmarked list.
-
+const addToBookmarkedList = (userID, productID) => {
+    console.log("here")
+    const bookmarkedRef = ref(database, 'users/' + userID + '/bookmarked-items');
+    const newBookmarkedRef = push(bookmarkedRef);
+    set(newBookmarkedRef, {
+        productID: productID
+    })
+}
 
 // This method adds a new product to the user's disliked list.
+const addToDislikedList = (userID, productID) => {
+    console.log("here")
+    const dislikedListRef = ref(database, 'users/' + userID + '/disliked-items');
+    const newDislikedRef = push(dislikedListRef);
+    set(newDislikedRef, {
+        productID: productID
+    })
+}
 
 // This method updates specific fields of data in the database.
 const updateData = (id, username) => {
@@ -98,4 +120,13 @@ document.querySelector('#referral').addEventListener("click", () => {
 })
 document.querySelector('#wishList').addEventListener("click", () => {
     addToWishList(1, 10003);
+})
+document.querySelector('#likedList').addEventListener("click", () => {
+    addToLikedList(1, 10000);
+})
+document.querySelector('#bookmarkedList').addEventListener("click", () => {
+    addToBookmarkedList(2, 10001);
+})
+document.querySelector('#dislikedList').addEventListener("click", () => {
+    addToDislikedList(1, 10002);
 })

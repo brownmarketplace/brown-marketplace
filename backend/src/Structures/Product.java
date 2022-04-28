@@ -13,10 +13,13 @@ public class Product {
   private List<String> pictureUrls;
   private String datePosted;
   private String status;
+  private int liked;
+  private int bookmarked;
+  private int disliked;
 
   public Product(int id, String name, String description, Double price, List<String> tags,
                  String category, int sellerId, List<String> pictureUrls, String datePosted,
-                 String status) {
+                 String status, int liked, int bookmarked, int disliked) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -27,6 +30,9 @@ public class Product {
     this.pictureUrls = pictureUrls;
     this.datePosted = datePosted;
     this.status = status;
+    this.liked = liked;
+    this.bookmarked = bookmarked;
+    this.disliked = disliked;
   }
 
   public int getId() {
@@ -107,5 +113,29 @@ public class Product {
 
   public void setStatus(String status) {
     this.status = status;
+  }
+
+  public int getLiked() {
+    return this.liked;
+  }
+
+  public void setLiked(int liked) {
+    this.liked = liked;
+  }
+
+  public int getBookmarked() {
+    return this.bookmarked;
+  }
+
+  public void setBookmarked(int bookmarked) {
+    this.bookmarked = bookmarked;
+  }
+
+  public int getDisliked() {
+    return this.disliked;
+  }
+
+  public void setDisliked(int disliked) {
+    this.disliked = disliked;
   }
 }
