@@ -12,12 +12,12 @@ const validateForm = () => {
     || classYear == "") {
         alert("form not completely filled");
     } else {
-        writeBasicInfoToDatabase(id, username, name, email, profilePic, classYear);
+        addUser(id, username, name, email, profilePic, classYear);
     }
 };
 
-// This method writes data to a specified path in the database. It replaces any existing data at that path.
-const writeBasicInfoToDatabase = (id, username, name, email, profilePic, classYear) => {
+// This method adds a new user to the database. It replaces any existing data at that path.
+const addUser = (id, username, name, email, profilePic, classYear) => {
     console.log("here")
     set(ref(database, 'users/' + id), {
         id: id,
@@ -90,7 +90,7 @@ const addToDislikedList = (userID, productID) => {
     })
 }
 
-// This method updates specific fields of data in the database.
+// This method updates specific fields of user data in the database.
 const updateData = (id, username) => {
     update(ref(database, 'users/' + id), {
         username: username
@@ -98,7 +98,7 @@ const updateData = (id, username) => {
     console.log("here")
 }
 
-// This method deletes data from the database.
+// This method deletes user data from the database.
 const deleteData = (id) => {
     remove(ref(database, 'users/' + id))
 }

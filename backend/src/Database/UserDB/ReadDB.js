@@ -14,7 +14,7 @@ const readOneUserInfo = (id) => {
     })
 }
 
-const readMultipleUserInfo = () => {
+const readAllUserInfo = () => {
     onValue(ref(database, 'users'), (snapshot) => {
         snapshot.forEach(function(childSnapshot) {
             console.log(childSnapshot.val())
@@ -32,7 +32,7 @@ const filterUsersByClassYear = (classYear) => {
 }
 
 // This method reads the data of a specific user.
-const getUserData = (userID) => {
+const getSpecificUserData = (userID) => {
     const q = query(ref(database, 'users/'), orderByChild('id'), equalTo(userID));
     get(q).then(snapshot => {
         console.log(snapshot.val())
@@ -43,11 +43,11 @@ document.querySelector('#read').addEventListener("click", () => {
     readOneUserInfo(1);
 })
 document.querySelector('#readAll').addEventListener("click", () => {
-    readMultipleUserInfo();
+    readAllUserInfo();
 })
 document.querySelector('#readFiltered').addEventListener("click", () => {
     filterUsersByClassYear("sophomore");
 })
 document.querySelector('#readSpecificUser').addEventListener("click", () => {
-    getUserData("2");
+    getSpecificUserData("2");
 })
