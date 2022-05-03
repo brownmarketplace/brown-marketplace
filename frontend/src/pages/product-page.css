@@ -1,21 +1,16 @@
 .product-contents {
-    background-color: lightgoldenrodyellow;
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 1fr 1fr;
     margin-left: 10%;
     margin-right: 10%;
 }
 
-.product-image {
-    background-color: palevioletred;
-}
-
 .right-column {
-    background-color: lightslategray;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 .product-info {
-    background-color: lightsalmon;
     padding: 10px;
 }
 
@@ -25,29 +20,25 @@
 }
 
 .product-title {
-    /* background-color: khaki; */
     color: black;
     text-align: left;
     font-size: 24px;
 }
 
 .product-price {
-    /* background-color: firebrick; */
     color: black;
     text-align: right;
     font-size: 24px;
 }
 
 .product-description {
-    /* background-color: violet; */
     color: black;
     text-align: left;
-    padding: 2px;
+    padding: 10px;
     font-size: 18px;
 }
 
 .seller-info {
-    background-color: lightcoral;
     padding: 10px;
     font-size: 24px;
 }
