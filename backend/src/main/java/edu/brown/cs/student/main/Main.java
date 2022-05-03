@@ -1,8 +1,13 @@
 package edu.brown.cs.student.main;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import com.google.firebase.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import edu.brown.cs.student.main.dbProxy.dbProxy;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
@@ -39,25 +44,10 @@ public final class Main {
     parser.accepts("gui");
     parser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(DEFAULT_PORT);
 
-    OptionSet options = parser.parse(args);
-    
-	if (options.has("gui")) {
-	  try {
-        connectDb();
-      } catch (IOException e) {
-	    System.out.println("ERROR: cannot connect to database");
-      }
-	}    
+    dbProxy proxy = new dbProxy();
+    while (true) {
+
+    }
   }
 
-  private void connectDb() throws IOException {
-    FileInputStream refreshToken = new FileInputStream("backend/src/main/java/edu/brown/cs/student/main/resource/firebase-key.json");
-
-    FirebaseOptions options = FirebaseOptions.builder()
-        .setCredentials(GoogleCredentials.fromStream(refreshToken))
-        .setDatabaseUrl("https://cs32-final-project-7a4b0-default-rtdb.firebaseio.com/")
-        .build();
-
-    FirebaseApp.initializeApp(options);
-  }
 }
