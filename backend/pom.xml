@@ -58,7 +58,7 @@
     </dependency>
 
     <!--
-        Simple Logging Facade for Java is a logging tool for debugging.
+        Simple Logging Facade for java.main.java is a logging tool for debugging.
         https://www.slf4j.org/.
     -->
     <dependency>
@@ -179,7 +179,7 @@
 
 
 
-      <!-- Maven compiler plugin for compiling Java 11 -->
+      <!-- Maven compiler plugin for compiling java.main.java 11 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -272,7 +272,7 @@
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>2.7</version>
         <configuration>
-          <!-- Until it uses BCEL 6.0, details breaks on Java 11 -->
+          <!-- Until it uses BCEL 6.0, details breaks on java.main.java 11 -->
           <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
           <!-- jetty related locations can't be found, just skip. -->
           <dependencyLocationsEnabled>false</dependencyLocationsEnabled>

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is a generic bloom filter. It has three main functionalities: creating, adding and
+ * This class is a generic bloom filter. It has three java.main functionalities: creating, adding and
  * querying. It uses an array of binary numbers as its underlying data structure.
  */
 public class BloomFilter {
