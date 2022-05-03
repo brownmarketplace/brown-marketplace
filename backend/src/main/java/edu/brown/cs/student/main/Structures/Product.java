@@ -1,4 +1,4 @@
-package Structures;
+package edu.brown.cs.student.main.Structures;
 
 import java.util.List;
 
