@@ -9,13 +9,17 @@ import './boilerplate-header.css'
 function BoilerplateHeader(props) {
   return (
     <div className="boilerplate-header">
-        <Link to="/">
+        {/* On click, returns to the previous page. */}
+        <Link to={-1}>
           <img src={xButton} alt="back" className="xButton" />
         </Link>
         <Title title={props.title}/>
-        {props.showProfile &&
-        <ProfilePageButton userPicture={pfp}/>
-        }
+
+        {/* If showProfile is true, render ProfilePageButton.
+        Else, render empty div to keep the header layout consistent (flex: space-around). */}
+
+        { props.showProfile && <ProfilePageButton userPicture={pfp}/> }
+        { !props.showProfile && <div/> } 
     </div>
   )
 }

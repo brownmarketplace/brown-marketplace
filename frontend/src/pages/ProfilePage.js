@@ -39,7 +39,7 @@ function ProfilePage(props) {
                 <WishList/>
             </div>
         </div>
-        <Footer/>
+        {/* <Footer/> */}
     </div>
   )
 }

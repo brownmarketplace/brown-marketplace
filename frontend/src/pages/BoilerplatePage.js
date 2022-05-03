@@ -12,7 +12,7 @@ function BoilerplatePage(props) {
         <div style={{ textAlign: 'center', marginTop: '30px' }}>
             Put your content here.
         </div>
-        <Footer/>
+        {/* <Footer/> */}
     </div>
   )
 }
