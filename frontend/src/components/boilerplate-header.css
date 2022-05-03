@@ -1,8 +1,24 @@
 .boilerplate-header {
-    /* option 1 */
-    /* display: grid;
-    grid-template-columns: 10% 50% 10%; */
-    /* options 2 */
     display: flex;
     justify-content: space-around;
+}
+
+.xButton {
+    height: 4vw;
+    filter: drop-shadow(2px 4px 0px rgb(160, 160, 160));
+}
+
+.xButton:active {
+    filter: drop-shadow(1px 2px 0 rgb(169, 169, 169));
+}
+
+/* When screen is narrower, button depth should decrease a bit. */
+@media screen and (max-width: 710px) {
+    .xButton {
+        filter: drop-shadow(1px 2px 0px rgb(160, 160, 160));
+    }
+
+    .xButton:active {
+        filter: drop-shadow(1px 2px 0 rgb(169, 169, 169));
+    }
 }

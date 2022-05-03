@@ -4,7 +4,7 @@ import './title.css'
 function Title(props) {
   return (
     <div className="boilerplate-title">
-      {props.title}
+      <div>{props.title}</div>
     </div>
   )
 }

@@ -1,39 +1,50 @@
 .profile-contents {
-    background-color: lightgoldenrodyellow;
+    margin: 7vw 7vw;
 }
 
 .first-profile-section {
-    background-color: lightblue;
     display: grid;
     grid-template-columns: 30% 70%;
 }
 
 .second-profile-section {
-    background-color: lightgreen;
+    margin-top: 4vw;
 }
 
 .profile-picture {
-    background-color: lightpink;
+    background-color: #E3EBFF;
+    border-radius: 20px;
+    width: 20vw;
+    height: 20vw;
 }
 
 .username {
-    background-color: aquamarine;
+    font-size: 26px;
+    margin-bottom: 12px;
 }
 
 .user-info {
-    background-color: teal;
+    display: inline;
+    background-color: #FEFFD7;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 15px;
 }
 
 .user-listing-and-referrals {
-    background-color: moccasin;
     display: grid;
-    grid-template-columns: 50% 50%;
+    margin-top: 20px;
 }
 
-.user-listing {
-    background-color: lightsalmon;
-}
+/* When screen width is narrower, widen the horizontal gap between the columns of the 1st section 
+   so they're not squished. In addition, increase vertical gap between profile info section and wishlist. */
+@media screen and (max-width: 710px) {
+    .first-profile-section {
+        display: grid;
+        grid-template-columns: 35% 65%;
+    }
 
-.user-referred-list {
-    background-color: salmon;
+    .second-profile-section {
+        margin-top: 5vw;
+    }
 }
