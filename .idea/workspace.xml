@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bea4abeb-7d8d-484b-b903-aa49373490b5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ModifyDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ModifyDB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ReadDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ReadDB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/UserDB/ModifyDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/UserDB/ModifyDB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/UserDB/ReadDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/UserDB/ReadDB.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +35,6 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="17" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -60,7 +62,7 @@
       <workItem from="1651598579923" duration="780000" />
       <workItem from="1651599513509" duration="836000" />
       <workItem from="1651600493555" duration="1236000" />
-      <workItem from="1651603883238" duration="622000" />
+      <workItem from="1651603883238" duration="832000" />
     </task>
     <servers />
   </component>

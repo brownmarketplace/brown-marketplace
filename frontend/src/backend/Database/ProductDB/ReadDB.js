@@ -3,7 +3,7 @@ import { getDatabase, ref, get, onValue, query, orderByChild, equalTo }
 const database = getDatabase();
 
 // This method returns all the products' data in the database.
-const readAllProductsInfo = () => {
+var readAllProductsInfo = () => {
     onValue(ref(database, 'products'), (snapshot) => {
         snapshot.forEach(function(childSnapshot) {
             console.log(childSnapshot.val())

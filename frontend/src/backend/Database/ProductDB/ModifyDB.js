@@ -1,7 +1,7 @@
 import { getDatabase, ref, set, update, get, query, orderByChild, equalTo }
     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
-const validateForm = () => {
+var validateForm = () => {
     const id = document.querySelector("#product-id").value;
     const name = document.querySelector("#product-name").value;
     const description = document.querySelector("#product-description").value;
@@ -27,7 +27,7 @@ const validateForm = () => {
 };
 
 // This method adds a new product to the database. It replaces any existing data at that path.
-const writeBasicInfoToDatabase = (id, name, description, price, tag, category,
+var writeBasicInfoToDatabase = (id, name, description, price, tag, category,
                                   seller, pictures, date, sold, numLiked, numBookmarked, numDisliked) => {
     console.log("here")
     set(ref(database, 'products/' + id), {
@@ -49,7 +49,7 @@ const writeBasicInfoToDatabase = (id, name, description, price, tag, category,
 }
 
 // This method adds one to the number of likes the product has.
-const modifyNumLiked = (id, change) => {
+var modifyNumLiked = (id, change) => {
     const q = query(ref(database, 'products/'), orderByChild('id'), equalTo(id));
     let newNumLiked;
 
@@ -64,7 +64,7 @@ const modifyNumLiked = (id, change) => {
 }
 
 // This method toggles the sold flag.
-const updateSoldFlag = (id) => {
+var updateSoldFlag = (id) => {
     const q = query(ref(database, 'products/'), orderByChild('id'), equalTo(id));
     let currSoldFlag = "No";
     get(q).then(snapshot => {
