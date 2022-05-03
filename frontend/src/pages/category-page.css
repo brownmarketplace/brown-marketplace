@@ -1,0 +1,19 @@
+.tag-holder {
+    margin: 0;
+    padding: 0;
+}
+
+.tag-holder li {
+    display: inline-block;
+    padding: 5px;
+}
+
+.product-holder {
+    margin: 0;
+    padding: 0;
+}
+
+.product-holder li {
+    display: inline-block;
+    padding: 5px;
+}
