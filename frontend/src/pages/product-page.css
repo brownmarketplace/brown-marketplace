@@ -1,0 +1,44 @@
+.product-contents {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.right-column {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.product-info {
+    padding: 10px;
+}
+
+.product-header {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+.product-title {
+    color: black;
+    text-align: left;
+    font-size: 24px;
+}
+
+.product-price {
+    color: black;
+    text-align: right;
+    font-size: 24px;
+}
+
+.product-description {
+    color: black;
+    text-align: left;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.seller-info {
+    padding: 10px;
+    font-size: 24px;
+}
