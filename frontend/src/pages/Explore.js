@@ -5,7 +5,7 @@ import defaultProfilePicture from '../images/pfp.png'
 
 import './boilerplate-page.css'
 
-function Home(props) {
+function Explore(props) {
   return (
     <div className="boilerplate">
         <BoilerplateHeader title={props.title} userPicture={props.pfp}/>
@@ -17,9 +17,9 @@ function Home(props) {
   )
 }
 
-Home.defaultProps = {
+Explore.defaultProps = {
   title: "Brown Marketplace",
   pfp: defaultProfilePicture
 }
 
-export default Home
+export default Explore
