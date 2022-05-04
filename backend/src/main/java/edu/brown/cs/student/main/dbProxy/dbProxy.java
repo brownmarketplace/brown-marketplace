@@ -22,6 +22,9 @@ public class dbProxy {
     }
     this.retrieve("products");
     this.retrieve("users");
+    // TODO: parsing
+    // Product: product name, list of tags, category
+    // User: list of likes, list of bookmarks
   }
 
   private void connectDb() throws IOException {

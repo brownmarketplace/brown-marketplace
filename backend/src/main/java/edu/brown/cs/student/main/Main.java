@@ -1,18 +1,9 @@
 package edu.brown.cs.student.main;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.*;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import edu.brown.cs.student.main.dbProxy.dbProxy;
+import edu.brown.cs.student.main.server.Server;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-
-import java.io.FileInputStream;
-import java.io.IOException;
 
 /**
  * The Main class of our project. This is where execution begins.
@@ -44,9 +35,12 @@ public final class Main {
     parser.accepts("gui");
     parser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(DEFAULT_PORT);
 
-    dbProxy proxy = new dbProxy();
-    while (true) {
+    OptionSet options = parser.parse(args);
 
+    if (options.has("gui")) {
+      dbProxy proxy = new dbProxy();
+      Server server = new Server(proxy);
+      server.runSparkServer((int) options.valueOf("port"));
     }
   }
 
