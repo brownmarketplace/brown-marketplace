@@ -5,12 +5,17 @@ import Typography from '@mui/material/Typography';
 function PageBreadcrumbs(props) {
     return (
         <Breadcrumbs aria-label="breadcrumb">
-            {props.path.map((e) => 
+            {props.path.map((e) =>
                 e.href === null
-                    ? <Typography color="text.primary">{e.title}</Typography>
+                    ? <Typography
+                        color="text.primary"
+                        style={{ textTransform: 'capitalize' }}>
+                        {e.title}
+                    </Typography>
                     : <Link
                         underline="hover"
                         color="inherit"
+                        style={{ textTransform: 'capitalize' }}
                         href={e.href}>
                         {e.title}
                     </Link>

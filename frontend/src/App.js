@@ -1,6 +1,6 @@
 import Home from './pages/Home';
 import BoilerplatePage from './pages/BoilerplatePage'
-import ProfilePage  from './pages/ProfilePage';
+import ProfilePage from './pages/ProfilePage';
 import AddListing from './pages/AddListing';
 import ProductPage from './pages/ProductPage';
 import CategoryPage from './pages/CategoryPage';
@@ -18,7 +18,9 @@ const App = () => {
         </Route>
         <Route path="/sell" element={<AddListing />} />
         <Route path="/product/:productId" element={<ProductPage />} />
-        <Route path="/category/:categoryTitle" element={<CategoryPage />} />
+        <Route path="/category/:category" element={<CategoryPage />} >
+          <Route path=":subcategory" element={<CategoryPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

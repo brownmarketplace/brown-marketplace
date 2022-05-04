@@ -15,30 +15,43 @@ import PageBreadcrumbs from '../components/product-components/PageBreadcrumbs'
 import Storefront from '../components/category-components/Storefronts'
 
 function CategoryPage(props) {
-  const { categoryTitle } = useParams()
+  const { category, subcategory } = useParams()
   const subtags = ["Frog", "Cat", "Dog", "Seal", "Giraffe", "Red Panda", "Flamingo"]
-  // const productIds = Array.from({ length: 15 }, (v, k) => k + 1)
-  const [productIds, setProductIds] = useState(props.products) // get from database
+
+  const productIds = Array.from({ length: 15 }, (v, k) => k + 1)
+  const [tag, setTag] = useState(null)
+  // const [productIds, setProductIds] = useState(props.products) // get from database
 
   return (
     <div className="boilerplate">
-      <BoilerplateHeader title={categoryTitle} userPicture={props.pfp} />
+      <BoilerplateHeader title={"Brown Marketplace"} userPicture={props.pfp} />
       <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
         <Grid container direction="column" justifyContent="center" spacing={1} paddingLeft="10%" paddingRight="10%">
           <Grid item>
-            <PageBreadcrumbs />
+            <PageBreadcrumbs path={
+              subcategory
+                ? [{ title: "Home", href: "/home" },
+                { title: category, href: `/category/${category}` },
+                { title: subcategory, href: null }]
+                : [{ title: "Home", href: "/home" },
+                { title: category, href: null }]} />
           </Grid>
           <Grid item style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
-            <Typography variant="h2" align="left">{categoryTitle}</Typography>
-            {/* {subtags.map((item) => <Tag tagName={item} setProductIds={setProductIds} />)}
-            {subtags.map((item) => <Tag tagName={item} setProductIds={setProductIds} />)}
-            {subtags.map((item) => <Tag tagName={item} setProductIds={setProductIds} />)} */}
+            <Typography variant="h2" align="left" style={{ textTransform: 'capitalize' }}>
+              {subcategory == null ? category : subcategory}
+            </Typography>
+            <Typography variant="h2" align="left">
+              {tag}
+            </Typography>
           </Grid>
           <Grid item style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
-            {subtags.map((item) => <Tag tagName={item} setProductIds={setProductIds} />)}
-            {subtags.map((item) => <Tag tagName={item} setProductIds={setProductIds} />)}
-            {subtags.map((item) => <Tag tagName={item} setProductIds={setProductIds} />)}
+            {/* {subtags.map((item) => 
+              item.containTag(tag)
+              ? <Tag tagName={item} setTag={setTag}/>
+              : null 
+            )} */}
+            {subtags.map((item) => <Tag tagName={item} setTag={setTag} />)}
           </Grid>
           <Grid item>
             <Storefront productIds={productIds} />
@@ -53,7 +66,6 @@ function CategoryPage(props) {
 
 CategoryPage.defaultProps = {
   pfp: defaultProfilePicture,
-  products: Array.from({ length: 15 }, (v, k) => k + 1),
 }
 
 export default CategoryPage

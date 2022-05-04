@@ -16,10 +16,8 @@ import defaultProfilePicture from '../images/pfp.png'
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
 import ButtonBase from '@mui/material/ButtonBase'
 import Button from '@mui/material/Button';
-import { Paper } from '@mui/material'
 
 function ProductPage(props) {
   const { productId } = useParams()
@@ -33,16 +31,19 @@ function ProductPage(props) {
 
   // product info
   const [image, setImage] = useState("https://i.pinimg.com/564x/e6/33/34/e63334958361afd77c65e8cdf0ad62ac.jpg")
-  const title = "Product id: " + productId // get product name from API
-  const price = "$" + "4.99"
+  const category = "Animal"
+  const subcategory = "Bird"
+  // const title = "Product id: " + productId // get product name from API
+  const title = "Flamingo Statue"
+  const price = "$4.99"
   const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus odio venenatis convallis congue. Fusce condimentum imperdiet justo. Aenean ut ligula in arcu facilisis convallis non fermentum purus. Duis elementum volutpat velit eu venenatis. Nam vitae iaculis odio. Nam viverra ante et iaculis semper. Ut congue magna eu sem commodo dignissim."
-  const details = "Size: gigantic\n\n Color: pink"
+  const details = "Size: gigantic\n Color: pink"
 
-  // seller info
-  const sellerUsername = "username"
-  const sellerNumber = "(401)-999-9999"
-  const sellerEmail = "username@brown.edu"
-  const sellerSocial = "username@ig"
+  // // seller info
+  // const sellerUsername = "username"
+  // const sellerNumber = "(401)-999-9999"
+  // const sellerEmail = "username@brown.edu"
+  // const sellerSocial = "username@ig"
 
   // recommendation
   const productIds = Array.from({ length: 30 }, (v, k) => k + 1)
@@ -52,12 +53,9 @@ function ProductPage(props) {
     console.log('contact seller');
   }
 
-  // util
-  const bg = "https://img.freepik.com/free-vector/pattern-geometric-line-circle-abstract-seamless-blue-line_60284-53.jpg?w=2000"
-
   return (
     <div className="boilerplate">
-      <BoilerplateHeader title={""} userPicture={props.pfp} />
+      <BoilerplateHeader title={"Brown Marketplace"} userPicture={props.pfp} />
       <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
         {/* <Paper style={{ backgroundImage: `url(${bg})` }}>
@@ -65,13 +63,17 @@ function ProductPage(props) {
 
         <Grid container justifyContent="center" spacing={1} paddingLeft="10%" paddingRight="10%">
           <Grid item xs={12}>
-            <PageBreadcrumbs />
+            <PageBreadcrumbs path={
+              [{ title: "Home", href: "/home" },
+              { title: category, href: `/category/${category}` },
+              { title: subcategory, href: `/category/${category}/${subcategory}` },
+              { title: title, href: null }]} />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Typography variant="h4" align="left">{title}</Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <div style={{ display: 'grid', gridTemplateColumns: '60px auto', gap: '10px' }}>
+          </Grid> */}
+          <Grid item xs={5}>
+            <div style={{ display: 'grid', gridTemplateColumns: '40px auto', gap: '10px' }}>
               <Grid container direction="column" spacing={1}>
                 {altImage.map((img) =>
                   <Grid item>
@@ -91,7 +93,7 @@ function ProductPage(props) {
                 src={image} />
             </div>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={7}>
             <Grid container justifyContent="space-between" padding={1} spacing={2}>
               <Grid item xs={8} align="left">
                 <Typography variant="h4">{title}</Typography>
@@ -107,21 +109,18 @@ function ProductPage(props) {
                 <Typography variant="h6" color="text.primary" align="left">Detail</Typography>
                 <Typography variant="body2" color="text.secondary" align="left">{details}</Typography>
               </Grid>
-              <Grid item xs={12} align="right">
-                {/* <Button variant="contained" onClick={contactSeller}>Contact Seller</Button> */}
+              <Grid item xs={12} align="center">
+                <Button variant="contained" onClick={contactSeller}>Contact Seller</Button>
                 <AddToWishList />
                 <CopyToClipboard />
               </Grid>
-              <Grid item xs={12}>
-                <Card>
-                  {/* TODO: account card */}
-                </Card>
+              {/* <Grid item xs={12}>
                 <Typography variant="h6" color="text.primary">Seller Information</Typography>
                 <Typography variant="body1">{sellerUsername}</Typography>
                 <Typography variant="body1">{sellerNumber}</Typography>
                 <Typography variant="body1">{sellerEmail}</Typography>
                 <Typography variant="body1">{sellerSocial}</Typography>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
           <Grid item xs={12}>
