@@ -2,3 +2,8 @@
     height: 4vw;
     filter: drop-shadow(2px 4px 0px rgb(160, 160, 160));
 }
+
+.search-bar-container {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}

@@ -14,10 +14,7 @@ function Explore(props) {
     <div className="boilerplate">
         <ExploreHeader title={props.title} userPicture={props.pfp}/>
         <div style={{ textAlign: 'center', marginTop: '30px' }}>
-          {/* Give div vertical margin of 12px */}
-          {/* <div className='search-container'> */}
-            <SearchBar />
-          {/* </div> */}
+          Slider
         </div>
     </div>
   )
