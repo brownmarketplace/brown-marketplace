@@ -23,6 +23,11 @@ var filterProductsByCategory = (category) => {
     })
 }
 
+// This method filters the product data by a category and then a sub-category.
+
+
+// This method filters the product data by a tag.
+
 document.querySelector('#product-readAll').addEventListener("click", () => {
     readAllProductsInfo();
 })
