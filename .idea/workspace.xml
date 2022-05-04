@@ -5,8 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ModifyDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ModifyDB.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ReadDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ReadDB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/UserDB/ModifyDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/UserDB/ModifyDB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/UserDB/ReadDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/UserDB/ReadDB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/testDB.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/testDB.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +21,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -62,7 +69,8 @@
       <workItem from="1651598579923" duration="780000" />
       <workItem from="1651599513509" duration="836000" />
       <workItem from="1651600493555" duration="1236000" />
-      <workItem from="1651603883238" duration="832000" />
+      <workItem from="1651603883238" duration="6744000" />
+      <workItem from="1651629138857" duration="1789000" />
     </task>
     <servers />
   </component>

@@ -1,4 +1,4 @@
-import { getDatabase, ref, set, update, get, query, orderByChild, equalTo }
+import { getDatabase, ref, set, update, get, push, query, orderByChild, equalTo }
     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
 var validateForm = () => {
@@ -35,8 +35,6 @@ var writeBasicInfoToDatabase = (id, name, description, price, tag, category,
         name: name,
         description: description,
         price: price,
-        tag: tag,
-        category: category,
         seller: seller,
         pictures: pictures,
         date: date,
@@ -46,6 +44,35 @@ var writeBasicInfoToDatabase = (id, name, description, price, tag, category,
         numDisliked: numDisliked
     });
     console.log("here")
+}
+
+// This method adds a category to the product.
+var addCategoryToProduct = (id, category, categoryID) => {
+    const categoryRef = ref(database, 'products/' + id + '/categories');
+    // Add the category to the list of categories of the product
+    const newCategoryRef = push(categoryRef);
+    set(newCategoryRef, {
+        categoryID: categoryID,
+        categoryName: category
+    })
+
+    // Add the product id to the list of product ids of the category
+    const categoryRef2 = ref(database, 'categories');
+    const newCategoryRef2 = push(categoryRef2);
+    set(newCategoryRef2, {
+        categoryID: categoryID,
+        categoryName: category,
+        productID: id
+    })
+}
+
+// This method adds a tag to the product.
+var addTagToProduct = (id, tag, tagID) => {
+    console.log("here")
+    set(ref(database, 'products/' + id + '/tags/' + tagID), {
+        tagID: tagID,
+        tagName: tag
+    })
 }
 
 // This method adds one to the number of likes the product has.
@@ -82,9 +109,16 @@ var updateSoldFlag = (id) => {
 document.querySelector('#product-register').addEventListener("click", () => {
     validateForm();
 })
+document.querySelector('#product-add-category').addEventListener("click", () => {
+    addCategoryToProduct("2", "Home Decor", "2")
+})
+document.querySelector('#product-add-tag').addEventListener("click", () => {
+    addTagToProduct("1", "Flamingo", "2")
+})
 document.querySelector('#product-add-liked').addEventListener("click", () => {
     modifyNumLiked("1", 1)
 })
 document.querySelector('#product-update-sold').addEventListener("click", () => {
     updateSoldFlag("1")
 })
+
