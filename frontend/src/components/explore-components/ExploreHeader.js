@@ -23,6 +23,16 @@ function ExploreHeader(props) {
     // State for Categories Drawer
     const [drawerOpen, toggleDrawer] = useState(false)  
 
+    // create a list of dummy categories
+    const categories = [
+        "All",
+        "Electronics",
+        "Fashion",
+        "Home",
+        "Sports",
+        "Other"
+    ]
+
     return (
     <div className="boilerplate-header">
         {/* On click, returns to the previous page. */}
@@ -32,9 +42,17 @@ function ExploreHeader(props) {
         {/* Define Categories Drawer */}
         <Drawer anchor="left" open={drawerOpen} onClose={() => toggleDrawer(false)}>
             <List className="w-64">
-                <ListItem button>
+                <ListItem>
                     <ListItemText>Categories</ListItemText>
-                </ListItem>    
+                </ListItem>   
+                 {/*Create Buttons for each cateofy in categories */}
+                {categories.map((category, index) => (
+                    <ListItem button key={index}>
+                        <Link to={`/category/${category}`}>
+                            <ListItemText>{category}</ListItemText>
+                        </Link>
+                    </ListItem>
+                ))}
             </List>
         </Drawer>
 
