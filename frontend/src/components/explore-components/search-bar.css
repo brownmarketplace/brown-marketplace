@@ -1,0 +1,44 @@
+.search-bar-container {
+    position: relative;
+}
+
+.search-bar {
+    border: 1px solid #e2e8f0;
+    /* make border rounded */
+    border-radius: 0.5rem;
+}
+
+.on-focus {
+    /* make border transparent */
+    border-color: transparent;
+}
+
+.no-focus {
+    /* make border transparent */
+    border-color: hsla(0,0%,53.3%,.25);
+}
+
+.search-icon {
+    padding: 0.5rem;
+    display: flex;
+    justify-items: start;
+}
+
+/* w-full py-3 pr-3 pl-1 focus:outline-none text-lg */
+.search-input {
+    width: 100%;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-right: 0.75rem;
+    padding-left: 0.25rem;
+    /*  set focus to outline-none */
+    outline: none;
+    border: none;
+    /*  set font size to 1.125rem */
+    font-size: 1.125rem;    
+}
+
+::placeholder {
+    /*  set placeholder color to lightgray */
+    color: #c2cbd6;
+}

@@ -36,7 +36,7 @@ function ExploreHeader(props) {
     return (
     <div className="boilerplate-header">
         {/* On click, returns to the previous page. */}
-        <img src={xButton} alt="categories" className="categoriesButton" onClick={() => toggleDrawer(true)} />
+        <img src={xButton} alt="categories" className="categories-button" onClick={() => toggleDrawer(true)} />
         <Title title={props.title}/>
 
         {/* Define Categories Drawer */}
