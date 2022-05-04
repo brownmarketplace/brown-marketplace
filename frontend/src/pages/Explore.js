@@ -8,6 +8,7 @@ import SearchBar from '../components/explore-components/SearchBar'
 import Title from '../components/boilerplate-components/Title'
 import TinderCard from 'react-tinder-card'
 import ProductCards from '../components/explore-components/ProductCards'
+import ProductButtons from '../components/explore-components/ProductButtons'
 
 // CSS Imports
 import './boilerplate-page.css'
@@ -21,8 +22,7 @@ function Explore(props) {
     <div className="boilerplate">
         <ExploreHeader title={props.title} userPicture={props.pfp}/>
         <div style={{ textAlign: 'center', marginTop: '30px' }}>
-          {/* Center the Product Card */}
-          Buttons
+          <ProductButtons />
         </div>
     </div>
   )
