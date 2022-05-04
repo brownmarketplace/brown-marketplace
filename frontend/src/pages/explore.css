@@ -12,6 +12,12 @@
     align-items: center;
 } */
 
+.product-cards {
+    /* center */
+    justify-content: center;
+
+}
+
 .card-container {
     width: 400px;
     height: 650px ;

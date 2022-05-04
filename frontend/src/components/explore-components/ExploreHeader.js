@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Title from '../boilerplate-components/Title'
 import ProfilePageButton from '../boilerplate-components/ProfilePageButton'
 import SearchBar from '../explore-components/SearchBar'
+import ProductCards from './ProductCards'
 
 // Image Imports
 import xButton from "../../images/back-button.png"
@@ -46,6 +47,7 @@ function ExploreHeader(props) {
             <div className="search-bar-container">
                 <SearchBar />
             </div>
+            <ProductCards />
         </div>
 
         {/* Define Categories Drawer */}

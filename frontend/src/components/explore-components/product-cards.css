@@ -1,0 +1,29 @@
+.product-card {
+    position: relative;
+    width: 600px;
+    padding: 20px;
+    /* Styling proportionate to viewport */
+    max-width: 85vw;
+    height: 50vh;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0px 18px 53px 0px rgba(0, 0, 0, 0.30);
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+.swipe {
+    /* Stack the cards on top of each other */
+    position: absolute;
+}
+
+.product-card > h3 {
+    position: absolute;
+    bottom: 10px;
+    color: white;
+}
