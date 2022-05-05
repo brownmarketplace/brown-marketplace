@@ -6,6 +6,13 @@ import TinderCard from "react-tinder-card";
 // CSS Import
 import './product-cards.css'
 
+// MUI Icons
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import ReplayIcon from '@mui/icons-material/Replay';
+import StarRateIcon from '@mui/icons-material/StarRate';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 function ProductCards() {
     const [products, setProducts] = useState([
         {
@@ -32,11 +39,7 @@ function ProductCards() {
             name: 'Mushroom Crochets',
             url: 'https://embed.filekitcdn.com/e/pZVtAQBFhqs4ADp3yRAnVv/6J9S2S2ez1N2JNCkbxCfKt'
         },
-        ]);
-
-
-
-    
+        ]);    
 
     const [currentIndex, setCurrentIndex] = useState(products.length - 1)
     const [lastDirection, setLastDirection] = useState()
@@ -73,6 +76,12 @@ function ProductCards() {
         // TODO: when quickly swipe and restore multiple times the same card,
         // it happens multiple outOfFrame events are queued and the card disappear
         // during latest swipes. Only the last outOfFrame event should be considered valid
+
+        // if swipe was right, go to "/product/product-name"
+        if (lastDirection === 'right') {
+            window.location.href = `/product/${name}`
+        }
+        
     }
 
     const swipe = async (dir) => {
@@ -90,7 +99,7 @@ function ProductCards() {
     }
 
     return (
-        <div>
+        <div className='swiper-container'>
             <div className="cards-container">
                 {products.map((product, index) => (
                     <TinderCard
@@ -113,10 +122,19 @@ function ProductCards() {
                     </TinderCard>
                 ))}
             </div>
-            <div className='buttons'>
-                <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => swipe('left')}>Swipe left!</button>
-                <button style={{ backgroundColor: !canGoBack && '#c3c4d3' }} onClick={() => goBack()}>Undo swipe!</button>
-                <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => swipe('right')}>Swipe right!</button>
+            <div className='product-buttons'>
+                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="left" onClick={() => swipe('left')}>
+                    <CloseIcon fontSize="large" />
+                </IconButton>
+                <IconButton style={{ backgroundColor: !canGoBack && '#c3c4d3' }} className="repeat" onClick={() => goBack()}>
+                    <ReplayIcon fontSize="large" />
+                </IconButton>
+                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="bookmark" onClick={() => alert("Boomarked!")}>
+                    <StarRateIcon fontSize="large" />
+                </IconButton>
+                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="right" onClick={() => swipe('right')}>
+                    <FavoriteIcon fontSize="large" />
+                </IconButton>
             </div>
         </div>
     );
