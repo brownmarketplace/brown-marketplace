@@ -90,27 +90,34 @@ function ProductCards() {
     }
 
     return (
-        <div className="cards-container">
-            {products.map((product, index) => (
-                <TinderCard
-                    ref={childRefs[index]}
-                    className="swipe"
-                    // give each card a unique key, efficient to re-render
-                    key={product.name}
-                    // update current index when card is swiped
-                    onSwipe={(dir) => swiped(dir, product.name, index)}
-                    // when card leaves screen, update current index
-                    onCardLeftScreen={() => outOfFrame(product.name, index)}
-                    // only allow swiping left or right
-                    preventSwipe={['up', 'down']}
-                >
-                    <div 
-                    style={{ backgroundImage: `url(${product.url})` }}
-                    className="product-card">
-                        <h3>{product.name}</h3>
-                    </div>
-                </TinderCard>
-            ))}
+        <div>
+            <div className="cards-container">
+                {products.map((product, index) => (
+                    <TinderCard
+                        ref={childRefs[index]}
+                        className="swipe"
+                        // give each card a unique key, efficient to re-render
+                        key={product.name}
+                        // update current index when card is swiped
+                        onSwipe={(dir) => swiped(dir, product.name, index)}
+                        // when card leaves screen, update current index
+                        onCardLeftScreen={() => outOfFrame(product.name, index)}
+                        // only allow swiping left or right
+                        preventSwipe={['up', 'down']}
+                    >
+                        <div 
+                        style={{ backgroundImage: `url(${product.url})` }}
+                        className="product-card">
+                            <h3>{product.name}</h3>
+                        </div>
+                    </TinderCard>
+                ))}
+            </div>
+            <div className='buttons'>
+                <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => swipe('left')}>Swipe left!</button>
+                <button style={{ backgroundColor: !canGoBack && '#c3c4d3' }} onClick={() => goBack()}>Undo swipe!</button>
+                <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => swipe('right')}>Swipe right!</button>
+            </div>
         </div>
     );
 }
