@@ -1,7 +1,7 @@
-package Structures;
+package edu.brown.cs.student.Structures;
 
-import Recommender.bloomFilter.BFInsertable;
-import Recommender.bloomFilter.BloomFilter;
+import edu.brown.cs.student.Recommender.bloomFilter.BFInsertable;
+import edu.brown.cs.student.bloomFilter.BloomFilter;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;

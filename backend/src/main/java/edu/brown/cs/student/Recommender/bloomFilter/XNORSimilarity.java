@@ -1,7 +1,6 @@
-package Recommender.bloomFilter;
+package edu.brown.cs.student.Recommender.bloomFilter;
 
-import Structures.Product;
-
+import edu.brown.cs.student.Structures.Product;
 import java.util.Comparator;
 
 /**
