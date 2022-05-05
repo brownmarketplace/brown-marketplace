@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 
 // Load the data from backend
-function Explore() {
+function ExploreApi() {
 
     const [explore, setExplore] = useState("")
 
@@ -30,4 +30,4 @@ function Explore() {
     );
 }
 
-export default Explore;
+export default ExploreApi;

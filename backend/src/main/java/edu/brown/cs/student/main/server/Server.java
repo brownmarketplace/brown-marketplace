@@ -8,6 +8,8 @@ import spark.Response;
 import spark.Route;
 import spark.Spark;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Server {
@@ -45,7 +47,6 @@ public class Server {
   }
 
 
-
   /**
    * This Route handles the /tables GET request. It expects no req body and no URL parameters.
    */
@@ -78,8 +79,12 @@ public class Server {
 //        tableNames.add(tables.getString(1));
 //      }
 
-      Map<String, Object> resBody = ImmutableMap.of("names", "recommendation info placeholding");
-      return gson.toJson(resBody);
+      List<String> resBody = new ArrayList<>();
+      resBody.add("apple");
+      resBody.add("orange");
+      resBody.add("peach");
+
+      return gson.toJson(ImmutableMap.of("result", resBody));
     }
   }
 }
