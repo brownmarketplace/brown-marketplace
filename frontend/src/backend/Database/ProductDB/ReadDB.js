@@ -17,20 +17,48 @@ var filterProductsByCategory = (category) => {
     const q = query(ref(database, 'categories'), orderByChild('categoryName'), equalTo(category));
     get(q).then(snapshot => {
         snapshot.forEach(function(childSnapshot) {
-            products.push(childSnapshot.val().productID)
+            products = childSnapshot.val().productIDs
+            console.log("Product IDs filtered by category: ")
+            console.log(products)
         })
-        console.log("List of product IDs in the category: " + products)
     })
 }
 
-// This method filters the product data by a category and then a sub-category.
-
+// This method filters the product data by a specific sub-category.
+var filterProductsBySubcategory = (subCategory) => {
+    var products = []
+    const q = query(ref(database, 'sub-categories'), orderByChild('subCategoryName'), equalTo(subCategory));
+    get(q).then(snapshot => {
+        snapshot.forEach(function(childSnapshot) {
+            products = childSnapshot.val().productIDs
+            console.log("Product IDs filtered by sub-category: ")
+            console.log(products)
+        })
+    })
+}
 
 // This method filters the product data by a tag.
+var filterProductsByTags = (tag) => {
+    var products = []
+    const q = query(ref(database, 'tags'), orderByChild('tagName'), equalTo(tag));
+    get(q).then(snapshot => {
+        snapshot.forEach(function(childSnapshot) {
+            products = childSnapshot.val().productIDs
+            console.log("Product IDs filtered by tag: ")
+            console.log(products)
+        })
+    })
+}
 
 document.querySelector('#product-readAll').addEventListener("click", () => {
     readAllProductsInfo();
 })
 document.querySelector('#product-readFiltered').addEventListener("click", () => {
-    filterProductsByCategory("Home Decor");
+    filterProductsByCategory("Room Decor");
+})
+document.querySelector('#product-readFilteredSubCategory').addEventListener("click", () => {
+    filterProductsBySubcategory("Posters");
+})
+document.querySelector('#product-readFilteredTag').addEventListener("click", () => {
+    filterProductsByTags("Gift");
 })
