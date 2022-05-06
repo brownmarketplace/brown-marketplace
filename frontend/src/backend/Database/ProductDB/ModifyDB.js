@@ -66,10 +66,11 @@ var addCategoryToProduct = (id, category, categoryID) => {
     })
 
     // Add the product id to the list of product ids of the category
-    const categoryRef2 = ref(database, 'categories/' + categoryID);
+    const categoryRef2 = ref(database, 'categories/' + categoryID + '/productIDs/' + id);
     set(categoryRef2, {
         productID: id
     })
+    console.log("Added category to product")
 }
 
 var addSubCategoryToList = (categoryID, subCategoryName, subCategoryID) => {
@@ -81,12 +82,12 @@ var addSubCategoryToList = (categoryID, subCategoryName, subCategoryID) => {
     })
 
     // Add sub-category to the list of sub-categories
-    const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID);
-    set(subCategoryRef2, {
-        subCategoryID: subCategoryID,
-        subCategoryName: subCategoryName,
-        categoryID: categoryID
-    })
+    // const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID);
+    // set(subCategoryRef2, {
+    //     subCategoryID: subCategoryID,
+    //     subCategoryName: subCategoryName,
+    //     categoryID: categoryID
+    // })
     console.log("Added new sub-category")
 }
 
@@ -95,18 +96,17 @@ var addSubCategoryToProduct = (productID, categoryID, subCategoryName, subCatego
     // Add the sub-category to the list of subcategories under the category of the product
     const subCategoryRef = ref(database, 'products/' + productID + '/categories/' + categoryID + '/subcategories/'
     + subCategoryID)
-    // const newSubCategoryRef = push(subCategoryRef);
     set(subCategoryRef, {
         subcategoryID: subCategoryID,
-        subCategoryName: subCategoryName,
-        categoryID: categoryID
+        subCategoryName: subCategoryName
     })
 
     // Add the product id to the list of product ids of the sub-category
-    const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID);
+    const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID + '/productIDs/' + productID);
     set(subCategoryRef2, {
-        productID: id
+        productID: productID
     })
+    console.log("Added subcategory to product")
 }
 
 var addTagToList = (tagID, tagName) => {
@@ -121,11 +121,19 @@ var addTagToList = (tagID, tagName) => {
 
 // This method adds a tag to the product.
 var addTagToProduct = (id, tag, tagID) => {
-    console.log("here")
-    set(ref(database, 'products/' + id + '/tags/' + tagID), {
+    // Add the tag to the list of tags of the product
+    const tagRef = ref(database, 'products/' + id + '/tags/' + tagID)
+    set(tagRef, {
         tagID: tagID,
         tagName: tag
     })
+
+    // Add the product id to the list of product ids of the tag
+    const tagRef2 = ref(database, 'tags/' + tagID + '/productIDs/' + id);
+    set(tagRef2, {
+        productID: id
+    })
+    console.log("Added tag to product")
 }
 
 // This method adds one to the number of likes the product has.
@@ -163,13 +171,13 @@ document.querySelector('#product-register').addEventListener("click", () => {
     validateForm();
 })
 document.querySelector('#product-add-category').addEventListener("click", () => {
-    addCategoryToList("Other", "7")
+    addCategoryToProduct(3, "Room Decor", 1)
 })
 document.querySelector('#product-add-sub-category').addEventListener("click", () => {
-    addSubCategoryToList("7", "Miscellaneous", 32)
+    addSubCategoryToProduct(3, 1, "Posters", 4)
 })
 document.querySelector('#product-add-tag').addEventListener("click", () => {
-    addTagToList("5", "Gift")
+    addTagToProduct(3, "Gift", 5)
 })
 document.querySelector('#product-add-liked').addEventListener("click", () => {
     modifyNumLiked("1", 1)
