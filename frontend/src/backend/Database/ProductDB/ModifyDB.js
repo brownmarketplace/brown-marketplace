@@ -47,9 +47,8 @@ var writeBasicInfoToDatabase = (id, name, description, price, tag, category,
 }
 
 var addCategoryToList = (category, categoryID) => {
-    // Add the product id to the list of product ids of the category
+    // Add the category to the list of categories
     const categoryRef2 = ref(database, 'categories/' + categoryID);
-    // const newCategoryRef2 = push(categoryRef2);
     set(categoryRef2, {
         categoryID: categoryID,
         categoryName: category
@@ -74,16 +73,15 @@ var addCategoryToProduct = (id, category, categoryID) => {
 }
 
 var addSubCategoryToList = (categoryID, subCategoryName, subCategoryID) => {
-    // Add the sub-category to the category
+    // Add the sub-category to the corresponding category
     const subCategoryRef = ref(database, 'categories/' + categoryID + '/subcategories/' + subCategoryID)
     set(subCategoryRef, {
         subcategoryID: subCategoryID,
         subCategoryName: subCategoryName
     })
 
-    // Add the product id to the list of product ids of the sub-category
+    // Add sub-category to the list of sub-categories
     const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID);
-    // const newSubCategoryRef2 = push(subCategoryRef2);
     set(subCategoryRef2, {
         subCategoryID: subCategoryID,
         subCategoryName: subCategoryName,
@@ -111,8 +109,14 @@ var addSubCategoryToProduct = (productID, categoryID, subCategoryName, subCatego
     })
 }
 
-var addTagToList = () => {
-
+var addTagToList = (tagID, tagName) => {
+    // add the tag to the list of tags
+    const tagRef = ref(database, 'tags/' + tagID)
+    set(tagRef, {
+        tagID: tagID,
+        tagName: tagName
+    })
+    console.log("Added new tag")
 }
 
 // This method adds a tag to the product.
@@ -165,7 +169,7 @@ document.querySelector('#product-add-sub-category').addEventListener("click", ()
     addSubCategoryToList("7", "Miscellaneous", 32)
 })
 document.querySelector('#product-add-tag').addEventListener("click", () => {
-    addTagToProduct("1", "Flamingo", "2")
+    addTagToList("5", "Gift")
 })
 document.querySelector('#product-add-liked').addEventListener("click", () => {
     modifyNumLiked("1", 1)
