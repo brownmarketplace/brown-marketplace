@@ -51,7 +51,7 @@ function ExploreHeader(props) {
         </div>
 
         {/* Define Categories Drawer */}
-        <Drawer anchor="left" open={drawerOpen} onClose={() => toggleDrawer(false)}>
+        <Drawer className='drawer' anchor="left" open={drawerOpen} onClose={() => toggleDrawer(false)}>
             <List className="categories">
                 <ListItem>
                     <ListItemText>Categories</ListItemText>

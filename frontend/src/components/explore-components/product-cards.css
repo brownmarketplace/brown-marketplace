@@ -6,16 +6,13 @@
 }
 
 .product-card {
-    position: relative;
-    width: 600px;
-    padding: 20px;
+    /* position: relative; */
+    width: 415px;
+    background-color: #FFEFD7;
+    /* padding: 20px; */
     /* Styling proportionate to viewport */
-    max-width: 85vw;
-    height: 50vh;
-    border-radius: 20px;
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0px 18px 53px 0px rgba(0, 0, 0, 0.30);
+    /* background-size: cover;
+    background-position: center; */
 }
 
 .card-container {
@@ -29,11 +26,27 @@
     position: absolute;
 }
 
-.product-card > h3 {
+.product-card > .price {
+    /* position: absolute;
+    right: 10px;
+    top: 10px;
+    color: white; */
+    right: 0px;
+    top: 20px;
     position: absolute;
-    bottom: 10px;
-    color: white;
+    display: flex;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px 0px 0px 5px;
+    align-items: center;
+    justify-content: center;
+    background: #7fadff;
 }
+
+
+    
 
 .product-buttons {
     margin: 20px;
