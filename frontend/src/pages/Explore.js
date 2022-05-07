@@ -22,7 +22,7 @@ function Explore(props) {
     <div className="boilerplate">
         <ExploreHeader title={props.title} userPicture={props.pfp}/>
         <div style={{ textAlign: 'center', marginTop: '30px' }}>
-          {/* <ProductButtons /> */}
+           Empty
         </div>
     </div>
   )
