@@ -32,7 +32,7 @@ function ProductPreview(props) {
             boxShadow: "none",
             // aspectRatio: 4 / 5,
         }}>
-            <CardActionArea disableRipple href={"../product/" + productId}>
+            <CardActionArea disableRipple href={"/product/" + productId}>
                 <CardMedia
                     component="img"
                     image={images[props.productId % 5]}
