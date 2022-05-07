@@ -6,6 +6,7 @@ import ProductPage from './pages/ProductPage';
 import CategoryPage from './pages/CategoryPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
+import ExploreApi from './Explore-api';
 
 const App = () => {
   return (

@@ -20,8 +20,8 @@ public class dbProxy {
     } catch (IOException e) {
       System.out.println("Error: cannot connect to the firebase");
     }
-    this.retrieve("products");
-    this.retrieve("users");
+//    this.retrieve("products");
+//    this.retrieve("users/1");
     // TODO: parsing
     // Product: product name, list of tags, category
     // User: list of likes, list of bookmarks
@@ -38,7 +38,7 @@ public class dbProxy {
     FirebaseApp.initializeApp(options);
   }
 
-  private void retrieve(String route){
+  public void retrieve(String route){
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference("/" + route);
 

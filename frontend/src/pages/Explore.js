@@ -6,7 +6,7 @@ import ExploreHeader from '../components/explore-components/ExploreHeader'
 import Footer from '../components/Footer'
 import SearchBar from '../components/explore-components/SearchBar'
 import Title from '../components/boilerplate-components/Title'
-import TinderCard from 'react-tinder-card'
+// import TinderCard from 'react-tinder-card'
 import ProductCards from '../components/explore-components/ProductCards'
 import ProductButtons from '../components/explore-components/ProductButtons'
 
