@@ -1,6 +1,6 @@
 import { getDatabase, ref, set, update, remove, push } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
-const validateForm = () => {
+var validateForm = () => {
     const id = document.querySelector("#form-id").value;
     const username = document.querySelector("#form-username").value;
     const name = document.querySelector("#form-name").value;
@@ -17,7 +17,7 @@ const validateForm = () => {
 };
 
 // This method adds a new user to the database. It replaces any existing data at that path.
-const addUser = (id, username, name, email, profilePic, classYear) => {
+var addUser = (id, username, name, email, profilePic, classYear) => {
     console.log("here")
     set(ref(database, 'users/' + id), {
         id: id,
@@ -31,7 +31,7 @@ const addUser = (id, username, name, email, profilePic, classYear) => {
 }
 
 // This method adds a new listing to the user's list of listings.
-const addNewListing = (userID, productID) => {
+var addNewListing = (userID, productID) => {
     console.log("here")
     const listingRef = ref(database, 'users/' + userID + '/listings');
     const newListingRef = push(listingRef);
@@ -40,28 +40,28 @@ const addNewListing = (userID, productID) => {
     })
 }
 
-// This method adds a new referral to the user's list of referred users.
-const addNewReferral = (userID, referredUserID) => {
-    console.log("here")
-    const referralRef = ref(database, 'users/' + userID + '/referrals');
-    const newReferralRef = push(referralRef)
-    set(newReferralRef, {
-        referredUserID: referredUserID
-    })
-}
+// // This method adds a new referral to the user's list of referred users.
+// var addNewReferral = (userID, referredUserID) => {
+//     console.log("here")
+//     const referralRef = ref(database, 'users/' + userID + '/referrals');
+//     const newReferralRef = push(referralRef)
+//     set(newReferralRef, {
+//         referredUserID: referredUserID
+//     })
+// }
 
-// This method adds a new product to the user's wish list.
-const addToWishList = (userID, productID) => {
-    console.log("here")
-    const wishListRef = ref(database, 'users/' + userID + '/wish-list');
-    const newWishListRef = push(wishListRef);
-    set(newWishListRef, {
-        productID: productID
-    })
-}
+// // This method adds a new product to the user's wish list.
+// var addToWishList = (userID, productID) => {
+//     console.log("here")
+//     const wishListRef = ref(database, 'users/' + userID + '/wish-list');
+//     const newWishListRef = push(wishListRef);
+//     set(newWishListRef, {
+//         productID: productID
+//     })
+// }
 
 // This method adds a new product to the user's liked list.
-const addToLikedList = (userID, productID) => {
+var addToLikedList = (userID, productID) => {
     console.log("here")
     const likedListRef = ref(database, 'users/' + userID + '/liked-items');
     const newLikedListRef = push(likedListRef);
@@ -71,27 +71,27 @@ const addToLikedList = (userID, productID) => {
 }
 
 // This method adds a new product to the user's bookmarked list.
-const addToBookmarkedList = (userID, productID) => {
-    console.log("here")
-    const bookmarkedRef = ref(database, 'users/' + userID + '/bookmarked-items');
-    const newBookmarkedRef = push(bookmarkedRef);
-    set(newBookmarkedRef, {
-        productID: productID
-    })
-}
+// var addToBookmarkedList = (userID, productID) => {
+//     console.log("here")
+//     const bookmarkedRef = ref(database, 'users/' + userID + '/bookmarked-items');
+//     const newBookmarkedRef = push(bookmarkedRef);
+//     set(newBookmarkedRef, {
+//         productID: productID
+//     })
+// }
 
 // This method adds a new product to the user's disliked list.
-const addToDislikedList = (userID, productID) => {
-    console.log("here")
-    const dislikedListRef = ref(database, 'users/' + userID + '/disliked-items');
-    const newDislikedRef = push(dislikedListRef);
-    set(newDislikedRef, {
-        productID: productID
-    })
-}
+// var addToDislikedList = (userID, productID) => {
+//     console.log("here")
+//     const dislikedListRef = ref(database, 'users/' + userID + '/disliked-items');
+//     const newDislikedRef = push(dislikedListRef);
+//     set(newDislikedRef, {
+//         productID: productID
+//     })
+// }
 
 // This method updates specific fields of user data in the database.
-const updateData = (id, username) => {
+var updateData = (id, username) => {
     update(ref(database, 'users/' + id), {
         username: username
     })
@@ -99,7 +99,7 @@ const updateData = (id, username) => {
 }
 
 // This method deletes user data from the database.
-const deleteData = (id) => {
+var deleteData = (id) => {
     remove(ref(database, 'users/' + id))
 }
 
@@ -115,18 +115,18 @@ document.querySelector('#delete').addEventListener("click", () => {
 document.querySelector('#listing').addEventListener("click", () => {
     addNewListing(1, 10002);
 })
-document.querySelector('#referral').addEventListener("click", () => {
-    addNewReferral(1, 2);
-})
-document.querySelector('#wishList').addEventListener("click", () => {
-    addToWishList(1, 10003);
-})
+// document.querySelector('#referral').addEventListener("click", () => {
+//     addNewReferral(1, 2);
+// })
+// document.querySelector('#wishList').addEventListener("click", () => {
+//     addToWishList(1, 10003);
+// })
 document.querySelector('#likedList').addEventListener("click", () => {
     addToLikedList(1, 10000);
 })
-document.querySelector('#bookmarkedList').addEventListener("click", () => {
-    addToBookmarkedList(2, 10001);
-})
-document.querySelector('#dislikedList').addEventListener("click", () => {
-    addToDislikedList(1, 10002);
-})
+// document.querySelector('#bookmarkedList').addEventListener("click", () => {
+//     addToBookmarkedList(2, 10001);
+// })
+// document.querySelector('#dislikedList').addEventListener("click", () => {
+//     addToDislikedList(1, 10002);
+// })

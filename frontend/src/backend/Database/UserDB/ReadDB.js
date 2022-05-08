@@ -7,14 +7,14 @@ const database = getDatabase();
   onValue() to observe events. This method is triggered once when the listener is attached and again every time the
   data, including children, changes
  */
-const readOneUserInfo = (id) => {
+var readOneUserInfo = (id) => {
     onValue(ref(database, 'users/' + id), (snapshot) => {
         console.log(snapshot.val())
         // console.log(snapshot.val().id);
     })
 }
 
-const readAllUserInfo = () => {
+var readAllUserInfo = () => {
     onValue(ref(database, 'users'), (snapshot) => {
         snapshot.forEach(function(childSnapshot) {
             console.log(childSnapshot.val())
@@ -24,7 +24,7 @@ const readAllUserInfo = () => {
 }
 
 // This method reads all the data for users who are sophomores.
-const filterUsersByClassYear = (classYear) => {
+var filterUsersByClassYear = (classYear) => {
     const q = query(ref(database, 'users/'), orderByChild('classYear'), equalTo(classYear));
     get(q).then(snapshot => {
         console.log(snapshot.val())
@@ -32,7 +32,7 @@ const filterUsersByClassYear = (classYear) => {
 }
 
 // This method reads the data of a specific user.
-const getSpecificUserData = (userID) => {
+var getSpecificUserData = (userID) => {
     const q = query(ref(database, 'users/'), orderByChild('id'), equalTo(userID));
     get(q).then(snapshot => {
         console.log(snapshot.val())
