@@ -18,8 +18,10 @@ const App = () => {
         </Route>
         <Route path="/sell" element={<AddListing />} />
         <Route path="/product/:productId" element={<ProductPage />} />
-        <Route path="/category/:category" element={<CategoryPage />} >
-          <Route path=":subcategory" element={<CategoryPage />} />
+        <Route path="/category" element={<CategoryPage />} >
+          <Route path=":category" element={<CategoryPage />} >
+            <Route path=":subcategory" element={<CategoryPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

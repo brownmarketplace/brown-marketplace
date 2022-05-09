@@ -18,8 +18,8 @@ function Storefront(props) {
         // </Grid>
 
         <Grid container spacing={2}>
-            {props.productIds.map((e) =>
-                <Grid item xs={6} md={4} lg={3}>
+            {props.productIDs.map((e, idx) =>
+                <Grid item key={idx} xs={6} md={4} lg={3}>
                     <ProductPreview productId={e} />
                 </Grid>)}
         </Grid>
@@ -48,7 +48,7 @@ function Storefront(props) {
 }
 
 Storefront.defaultProps = {
-    productIds: []
+    productIDs: [],
 }
 
 export default Storefront;

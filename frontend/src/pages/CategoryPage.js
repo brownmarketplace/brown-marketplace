@@ -1,26 +1,60 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import BoilerplateHeader from '../components/BoilerplateHeader'
-import Footer from '../components/Footer'
-import defaultProfilePicture from '../images/pfp.png'
 
 import './boilerplate-page.css'
 import './category-page.css'
 
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography';
-
+// components
+import BoilerplateHeader from '../components/BoilerplateHeader'
+import Footer from '../components/Footer'
 import Tag from '../components/category-components/Tag'
 import PageBreadcrumbs from '../components/product-components/PageBreadcrumbs'
 import Storefront from '../components/category-components/Storefronts'
 
+// mui
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography';
+
 function CategoryPage(props) {
   const { category, subcategory } = useParams()
-  const subtags = ["Frog", "Cat", "Dog", "Seal", "Giraffe", "Red Panda", "Flamingo"]
-
-  const productIds = Array.from({ length: 15 }, (v, k) => k + 1)
   const [tag, setTag] = useState(null)
-  // const [productIds, setProductIds] = useState(props.products) // get from database
+  const [tags, setTags] = useState([])
+  const [productIDs, setProductIDs] = useState([])
+  // const [products, setProducts] = useState([])
+
+  const breadcrumbs = category
+    ? (subcategory
+      ? [{ title: "Home", href: "/home" },
+      { title: category, href: `/category/${category}` },
+      { title: subcategory, href: null }]
+      : [{ title: "Home", href: "/home" },
+      { title: category, href: null }])
+    : [{ title: "Home", href: "/home" }]
+
+  const title = category
+    ? (subcategory
+      ? subcategory
+      : category)
+    : 'Explore'
+
+  // read from database
+  const getTags = () => {
+    setTags(props.tags)
+  }
+
+  const getProducts = () => {
+    setProductIDs(props.productIDs)
+  }
+
+  useEffect(() => {
+    getTags()
+    getProducts()
+  }, []);
+
+  // filter products by tag maybe?
+  useEffect(() => {
+    
+  }, [tag])
 
   return (
     <div className="boilerplate">
@@ -29,32 +63,23 @@ function CategoryPage(props) {
 
         <Grid container direction="column" justifyContent="center" spacing={1} paddingLeft="10%" paddingRight="10%">
           <Grid item>
-            <PageBreadcrumbs path={
-              subcategory
-                ? [{ title: "Home", href: "/home" },
-                { title: category, href: `/category/${category}` },
-                { title: subcategory, href: null }]
-                : [{ title: "Home", href: "/home" },
-                { title: category, href: null }]} />
+            <PageBreadcrumbs path={breadcrumbs} />
           </Grid>
           <Grid item style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
             <Typography variant="h2" align="left" style={{ textTransform: 'capitalize' }}>
-              {subcategory == null ? category : subcategory}
-            </Typography>
-            <Typography variant="h2" align="left">
-              {tag}
+              {title}
             </Typography>
           </Grid>
           <Grid item style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
-            {/* {subtags.map((item) => 
+            {/* {products.map((item) => 
               item.containTag(tag)
               ? <Tag tagName={item} setTag={setTag}/>
               : null 
             )} */}
-            {subtags.map((item) => <Tag tagName={item} setTag={setTag} />)}
+            {tags.map((item, idx) => <Tag key={idx} tagName={item} setTag={setTag} />)}
           </Grid>
           <Grid item>
-            <Storefront productIds={productIds} />
+            <Storefront productIDs={productIDs} />
           </Grid>
         </Grid>
 
@@ -65,7 +90,8 @@ function CategoryPage(props) {
 }
 
 CategoryPage.defaultProps = {
-  pfp: defaultProfilePicture,
+  tags: ["Frog", "Cat", "Dog", "Seal", "Giraffe", "Red Panda", "Flamingo"],
+  productIDs: Array.from({ length: 15 }, (v, k) => k + 1),
 }
 
 export default CategoryPage
