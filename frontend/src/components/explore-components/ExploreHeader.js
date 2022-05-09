@@ -288,7 +288,7 @@ function ExploreHeader(props) {
         open={drawerOpen} 
         onClose={() => toggleDrawer(false)}>
             <div>
-                <Typography variant="h5" className="drawer-title">
+                <Typography ml={2} mt={2} variant="h4" className="drawer-title">
                     Categories
                 </Typography>
             </div>
