@@ -116,7 +116,7 @@ public class Server {
 
       System.out.println(id);
 
-      _proxy.retrieve("users/" + id);
+//      _proxy.retrieve("users/" + id);
 
       Map<String, String> success = ImmutableMap.of("result", "user id successfully found!");
       return gson.toJson(success);
