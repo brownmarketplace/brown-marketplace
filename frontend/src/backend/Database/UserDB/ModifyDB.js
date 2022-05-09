@@ -31,12 +31,11 @@ var addUser = (id, username, name, email, profilePic, classYear) => {
 }
 
 // This method adds a new listing to the user's list of listings.
-var addNewListing = (userID, productID) => {
-    console.log("here")
-    const listingRef = ref(database, 'users/' + userID + '/listings');
-    const newListingRef = push(listingRef);
-    set(newListingRef, {
-        productID: productID
+var addNewListing = (userID, productID, productName) => {
+    console.log("Added new listing")
+    const listingRef = ref(database, 'users/' + userID + '/listings/' + productID);
+    set(listingRef, {
+        productName: productName
     })
 }
 
@@ -61,12 +60,11 @@ var addNewListing = (userID, productID) => {
 // }
 
 // This method adds a new product to the user's liked list.
-var addToLikedList = (userID, productID) => {
-    console.log("here")
-    const likedListRef = ref(database, 'users/' + userID + '/liked-items');
-    const newLikedListRef = push(likedListRef);
-    set(newLikedListRef, {
-        productID: productID
+var addToLikedList = (userID, productID, productName) => {
+    console.log("Added to liked list")
+    const likedListRef = ref(database, 'users/' + userID + '/liked-items/' + productID);
+    set(likedListRef, {
+        productName: productName
     })
 }
 
@@ -113,7 +111,7 @@ document.querySelector('#delete').addEventListener("click", () => {
     deleteData(4);
 })
 document.querySelector('#listing').addEventListener("click", () => {
-    addNewListing(1, 10002);
+    addNewListing(1, "2", "Kirk the Koala");
 })
 // document.querySelector('#referral').addEventListener("click", () => {
 //     addNewReferral(1, 2);
@@ -122,7 +120,7 @@ document.querySelector('#listing').addEventListener("click", () => {
 //     addToWishList(1, 10003);
 // })
 document.querySelector('#likedList').addEventListener("click", () => {
-    addToLikedList(1, 10000);
+    addToLikedList(2, "3", "Kanye Poster");
 })
 // document.querySelector('#bookmarkedList').addEventListener("click", () => {
 //     addToBookmarkedList(2, 10001);
