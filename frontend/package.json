@@ -14,6 +14,8 @@
     "react": "^18.0.0",
     "react-awesome-button": "^6.5.1",
     "react-dom": "^18.0.0",
+    "react-dropzone": "^14.2.0",
+    "react-dropzone-uploader": "^2.11.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-tinder-card": "^1.4.5",

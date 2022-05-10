@@ -71,21 +71,20 @@ var addCategoryToList = (categoryName, subCategories) => {
 // This method adds a category to the product.
 var addCategoryToProduct = (productID, categoryName) => {
     // Add the category to the list of categories of the product
-    const categoryRef = ref(database, 'products/' + productID + '/categories');
-    const newCategoryRef = push(categoryRef)
-    set(newCategoryRef, {
-        categoryName: categoryName
-    })
+    const categoryRef = ref(database, 'products/' + productID + '/category');
+    set(categoryRef, categoryName)
+    // const newCategoryRef = push(categoryRef)
+    // set(newCategoryRef, {
+    //     categoryName: categoryName
+    // })
 
     // Add the product id to the list of product ids of the category
     var category_to_ids = getCategoryIDs()
     var categoryID = category_to_ids.get(categoryName)
 
-    const categoryRef2 = ref(database, 'categories/' + categoryID + '/productIDs');
-    const newCategoryRef2 = push(categoryRef2)
-    set(newCategoryRef2, {
-        productID: productID
-    })
+    const categoryRef2 = ref(database, 'categories/' + categoryID + '/productIDs/' + productID);
+    // const newCategoryRef2 = push(categoryRef2)
+    set(categoryRef2, productID)
     console.log("Added category to product")
 }
 
@@ -118,18 +117,14 @@ var addSubCategoryToProduct = (productID, categoryName, subCategoryName) => {
     // Add the sub-category to the list of subcategories under the category of the product
     let subCategoryID = getSubCategoryIDs().get(subCategoryName)
 
-    const subCategoryRef = ref(database, 'products/' + productID + '/sub-categories')
-    const newSubCategoryRef = push(subCategoryRef)
-    set(newSubCategoryRef, {
-        subCategoryName: subCategoryName
-    })
+    const subCategoryRef = ref(database, 'products/' + productID + '/sub-category')
+    // const newSubCategoryRef = push(subCategoryRef)
+    set(subCategoryRef, subCategoryName)
 
     // Add the product id to the list of product ids of the sub-category
-    const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID + '/productIDs');
-    const newSubCategoryRef2 = push(subCategoryRef2)
-    set(newSubCategoryRef2, {
-        productID: productID
-    })
+    const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID + '/productIDs/' + productID);
+    // const newSubCategoryRef2 = push(subCategoryRef2)
+    set(subCategoryRef2, productID)
     console.log("Added subcategory to product")
 }
 
@@ -185,18 +180,14 @@ var addTagToList = (tagName) => {
 var addTagToProduct = (productID, tagName) => {
     // Add the tag to the list of tags of the product
     var tagID = getTagIDS().get(tagName)
-    const tagRef = ref(database, 'products/' + productID + '/tags')
-    const newTagRef = push(tagRef)
-    set(newTagRef, {
-        tagName: tagName
-    })
+    const tagRef = ref(database, 'products/' + productID + '/tags/' + tagID)
+    // const newTagRef = push(tagRef)
+    set(tagRef, tagName)
 
     // Add the product id to the list of product ids of the tag
-    const tagRef2 = ref(database, 'tags/' + tagID + '/productIDs');
-    const newTagRef2 = push(tagRef2)
-    set(newTagRef2, {
-        productID: productID
-    })
+    const tagRef2 = ref(database, 'tags/' + tagID + '/productIDs/' + productID);
+    // const newTagRef2 = push(tagRef2)
+    set(tagRef2, productID)
     console.log("Added tag to product")
 }
 
@@ -272,13 +263,13 @@ document.querySelector('#product-register').addEventListener("click", () => {
     validateForm();
 })
 document.querySelector('#product-add-category').addEventListener("click", () => {
-    addCategoryToProduct(3, "Room Decor")
+    addCategoryToProduct("3", "Room Decor")
 })
 document.querySelector('#product-add-sub-category').addEventListener("click", () => {
-    addSubCategoryToProduct(3, "Room Decor", "Posters")
+    addSubCategoryToProduct("2", "Room Decor", "Lights")
 })
 document.querySelector('#product-add-tag').addEventListener("click", () => {
-    addTagToProduct(3, "Custom")
+    addTagToProduct("2", "Lightly Used")
 })
 document.querySelector('#product-add-liked').addEventListener("click", () => {
     modifyNumLiked("1", 1)
