@@ -1,0 +1,10 @@
+target/
+.mvn-classpath
+.classpath
+../../term-project-cyu63-mdonoso-sliu176-tlamlert-tzhang96-yliu401/backend/.idea/
+**.DS_Store**
+.settings/org.eclipse.m2e.core.prefs
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.core.resources.prefs
+.project
+.settings/org.eclipse.jdt.ui.prefs
