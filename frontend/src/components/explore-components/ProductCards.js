@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react'
+import { useNavigate } from "react-router-dom";
 
 // Component Imports
 import TinderCard from "react-tinder-card";
@@ -67,6 +68,7 @@ function ProductCards() {
     const [lastDirection, setLastDirection] = useState()
     // used for outOfFrame closure
     const currentIndexRef = useRef(currentIndex)
+    const navigate = useNavigate()
 
     const childRefs = useMemo(
         () =>
@@ -91,7 +93,7 @@ function ProductCards() {
         updateCurrentIndex(index - 1)
     }
 
-    const outOfFrame = (name, idx) => {
+    const outOfFrame = (dir, name, idx) => {
         console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current)
         // handle the case in which go back is pressed before card goes outOfFrame
         currentIndexRef.current >= idx && childRefs[idx].current.restoreCard()
@@ -100,10 +102,9 @@ function ProductCards() {
         // during latest swipes. Only the last outOfFrame event should be considered valid
 
         // if swipe was right, go to "/product/product-name"
-        if (lastDirection === 'right') {
-            window.location.href = `/product/${name}`
+        if (dir === 'right') {
+            navigate(`/product/${name}`)
         }
-        
     }
 
     const swipe = async (dir) => {
@@ -132,7 +133,7 @@ function ProductCards() {
                         // update current index when card is swiped
                         onSwipe={(dir) => swiped(dir, product.name, index)}
                         // when card leaves screen, update current index
-                        onCardLeftScreen={() => outOfFrame(product.name, index)}
+                        onCardLeftScreen={(dir) => outOfFrame(dir, product.name, index)}
                         // only allow swiping left or right
                         preventSwipe={['up', 'down']}
                     >
