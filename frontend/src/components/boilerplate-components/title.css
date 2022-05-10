@@ -1,0 +1,27 @@
+.boilerplate-title {
+    display: flex;
+    background: #F3F7FF;    
+    color: #80acff;
+    filter: drop-shadow(3px 3px 0px #dfeaff);
+
+    /* Alternative styling to match xButton - con: looks old-fashioned */
+    /* background: #f4f4f4; */
+    /* color: black; */
+    /* filter: drop-shadow(1px 3px 0px rgb(160, 160, 160)); */
+
+    font-size: 2vw;
+    border-radius: 14px;
+    justify-content: center;
+    margin: 0 5px;
+    width: 24vw;
+    height: 5vw;    
+    -webkit-box-decoration-break: clone;
+    -moz-background-inline-policy: clone;
+    box-decoration-break: clone;
+}
+
+.boilerplate-title div {
+    display: flex;
+    align-items: center;
+    height: 5vw;
+}

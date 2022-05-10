@@ -6,7 +6,11 @@
   <!-- groupId is used to identify the organization -->
   <groupId>edu.brown.cs</groupId>
   <!-- artifactId is used to name the specific project -->
+<<<<<<< HEAD
   <artifactId>sprint3</artifactId>
+=======
+  <artifactId>marketplace</artifactId>
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
   <!-- type of file you want to output -->
   <packaging>jar</packaging>
   <!-- Version of your project -->
@@ -20,6 +24,15 @@
   <!-- Dependencies section for libraries put all of your libraries in here -->
   <dependencies>
 
+<<<<<<< HEAD
+=======
+    <dependency>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>8.1.0</version>
+    </dependency>
+
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
     <!--
         jopt-simple is a command line parser.
         https://pholser.github.io/jopt-simple/.
@@ -40,6 +53,7 @@
       <version>4.13</version>
     </dependency>
 
+<<<<<<< HEAD
     <dependency>
       <groupId>com.vaadin.external.google</groupId>
       <artifactId>android-json</artifactId>
@@ -47,6 +61,8 @@
       <scope>compile</scope>
     </dependency>
 
+=======
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
     <!--
         Hamcrest is used for creating assertion tests in junit.
         https://github.com/hamcrest/JavaHamcrest.
@@ -58,7 +74,11 @@
     </dependency>
 
     <!--
+<<<<<<< HEAD
         Simple Logging Facade for java.java.java is a logging tool for debugging.
+=======
+        Simple Logging Facade for Java is a logging tool for debugging.
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
         https://www.slf4j.org/.
     -->
     <dependency>
@@ -84,12 +104,15 @@
       <version>28.2-jre</version>
     </dependency>
 
+<<<<<<< HEAD
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>4.0.0</version>
     </dependency>
 
+=======
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
     <!--
         Google GSON is a library for serialization/deserialization of JSON.
         https://github.com/google/gson.
@@ -100,6 +123,7 @@
       <version>2.8.6</version>
     </dependency>
 
+<<<<<<< HEAD
     <dependency>
       <groupId>io.github.bonigarcia</groupId>
       <artifactId>webdrivermanager</artifactId>
@@ -107,6 +131,8 @@
       <scope>test</scope>
     </dependency>
 
+=======
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
     <!--
         Spark is a web framework for java.
         http://sparkjava.com/.
@@ -136,6 +162,14 @@
       <artifactId>sqlite-jdbc</artifactId>
       <version>3.30.1</version>
     </dependency>
+<<<<<<< HEAD
+=======
+    <dependency>
+      <groupId>com.vaadin.external.google</groupId>
+      <artifactId>android-json</artifactId>
+      <version>0.0.20131108.vaadin1</version>
+    </dependency>
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
   </dependencies>
 
   <!-- Build section -->
@@ -179,7 +213,11 @@
 
 
 
+<<<<<<< HEAD
       <!-- Maven compiler plugin for compiling java.java.java 11 -->
+=======
+      <!-- Maven compiler plugin for compiling Java 11 -->
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -272,7 +310,11 @@
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>2.7</version>
         <configuration>
+<<<<<<< HEAD
           <!-- Until it uses BCEL 6.0, details breaks on java.java.java 11 -->
+=======
+          <!-- Until it uses BCEL 6.0, details breaks on Java 11 -->
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
           <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
           <!-- jetty related locations can't be found, just skip. -->
           <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
@@ -333,6 +375,7 @@
           spotbugs plugin to highlight possible code errors.
           https://spotbugs.readthedocs.io/en/latest/maven.html.
       -->
+<<<<<<< HEAD
 <!--      <plugin>-->
 <!--        <groupId>com.github.spotbugs</groupId>-->
 <!--        <artifactId>spotbugs-maven-plugin</artifactId>-->
@@ -347,6 +390,22 @@
 <!--          <threshold>Low</threshold>-->
 <!--        </configuration>-->
 <!--      </plugin>-->
+=======
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>3.1.12.2</version>
+        <configuration>
+          <!--
+              Enable analysis which takes more memory but finds more bugs.
+              If you run out of memory, change the value to 'Low'.
+          -->
+          <effort>Max</effort>
+          <!-- Report all bugs (other values are medium and max) -->
+          <threshold>Low</threshold>
+        </configuration>
+      </plugin>
+>>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
 
       <!--
           jacoco creates a "coverage" report, so you can see what

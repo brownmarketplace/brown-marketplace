@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import Explore from './pages/Explore';
+import BoilerplatePage from './pages/BoilerplatePage'
+import ProfilePage from './pages/ProfilePage';
+import AddListing from './pages/AddListing';
+import ProductPage from './pages/ProductPage';
+import CategoryPage from './pages/CategoryPage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css'
+import ExploreApi from './Explore-api';
+import GoogleAuth from './backend/google';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <GoogleAuth/>
+      <Routes>
+        <Route path="/" element={<BoilerplatePage />} />
+        {/* <Route path="/explore" element={<Explore />} /> */}
+        <Route path="/profile" element={<ProfilePage />}>
+          <Route path=":username" element={<ProfilePage />} />
+        </Route>
+        <Route path="/sell" element={<AddListing />} />
+        <Route path="/product/:productId" element={<ProductPage />} />
+        <Route path="/category" element={<CategoryPage />} >
+          <Route path=":category" element={<CategoryPage />} >
+            <Route path=":subcategory" element={<CategoryPage />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

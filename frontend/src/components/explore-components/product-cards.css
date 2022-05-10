@@ -1,0 +1,83 @@
+.swiper-container {
+    /* Center on page */
+    margin: 0 auto;
+    /* Center on screen */
+    position: absolute;
+}
+
+.product-card {
+    /* position: relative; */
+    width: 415px;
+    background-color: #FFEFD7;
+    /* padding: 20px; */
+    /* Styling proportionate to viewport */
+    /* background-size: cover;
+    background-position: center; */
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+.swipe {
+    /* Stack the cards on top of each other */
+    position: absolute;
+}
+
+.product-card > .price {
+    /* position: absolute;
+    right: 10px;
+    top: 10px;
+    color: white; */
+    right: 0px;
+    top: 20px;
+    position: absolute;
+    display: flex;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px 0px 0px 5px;
+    align-items: center;
+    justify-content: center;
+    background: #7fadff;
+}
+
+.product-buttons {
+    margin: 20px;
+    display: flex;
+    position: fixed;
+    /* Center */
+    justify-content: center;
+    width: 30%;
+    bottom: 3vh;
+    justify-content: space-evenly;
+}
+
+/* Override MUI boxshadow */
+.product-buttons .MuiIconButton-root {
+    background-color: white;
+    box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.30) !important;
+}
+  
+.left {
+    padding: 1.5rem !important;
+    color: #ec5e6f !important;
+}
+
+.repeat {
+    padding: 1.5rem !important;
+    color: #f5b748 !important;
+}
+
+.bookmark {
+    padding: 1.5rem !important;
+    color: #62b4f9 !important;
+}
+
+.right {
+    padding: 1.5rem !important;
+    color: #76e2b3 !important;
+}

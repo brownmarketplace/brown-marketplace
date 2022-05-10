@@ -1,21 +1,16 @@
 package edu.brown.cs.student.main;
 
-//import edu.brown.cs.student.REPL.REPL;
-//import edu.brown.cs.student.commands.Runners.APIRunner;
-//import edu.brown.cs.student.commands.Runners.BloomFilterRunner;
-//import edu.brown.cs.student.commands.Runners.DBRunner;
-//import edu.brown.cs.student.commands.Runners.KDTreeRunner;
-//import edu.brown.cs.student.commands.Runners.RecommenderRunner;
-//import edu.brown.cs.student.commands.Runners.StarsRunner;
-//import joptsimple.OptionParser;
-//import joptsimple.OptionSet;
+import edu.brown.cs.student.main.dbProxy.dbProxy;
+import edu.brown.cs.student.main.server.Server;
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
 
 /**
  * The Main class of our project. This is where execution begins.
+ *
  */
-public final class Main {
 
-  // use port 4567 by default when running server
+public final class Main {
   private static final int DEFAULT_PORT = 4567;
 
   /**

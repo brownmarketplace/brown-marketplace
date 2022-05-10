@@ -1,0 +1,14 @@
+.wish-list-header {
+    margin-top: 10px;
+    font-size: 26px;
+    color: #cd8c8c;
+}
+
+.wishlist-items {
+    background: rgba(255, 227, 227, 0.5);
+    height: 15vw;
+    width: 15vw;
+    margin-top: 1vw;
+    margin-right: 4vw;
+    border-radius: 10px;
+}
