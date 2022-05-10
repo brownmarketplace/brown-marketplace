@@ -11,6 +11,7 @@ import joptsimple.OptionSet;
  */
 
 public final class Main {
+
   private static final int DEFAULT_PORT = 4567;
 
   /**
@@ -28,52 +29,19 @@ public final class Main {
     this.args = args;
   }
 
-  /**
-   * The java.main method of the program, this method
-   * creates a new CSVReader object which
-   * initializes the REPL.
-   */
   private void run() {
-    // set up parsing of command line flags
-//    OptionParser parser = new OptionParser();
-//
-//    // "./run --gui" will start a web server
-//    parser.accepts("gui");
-//
-//    // use "--port <n>" to specify what port on which the server runs
-//    parser.accepts("port").withRequiredArg().ofType(Integer.class)
-//        .defaultsTo(DEFAULT_PORT);
-//
-//    OptionSet options = parser.parse(args);
-//    if (options.has("gui")) {
-//      runSparkServer((int) options.valueOf("port"));
-//    }
+	  
+    OptionParser parser = new OptionParser();
+    parser.accepts("gui");
+    parser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(DEFAULT_PORT);
 
-    System.out.println("Hello world");
+    OptionSet options = parser.parse(args);
 
-    // instantiate REPL
-//    REPL repl = new REPL();
-//    // add commands
-//    repl.addRunner(new StarsRunner());
-//    repl.addRunner(new BloomFilterRunner());
-//    repl.addRunner(new KDTreeRunner());
-//    repl.addRunner(new DBRunner());
-//    repl.addRunner(new APIRunner());
-//    repl.addRunner(new RecommenderRunner());
-//    // start REPL
-//    repl.run();
+    if (options.has("gui")) {
+      dbProxy proxy = new dbProxy();
+      Server server = new Server(proxy);
+      server.runSparkServer((int) options.valueOf("port"));
+    }
   }
 
-//  /**
-//   * Starts a web server on the specified port.
-//   *
-//   * @param port the port on which the server will run
-//   */
-//  private void runSparkServer(int port) {
-//    // set port to run the server on
-//    Spark.port(port);
-//
-//    // specify location of static resources (HTML, CSS, JS, images, etc.)
-//    Spark.externalStaticFileLocation("src/java.main/resources/static");
-//  }
 }

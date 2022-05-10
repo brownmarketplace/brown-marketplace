@@ -1,11 +1,7 @@
 target/
 .mvn-classpath
 .classpath
-<<<<<<< HEAD
-../../term-project-cyu63-mdonoso-sliu176-tlamlert-tzhang96-yliu401/backend/.idea/
-=======
 .idea/
->>>>>>> 4716fc74bdba6d27de8d91825f393e26d7a0bac0
 **.DS_Store**
 .settings/org.eclipse.m2e.core.prefs
 .settings/org.eclipse.jdt.core.prefs
