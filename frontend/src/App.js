@@ -15,7 +15,7 @@ const App = () => {
     <GoogleAuth/>
       <Routes>
         <Route path="/" element={<BoilerplatePage />} />
-        {/* <Route path="/explore" element={<Explore />} /> */}
+        <Route path="/explore" element={<Explore />} />
         <Route path="/profile" element={<ProfilePage />}>
           <Route path=":username" element={<ProfilePage />} />
         </Route>

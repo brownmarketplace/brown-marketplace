@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 
 // Component Imports
-// import TinderCard from "react-tinder-card";
+import TinderCard from "react-tinder-card";
 
 // CSS Import
 import './product-cards.css'
