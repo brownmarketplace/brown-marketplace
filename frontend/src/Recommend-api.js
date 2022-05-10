@@ -17,10 +17,11 @@ function RecommendApi() {
             setExplore(response.data['result']);
             console.log(response.data)
         })
-        .catch(e => console.log(e))
+        .catch(e => console.log("Erroring"))
     
     return (
         <div>
+            {console.log("here")}
             {React.createElement('p', {}, explore)}
         </div>
     );

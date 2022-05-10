@@ -4,8 +4,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import edu.brown.cs.student.Recommender.RecommenderSystem;
-import edu.brown.cs.student.Structures.Product;
+import edu.brown.cs.student.main.Recommender.RecommenderSystem;
+import edu.brown.cs.student.main.Structures.Product;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

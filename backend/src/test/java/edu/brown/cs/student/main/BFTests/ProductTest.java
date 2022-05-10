@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.BFTests;
 
 import com.google.common.annotations.VisibleForTesting;
-import edu.brown.cs.student.Structures.Product;
+import edu.brown.cs.student.main.Structures.Product;
 import org.junit.Test;
 
 import java.util.ArrayList;
