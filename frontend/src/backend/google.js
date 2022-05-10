@@ -57,13 +57,6 @@ function GoogleAuth() {
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
             />
-
-            <GoogleLogout
-                clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
-                buttonText="Logout"
-                onLogoutSuccess={()=>console.log("success")}
-                onFailure={responseGoogle}
-            />
         </div>
       );
 }
