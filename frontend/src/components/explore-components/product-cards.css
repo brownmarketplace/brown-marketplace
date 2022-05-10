@@ -45,13 +45,13 @@
     background: #7fadff;
 }
 
-
-    
-
 .product-buttons {
     margin: 20px;
     display: flex;
     position: fixed;
+    /* Center */
+    justify-content: center;
+    width: 30%;
     bottom: 3vh;
     justify-content: space-evenly;
 }
@@ -63,21 +63,21 @@
 }
   
 .left {
-    padding: 2rem !important;
+    padding: 1.5rem !important;
     color: #ec5e6f !important;
 }
 
 .repeat {
-    padding: 2rem !important;
+    padding: 1.5rem !important;
     color: #f5b748 !important;
 }
 
 .bookmark {
-    padding: 2rem !important;
+    padding: 1.5rem !important;
     color: #62b4f9 !important;
 }
 
 .right {
-    padding: 2rem !important;
+    padding: 1.5rem !important;
     color: #76e2b3 !important;
 }
