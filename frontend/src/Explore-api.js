@@ -6,16 +6,16 @@ function ExploreApi() {
 
     const [explore, setExplore] = useState("")
 
-    const config = {
+    const getConfig = {
         headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin":"*"
         },
     };
 
-    // Fetch the data from backend
+    // Fetch the recommended result from backend
     const exploreUrl = "http://127.0.0.1:4567/explore"
-    axios.get(exploreUrl, config)
+    axios.get(exploreUrl, getConfig)
         .then((response) => {
             console.log("recommendation loaded successfully");
             setExplore(response.data['result']);

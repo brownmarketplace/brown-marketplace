@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react'
 
 // Component Imports
-import TinderCard from "react-tinder-card";
+// import TinderCard from "react-tinder-card";
 
 // CSS Import
 import './product-cards.css'

@@ -2,6 +2,8 @@ package edu.brown.cs.student.main.server;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import org.json.JSONException;
+import org.json.JSONObject;
 import edu.brown.cs.student.main.dbProxy.dbProxy;
 import spark.Request;
 import spark.Response;
@@ -43,6 +45,8 @@ public class Server {
 
     // Put Routes Here
     Spark.get("/explore", new ExploreHandler());
+    Spark.post("/recommend", new RecommendHandler());
+
     Spark.init();
   }
 
@@ -87,4 +91,36 @@ public class Server {
       return gson.toJson(ImmutableMap.of("result", resBody));
     }
   }
+
+  /**
+   * Attempt to update a row in a table.
+   */
+  private class RecommendHandler implements Route {
+    @Override
+    public String handle(Request req, Response res) {
+      //initiate db
+      Gson gson = new Gson();
+
+      JSONObject reqJson;
+      String id;
+
+      try {
+        // Parse the request's body
+        reqJson = new JSONObject(req.body());
+        id = reqJson.getString("user");
+      } catch (JSONException e) {
+        res.status(500);
+        Map<String, String> error = ImmutableMap.of("error", "JSON is in the wrong format");
+        return gson.toJson(error);
+      }
+
+      System.out.println(id);
+
+//      _proxy.retrieve("users/" + id);
+
+      Map<String, String> success = ImmutableMap.of("result", "user id successfully found!");
+      return gson.toJson(success);
+    }
+  }
+
 }
