@@ -6,6 +6,7 @@ import Title from '../boilerplate-components/Title'
 import ProfilePageButton from '../boilerplate-components/ProfilePageButton'
 import SearchBar from '../explore-components/SearchBar'
 import ProductCards from './ProductCards'
+import {GoogleLogin, GoogleLogout, useGoogleLogin} from 'react-google-login';
 
 // Image Imports
 import hamburger from "../../images/hamburger.png"
@@ -42,7 +43,22 @@ import Divider from '@mui/material/Divider';
 
 function ExploreHeader(props) {
     // State for Categories Drawer
-    const [drawerOpen, toggleDrawer] = useState(false)  
+    const [drawerOpen, toggleDrawer] = useState(false) 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    // State for login
+    const responseGoogle = (response) => {
+        // make the props.showprofilepage true
+        setIsLoggedIn(true)
+        console.log(response);
+    }
+
+    const logoutState = () => {
+        // make the props.showprofilepage true
+        setIsLoggedIn(false);
+    }
+
+    // react-router-dom for navigation
     const navigate = useNavigate()
 
     // create a list of dummy categories
@@ -324,14 +340,47 @@ function ExploreHeader(props) {
 
         {/* If showProfile is true, render ProfilePageButton.
         Else, render empty div to keep the header layout consistent (flex: space-around). */}
-        { props.showProfile && <ProfilePageButton userPicture={pfp}/> }
-        { !props.showProfile && <div/> } 
+        {/* { props.showProfile && <ProfilePageButton userPicture={pfp}/> } */}
+
+        {/* if not logged in, show GoogleLogin, else show ProfilePage */}
+        {console.log(isLoggedIn)}
+        {isLoggedIn ? <div>
+        <ProfilePageButton userPicture={pfp}/>
+        <GoogleLogout
+            clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
+            buttonText="Logout"
+            onLogoutSuccess={()=>setIsLoggedIn(false)}
+            // onFailure={responseGoogle}
+        />
+    </div> : <div>
+            <GoogleLogin
+                clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn={true}
+            />
+        </div>}
+        {/* { !props.showProfile && <div>
+            <GoogleLogin
+                clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn={true}
+            />
+        </div> } */}
+        {/* { props.showProfile && <ProfilePageButton userPicture={pfp}/> }  */}
+
+    
     </div>
     )
 }
 
 ExploreHeader.defaultProps = {
-  showProfile: true
+  showProfile: false
 }
 
 export default ExploreHeader

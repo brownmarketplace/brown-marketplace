@@ -12,7 +12,7 @@ import GoogleAuth from './backend/google';
 const App = () => {
   return (
     <BrowserRouter>
-    <GoogleAuth/>
+    {/* <GoogleAuth/> */}
     <RecommendApi/>
       <Routes>
         <Route path="/" element={<BoilerplatePage />} />
