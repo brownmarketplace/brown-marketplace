@@ -40,13 +40,14 @@ function ProductPage(props) {
     console.log('reading from firebase database')
     onValue(ref(database, 'products/' + productId), (snapshot) => {
       const product = snapshot.val()
+      console.log(product)
       // setProductInfo(product)
       if (product != null) {
         setProductInfo(
           {
             // category: product.categories,
-            category: "Animal",
-            subcategory: "Bird",
+            category: product.category,
+            subcategory: product['sub-category'],
             title: product.name,
             price: product.price,
             description: product.description,
