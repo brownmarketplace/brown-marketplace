@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class dbProxy {
 
@@ -66,15 +64,16 @@ public class dbProxy {
       public void onDataChange(DataSnapshot dataSnapshot) {
         List<String> listings = (List<String>) dataSnapshot.child("listings").getValue();
         System.out.println(listings);
+        System.out.println(listings.get(1));
 //        Object listings = dataSnapshot.child("listings").getValue();
 //        System.out.println(listings);
         Object likes = dataSnapshot.child("liked-items").getValue();
         System.out.println(likes);
 
         System.out.println("hi");
-        List<String> liked = (List<String>) dataSnapshot.child("liked-items").getValue();
-        System.out.println(liked);
-        System.out.println("hii");
+//        List<String> liked = (List<String>) dataSnapshot.child("liked-items").getValue();
+//        System.out.println(liked);
+//        System.out.println("hii");
       }
 
       @Override
@@ -94,16 +93,9 @@ public class dbProxy {
     productRef.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-        ArrayList<Map<String, Object>> productList = new ArrayList<>();
         Iterator<DataSnapshot> products = dataSnapshot.getChildren().iterator();
         while (products.hasNext()) {
-//          System.out.println(products.next().getValue());
-          Map<String, Object> info = (Map<String, Object>) products.next().getValue();
-          System.out.println(info);
-          System.out.println(info.get("sold"));
-          if (Objects.equals(info.get("sold"), "No")){
-
-          }
+          System.out.println(products.next().getValue());
         }
       }
 
