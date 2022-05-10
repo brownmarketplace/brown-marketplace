@@ -15,45 +15,82 @@ import Storefront from '../components/category-components/Storefronts'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography';
 
+// database
+import { ref, get, onValue, query, orderByChild, equalTo, child }
+  from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import database from '../backend/Database/DBInstance'
+
 function CategoryPage(props) {
   const { category, subcategory } = useParams()
   const [tag, setTag] = useState(null)
   const [tags, setTags] = useState([])
-  const [productIDs, setProductIDs] = useState([])
-  // const [products, setProducts] = useState([])
+  // const [productIDs, setProductIDs] = useState([])
+  const [products, setProducts] = useState([])
 
   const breadcrumbs = category
     ? (subcategory
-      ? [{ title: "Home", href: "/home" },
+      ? [{ title: "All Products", href: "/category" },
       { title: category, href: `/category/${category}` },
       { title: subcategory, href: null }]
-      : [{ title: "Home", href: "/home" },
+      : [{ title: "All Products", href: "/category" },
       { title: category, href: null }])
-    : [{ title: "Home", href: "/home" }]
+    : [{ title: "All Products", href: "/category" }]
 
   const title = category
     ? (subcategory
       ? subcategory
       : category)
-    : 'Explore'
+    : 'All Products'
 
   // read from database
   const getTags = () => {
     setTags(props.tags)
   }
 
-  const getProducts = () => {
-    setProductIDs(props.productIDs)
+  const getAllProducts = () => {
+    onValue(ref(database, 'products'), (snapshot) => {
+      snapshot.forEach(function (childSnapshot) {
+        // setProductIDs(props.productIDs)
+        console.log(childSnapshot.val())
+        console.log("getting all products")
+      })
+    })
+  }
+
+  const getProductsByCategory = () => {
+    onValue(ref(database, 'products'), (snapshot) => {
+      console.log(snapshot.val())
+      
+      // snapshot.forEach(function (childSnapshot) {
+      //   // setProductIDs(props.productIDs)
+      //   console.log(childSnapshot.val())
+      //   console.log("getting cat products")
+      // })
+    })
+  }
+
+  const getProductsBySubcategory = () => {
+    onValue(ref(database, 'products'), (snapshot) => {
+      snapshot.forEach(function (childSnapshot) {
+        // setProductIDs(props.productIDs)
+        console.log(childSnapshot.val())
+        console.log("getting sub products")
+      })
+    })
   }
 
   useEffect(() => {
     getTags()
-    getProducts()
+    category
+    ? (subcategory
+      ? getProductsBySubcategory()
+      : getProductsByCategory())
+    : getAllProducts()
   }, []);
 
   // filter products by tag maybe?
   useEffect(() => {
-    
+
   }, [tag])
 
   return (
@@ -79,7 +116,8 @@ function CategoryPage(props) {
             {tags.map((item, idx) => <Tag key={idx} tagName={item} setTag={setTag} />)}
           </Grid>
           <Grid item>
-            <Storefront productIDs={productIDs} />
+            {/* <Storefront productIDs={productIDs} /> */}
+            <Storefront />
           </Grid>
         </Grid>
 
