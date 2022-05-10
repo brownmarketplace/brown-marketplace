@@ -1,8 +1,5 @@
 package edu.brown.cs.student.Recommender.bloomFilter;
 
-import edu.brown.cs.student.bloomFilter.BFInsertable;
-import edu.brown.cs.student.bloomFilter.BloomFilter;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.AbstractQueue;
 import java.util.ArrayList;
@@ -86,7 +83,7 @@ public class BFRecommender<T extends BFInsertable> {
 
   /**
    * This method generates recommendations of k similar products to a given product. It prints
-   * out the IDs of the k recommended products to the terminal.
+   * out the IDs of the k recommended products.
    *
    * @param iD  the product ID
    * @param k   the number of similar products to be recommended

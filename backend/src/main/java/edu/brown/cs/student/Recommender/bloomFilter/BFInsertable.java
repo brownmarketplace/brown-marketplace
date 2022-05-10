@@ -1,7 +1,5 @@
 package edu.brown.cs.student.Recommender.bloomFilter;
 
-import edu.brown.cs.student.bloomFilter.BloomFilter;
-
 import java.util.List;
 
 /**

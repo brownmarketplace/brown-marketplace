@@ -1,4 +1,4 @@
-package java.edu.brown.cs.student.Structures;
+package edu.brown.cs.student.Structures;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ public class User {
 
   public User(int id, String userName, String actualName, String profilePicUrl, String email,
               String classYear, List<Integer> listings, List<Integer> referrals,
-              List<Integer> wishList, List<Integer> likedItems, List<Integer> bookmarkedItems,
-              List<Integer> dislikedItems, List<Integer> purchasedItems) {
+              List<Integer> wishList, List<Integer> likedItems, List<Integer> dislikedItems,
+              List<Integer> purchasedItems) {
     this.id = id;
     this.userName = userName;
     this.actualName = actualName;

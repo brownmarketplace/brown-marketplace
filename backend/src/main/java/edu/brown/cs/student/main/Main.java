@@ -1,4 +1,4 @@
-package java.edu.brown.cs.student.main;
+package edu.brown.cs.student.main;
 
 //import edu.brown.cs.student.REPL.REPL;
 //import edu.brown.cs.student.commands.Runners.APIRunner;
