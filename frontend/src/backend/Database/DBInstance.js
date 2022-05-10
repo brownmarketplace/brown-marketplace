@@ -24,3 +24,4 @@ const analytics = getAnalytics(app);
 
 // Get a reference to the database service
 const database = getDatabase(app);
+export default database;
