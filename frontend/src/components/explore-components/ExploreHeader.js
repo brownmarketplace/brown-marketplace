@@ -55,32 +55,32 @@ function ExploreHeader(props) {
                 {
                     name: "Plushies",
                     icon: "",
-                    path: "/category/plushies"
+                    path: "/category/room-decor/plushies"
                 },
                 {
                     name: "Plants",
                     icon: "",
-                    path: "/category/plants"
+                    path: "/category/room-decor/plants"
                 },
                 {
                     name: "Lights",
                     icon: "",
-                    path: "/category/lights"
+                    path: "/category/room-decor/lights"
                 },
                 {
                     name: "Posters",
                     icon: "",
-                    path: "/category/posters"
+                    path: "/category/room-decor/posters"
                 },
                 {
                     name: "Tapestries", 
                     icon: "",
-                    path: "/category/tapestries"
+                    path: "/category/room-decor/tapestries"
                 },
                 {
                     name: "Other Room Decor",
                     icon: "",
-                    path: "/category/other-room-decor"
+                    path: "/category/room-decor/other-room-decor"
                 },
             ]
         },
@@ -92,33 +92,33 @@ function ExploreHeader(props) {
                 {
                     name: "Tops",
                     icon: "",
-                    path: "/category/tops"
+                    path: "/category/clothing/tops"
                 },
                 {
                     name: "Pants",
                     icon: "",
-                    path: "/category/pants"
+                    path: "/category/clothing/pants"
 
                 },
                 {
                     name: "Dresses",
                     icon: "",
-                    path: "/category/dresses"
+                    path: "/category/clothing/dresses"
                 },
                 {
                     name: "Shoes",
                     icon: "",
-                    path: "/category/shoes"
+                    path: "/category/clothing/shoes"
                 },
                 {
                     name: "Coats and Jackets", 
                     icon: "",
-                    path: "/category/coats-and-jackets"
+                    path: "/category/clothing/coats-and-jackets"
                 },
                 {
                     name: "Other Clothing",
                     icon: "",
-                    path: "/category/other-clothing"
+                    path: "/category/clothing/other-clothing"
                 },
             ]
         },
@@ -130,27 +130,27 @@ function ExploreHeader(props) {
                 {
                     name: "Chairs",
                     icon: "",
-                    path: "/category/chairs"
+                    path: "/category/clothing/chairs"
                 },
                 {
                     name: "Couches",
                     icon: "",
-                    path: "/category/couches"
+                    path: "/category/clothing/couches"
                 },
                 {
                     name: "Mattresses",
                     icon: "",
-                    path: "/category/mattresses"
+                    path: "/category/clothing/mattresses"
                 },
                 {
                     name: "Pillows",
                     icon: "",
-                    path: "/category/pillows"
+                    path: "/category/clothing/pillows"
                 },
                 {
                     name: "Other Furniture",
                     icon: "",
-                    path: "/category/other-furniture"
+                    path: "/category/clothing/other-furniture"
                 },
             ]
         },
@@ -162,27 +162,27 @@ function ExploreHeader(props) {
                 {
                     name: "Necklace",
                     icon: "",
-                    path: "/category/necklace"
+                    path: "/category/clothing/necklace"
                 },
                 {
                     name: "Bracelet",
                     icon: "",
-                    path: "/category/bracelet"
+                    path: "/category/clothing/bracelet"
                 },
                 {
                     name: "Earrings",
                     icon: "",
-                    path: "/category/earrings"
+                    path: "/category/clothing/earrings"
                 },
                 {
                     name: "Hair Clips",
                     icon: "",
-                    path: "/category/hair-clips"
+                    path: "/category/clothing/hair-clips"
                 },
                 {
                     name: "Other Accessories", 
                     icon: "",
-                    path: "/category/other-accessories"
+                    path: "/category/clothing/other-accessories"
                 },
             ]
         },
@@ -194,27 +194,27 @@ function ExploreHeader(props) {
                 {
                     name: "Textbooks",
                     icon: "",
-                    path: "/category/textbooks"
+                    path: "/category/books/textbooks"
                 },
                 {
                     name: "Fiction",
                     icon: "",
-                    path: "/category/fiction"
+                    path: "/category/books/fiction"
                 },
                 {
                     name: "Nonfiction",
                     icon: "",
-                    path: "/category/nonfiction"
+                    path: "/category/books/nonfiction"
                 },
                 {
                     name: "Poetry",
                     icon: "",
-                    path: "/category/poetry"
+                    path: "/category/books/poetry"
                 },
                 {
                     name: "Other Books", 
                     icon: "",
-                    path: "/category/other-books"
+                    path: "/category/books/other-books"
                 },
             ]
         },
@@ -226,22 +226,22 @@ function ExploreHeader(props) {
                 {
                     name: "Speakers",
                     icon: "",
-                    path: "/category/speakers"
+                    path: "/category/electronics-and-related/speakers"
                 },
                 {
                     name: "Phones",
                     icon: "",
-                    path: "/category/phones"
+                    path: "/category/electronics-and-related/phones"
                 },
                 {
                     name: "Devices",
                     icon: "",
-                    path: "/category/devices"
+                    path: "/category/electronics-and-related/devices"
                 },
                 {
                     name: "Other Electronics & Related",
                     icon: "",
-                    path: "/category/other-electronics-and-related"
+                    path: "/category/electronics-and-related/other-electronics-and-related"
                 },
             ]
         },
@@ -253,7 +253,7 @@ function ExploreHeader(props) {
                 {
                     name: "Miscellaneous",
                     icon: "",
-                    path: "/category/miscellaneous"
+                    path: "/category/other/miscellaneous"
                 },
             ]
         }
