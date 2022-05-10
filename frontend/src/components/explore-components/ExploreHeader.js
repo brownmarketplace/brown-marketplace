@@ -288,7 +288,7 @@ function ExploreHeader(props) {
         open={drawerOpen} 
         onClose={() => toggleDrawer(false)}>
             <div>
-                <Typography ml={2} mt={2} variant="h4" className="drawer-title">
+                <Typography ml={2} mt={2} variant="h5" className="drawer-title">
                     Categories
                 </Typography>
             </div>
@@ -297,7 +297,7 @@ function ExploreHeader(props) {
                 {/*Create Buttons for each category */}
                 {categories.map(category => (
                     <><ListItemButton key={category.name}
-                    onClick={() => handleClick(category.path)}>
+                    onClick={() => navigate(category.path)}>
                         <ListItemIcon>
                             {category.icon}
                         </ListItemIcon>
@@ -308,7 +308,7 @@ function ExploreHeader(props) {
                         {category.subcats.map(subcat =>  (
                             <ListItemButton sx={{ pl: 4 }} key={subcat.name} 
                             //  On click, go to the subcategory page
-                            onClick={() => handleClick(subcat.path)}>
+                            onClick={() => navigate(subcat.path)}>
                                 <ListItemIcon>
                                     {subcat.icon}
                                 </ListItemIcon>
