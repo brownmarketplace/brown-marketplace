@@ -44,7 +44,7 @@ public class Server {
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
     // Put Routes Here
-    Spark.get("/explore", new ExploreHandler());
+//    Spark.get("/explore", new ExploreHandler());
     Spark.post("/recommend", new RecommendHandler());
 
     Spark.init();
@@ -74,15 +74,6 @@ public class Server {
         res.status(500);
         return gson.toJson(ImmutableMap.of("error", "database not loaded into backend"));
       }
-//
-//      // Will hold all of the table names
-//      List<String> tableNames = new ArrayList<>();
-//      ResultSet tables = proxy.executeSQLStatement(
-//          "SELECT name FROM sqlite_master WHERE type='table'");
-//      while (tables.next()) {
-//        tableNames.add(tables.getString(1));
-//      }
-
       List<String> resBody = new ArrayList<>();
       resBody.add("apple");
       resBody.add("orange");
@@ -118,8 +109,12 @@ public class Server {
 
 //      _proxy.retrieve("users/" + id);
 
-      Map<String, String> success = ImmutableMap.of("result", "user id successfully found!");
-      return gson.toJson(success);
+      List<String> resBody = new ArrayList<>();
+      resBody.add("apple");
+      resBody.add("orange");
+      resBody.add("peach");
+
+      return gson.toJson(ImmutableMap.of("result", resBody));
     }
   }
 
