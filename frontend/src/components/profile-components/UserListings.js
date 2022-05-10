@@ -1,4 +1,5 @@
 import React from 'react'
+import SoldButton from './SoldButton'
 import './user-listings.css'
 
 function UserListings(props) {
@@ -8,6 +9,7 @@ function UserListings(props) {
     return (
       <div className="user-listing-item">
         {props.prodId}
+        <SoldButton />
       </div>
     )
   }

@@ -7,7 +7,7 @@ function AddDetails() {
 
   return (
     <div className="add-details">
-        <div>
+        <div style={{ marginTop: "24px" }}>
             <Chip 
             label="Item Details" 
             className="details-chip" 

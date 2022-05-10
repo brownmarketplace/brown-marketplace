@@ -11,6 +11,13 @@ var readAllProductsInfo = () => {
     })
 }
 
+// This method returns the data of a particular product in the database by the product ID.
+var readOneProductInfo = (productID) => {
+    onValue(ref(database, 'products/' + productID), (snapshot) => {
+        console.log(snapshot.val())
+    })
+}
+
 // This method filters the product data by a specific category.
 var filterProductsByCategory = (category) => {
     var products = []
@@ -52,6 +59,9 @@ var filterProductsByTags = (tag) => {
 
 document.querySelector('#product-readAll').addEventListener("click", () => {
     readAllProductsInfo();
+})
+document.querySelector('#product-read').addEventListener("click", () => {
+    readOneProductInfo("3");
 })
 document.querySelector('#product-readFiltered').addEventListener("click", () => {
     filterProductsByCategory("Room Decor");
