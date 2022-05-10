@@ -75,9 +75,9 @@ public class Server {
         return gson.toJson(ImmutableMap.of("error", "database not loaded into backend"));
       }
       List<String> resBody = new ArrayList<>();
-      resBody.add("apple");
-      resBody.add("orange");
-      resBody.add("peach");
+      resBody.add("1");
+      resBody.add("3");
+      resBody.add("5");
 
       return gson.toJson(ImmutableMap.of("result", resBody));
     }
