@@ -281,7 +281,7 @@ function ExploreHeader(props) {
         <Drawer className='drawer'
         PaperProps={{
             sx: {
-              backgroundColor: "#FFEFD7"
+              backgroundColor: "#FFEFD7",
             }
           }}
         anchor="left" 
