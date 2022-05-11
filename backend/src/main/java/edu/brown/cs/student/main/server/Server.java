@@ -2,6 +2,8 @@ package edu.brown.cs.student.main.server;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import edu.brown.cs.student.main.instances.Products;
+import edu.brown.cs.student.main.instances.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 import edu.brown.cs.student.main.dbProxy.dbProxy;
@@ -105,9 +107,13 @@ public class Server {
         return gson.toJson(error);
       }
 
-      System.out.println(id);
+//      System.out.println(id);
 
-//      _proxy.retrieve("users/" + id);
+      User user = _proxy.getUser("u1");
+      Products products = _proxy.getProduct();
+//      System.out.println(user.getListings());
+//      System.out.println(products.getProducts());
+//      System.out.println(products.getProducts().get("p1").get("date"));
 
       List<String> resBody = new ArrayList<>();
       resBody.add("apple");

@@ -7,36 +7,31 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import edu.brown.cs.student.main.instances.Products;
 import edu.brown.cs.student.main.instances.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class dbProxy {
 
+  private User _user;
+  private Products _products;
+
   public dbProxy(){
+    _user = new User();
+    _products = new Products();
+
     try {
       this.connectDb();
     } catch (IOException e) {
       System.out.println("Error: cannot connect to the firebase");
     }
 
-    //this.getUser("1");
-    this.getProducts();
-//    this.retrieve("products");
-    //this.retrieve("users");
-    // TODO: parsing
-    // Product: product name, list of tags, category
-    // User: list of likes
-
-    // products: an interface/class with methods like getName, getID, etc
-    // input: arraylist of products
-    // output: arraylist of product ids
+    this.queryProducts();
   }
 
   private void connectDb() throws IOException {
@@ -50,11 +45,8 @@ public class dbProxy {
     FirebaseApp.initializeApp(options);
   }
 
-  // User:
-  // /users/1/liked-item
-  // /users/1/listings
 
-  public void getUser(String id){
+  public void queryUser(String id){
     DatabaseReference userRef = FirebaseDatabase.getInstance()
         .getReference("/users/" + id);
 
@@ -62,18 +54,10 @@ public class dbProxy {
     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-        List<String> listings = (List<String>) dataSnapshot.child("listings").getValue();
-        System.out.println(listings);
-        System.out.println(listings.get(1));
-//        Object listings = dataSnapshot.child("listings").getValue();
-//        System.out.println(listings);
-        Object likes = dataSnapshot.child("liked-items").getValue();
-        System.out.println(likes);
-
-        System.out.println("hi");
-//        List<String> liked = (List<String>) dataSnapshot.child("liked-items").getValue();
-//        System.out.println(liked);
-//        System.out.println("hii");
+        Set<String> purchased = ((Map<String, Object>) dataSnapshot.child("purchased-items").getValue()).keySet();
+        Set<String> likes = ((Map<String, Object>) dataSnapshot.child("liked-items").getValue()).keySet();
+        _user.setListings(purchased);
+        _user.setLikes(likes);
       }
 
       @Override
@@ -84,7 +68,7 @@ public class dbProxy {
   }
 
 
-  public void getProducts(){
+  public void queryProducts(){
     DatabaseReference productRef = FirebaseDatabase.getInstance()
         .getReference("/products");
 
@@ -93,10 +77,14 @@ public class dbProxy {
     productRef.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-        Iterator<DataSnapshot> products = dataSnapshot.getChildren().iterator();
-        while (products.hasNext()) {
-          System.out.println(products.next().getValue());
-        }
+//        System.out.println(dataSnapshot.getValue());
+        Map<String, Map<String, Object>> products =
+            (Map<String, Map<String, Object>>) dataSnapshot.getValue();
+        _products.setProducts(products);
+//        Iterator<DataSnapshot> products = dataSnapshot.getChildren().iterator();
+//        while (products.hasNext()) {
+//          System.out.println(products.next().getValue());
+//        }
       }
 
       @Override
@@ -104,5 +92,14 @@ public class dbProxy {
         System.out.println(error);
       }
     });
+  }
+
+  public User getUser(String id){
+    this.queryUser(id);
+    return _user;
+  }
+
+  public Products getProduct(){
+    return _products;
   }
 }

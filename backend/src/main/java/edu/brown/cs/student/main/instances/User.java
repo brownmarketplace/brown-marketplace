@@ -1,15 +1,28 @@
 package edu.brown.cs.student.main.instances;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 public class User {
 
-//  public static ArrayList<String> _liked;
-  public static ArrayList<String> _listings;
+  private Set<String> _purchased;
+  private Set<String> _likes;
 
-  public User(ArrayList<String> listings) {
-//    _liked = liked;
-    _listings = listings;
-    System.out.println(_listings);
+  public User() {
+  }
+
+  public void setListings(Set<String> purchased){
+    _purchased = purchased;
+  }
+
+  public void setLikes(Set<String> likes){
+    _likes = likes;
+  }
+
+  public Set<String> getLikes(){
+    return _likes;
+  }
+
+  public Set<String> getPurchased(){
+    return _purchased;
   }
 }
