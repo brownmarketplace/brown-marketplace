@@ -29,44 +29,46 @@ import { ref, set, get, onValue, query, orderByChild, equalTo, child }
 import database from '../../backend/Database/DBInstance'
 
 function ProductCards() {
-    const [products, setProducts] = useState([]);    
+    const sample = [{
+        name: 'Frog',
+        pictures: 'https://www.aquariumofpacific.org/images/exhibits/Magnificent_Tree_Frog_900.jpg',
+        description: 'Cool animal that lives on Earth',
+        price: '$10'
+    },
+    {
+        name: 'Flamingo',
+        pictures: 'https://i.pinimg.com/564x/e6/33/34/e63334958361afd77c65e8cdf0ad62ac.jpg',
+        description: 'Cool animal that lives on Earth',
+        price: '$10'
+    },
+    {
+        name: 'Fox',
+        pictures: 'https://i.pinimg.com/564x/ef/49/37/ef493790714a037449d62d3f2a6fccbf.jpg',
+        description: 'Cool animal that lives on Earth',
+        price: '$10'
+    },
+    {
+        name: 'Seal',
+        pictures: 'https://i.pinimg.com/564x/0e/81/6e/0e816e21de2f3ed8f12b3b8426a35bac.jpg',
+        description: 'Cool animal that lives on Earth and is really cute!',
+        price: '$10'
+    },
+    {
+        name: 'Meerkat',
+        pictures: 'https://i.pinimg.com/564x/94/d4/ac/94d4acf4890271614be7018e7f035efe.jpg',
+        description: 'Cool animal that lives on Earth',
+        price: '$10000'
+    },
+    {
+        name: 'Mushroom Crochets',
+        pictures: 'https://embed.filekitcdn.com/e/pZVtAQBFhqs4ADp3yRAnVv/6J9S2S2ez1N2JNCkbxCfKt',
+        description: 'Cool animal that lives on Earth',
+        price: '$10'
+    }]
 
-    // {
-    //     name: 'Frog',
-    //     url: 'https://www.aquariumofpacific.org/images/exhibits/Magnificent_Tree_Frog_900.jpg',
-    //     description: 'Cool animal that lives on Earth',
-    //     price: '$10'
-    // },
-    // {
-    //     name: 'Flamingo',
-    //     url: 'https://i.pinimg.com/564x/e6/33/34/e63334958361afd77c65e8cdf0ad62ac.jpg',
-    //     description: 'Cool animal that lives on Earth',
-    //     price: '$10'
-    // },
-    // {
-    //     name: 'Fox',
-    //     url: 'https://i.pinimg.com/564x/ef/49/37/ef493790714a037449d62d3f2a6fccbf.jpg',
-    //     description: 'Cool animal that lives on Earth',
-    //     price: '$10'
-    // },
-    // {
-    //     name: 'Seal',
-    //     url: 'https://i.pinimg.com/564x/0e/81/6e/0e816e21de2f3ed8f12b3b8426a35bac.jpg',
-    //     description: 'Cool animal that lives on Earth and is really cute!',
-    //     price: '$10'
-    // },
-    // {
-    //     name: 'Meerkat',
-    //     url: 'https://i.pinimg.com/564x/94/d4/ac/94d4acf4890271614be7018e7f035efe.jpg',
-    //     description: 'Cool animal that lives on Earth',
-    //     price: '$10000'
-    // },
-    // {
-    //     name: 'Mushroom Crochets',
-    //     url: 'https://embed.filekitcdn.com/e/pZVtAQBFhqs4ADp3yRAnVv/6J9S2S2ez1N2JNCkbxCfKt',
-    //     description: 'Cool animal that lives on Earth',
-    //     price: '$10'
-    // },
+    const [products, setProducts] = useState([]);  
+    // const [products, setProducts] = useState(sample);  
+    const [pids, setPids] = useState(["p3", "p6", "p1"])  
 
     const [currentIndex, setCurrentIndex] = useState(products.length - 1)
     const [lastDirection, setLastDirection] = useState()
@@ -76,13 +78,34 @@ function ProductCards() {
 
     const getAllProducts = () => {
         console.log("Calling getAllProds")
-        onValue(ref(database, 'products'), (snapshot) => {
-            snapshot.forEach(function (childSnapshot) {
-                // populate the products array with the data from the database
-                // console.log(childSnapshot.val())
-                setProducts([...products, childSnapshot.val()])
-            })
-        })
+
+        // clear current products
+        setProducts([])
+        
+        const unsubscribe = onValue(ref(database, 'products'), (snapshot) => {
+            // save all of the childSnapshots in an array
+            let i = 1;
+            snapshot.forEach(childSnapshot => {
+                console.log(`childSnapshot ${i}`)
+                setProducts(products => [...products, childSnapshot.val()])
+                i++;
+            })      
+        });
+
+        return () => {
+            // unsubscribe / cleanup from the database
+            unsubscribe();
+        }
+    }
+
+    const getRecommendations = () => {
+        console.log("Calling getRecommendations")
+        // loop through the pids array to get the product IDs from the database, and set products to the products array
+        pids.forEach(pid => {
+            onValue(ref(database, 'products/' + pid), (snapshot) => {
+                setProducts(products => [...products, snapshot.val()])
+            }
+        )})
     }
 
     const addToLikedList = (userID, productID) => {
@@ -93,16 +116,14 @@ function ProductCards() {
 
     useEffect(() => {
         getAllProducts()
-        console.log("These are the products")
-        console.log(products)
+        // getRecommendations()
     }, [])
 
     const childRefs = useMemo(
-        () =>
+        () => 
         Array(products.length)
             .fill(0)
-            .map((i) => React.createRef()),
-        []
+            .map((i) => React.createRef())
     )
 
     const updateCurrentIndex = (val) => {
@@ -122,12 +143,10 @@ function ProductCards() {
 
     const outOfFrame = (dir, name, idx) => {
         console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current)
+        
         // handle the case in which go back is pressed before card goes outOfFrame
         currentIndexRef.current >= idx && childRefs[idx].current.restoreCard()
-        // TODO: when quickly swipe and restore multiple times the same card,
-        // it happens multiple outOfFrame events are queued and the card disappear
-        // during latest swipes. Only the last outOfFrame event should be considered valid
-
+      
         // if swipe was right, go to "/product/product-name"
         if (dir === 'right') {
             navigate(`/product/${name}`)
@@ -156,7 +175,7 @@ function ProductCards() {
                         ref={childRefs[index]}
                         className="swipe"
                         // give each card a unique key, efficient to re-render
-                        key={product.name}
+                        // key={product.name}
                         // update current index when card is swiped
                         onSwipe={(dir) => swiped(dir, product.name, index)}
                         // when card leaves screen, update current index
