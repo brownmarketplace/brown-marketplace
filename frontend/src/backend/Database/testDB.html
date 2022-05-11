@@ -7,6 +7,8 @@
 <body>
     <p class="title">Database Test</p>
     <!--testing user database-->
+    Path<br />
+    <input type="text" id="user-path" /><br />
     ID<br />
     <input type="text" id="form-id" /><br />
     Username<br />
@@ -31,13 +33,13 @@
     <br />
     <button id="listing">Add Listing</button>
     <button id="referral">Add Referral</button>
-<!--    <button id="wishList">Add to Wish List</button>-->
     <button id="likedList">Add to Liked List</button>
-<!--    <button id="bookmarkedList">Add to Bookmarked List</button>-->
-<!--    <button id="dislikedList">Add to Disliked List</button><br />-->
+    <button id="purchased">Add to Purchased List</button>
     <br />
 
     <!--testing product database-->
+    Path<br />
+    <input type="text" id="path-id" /><br />
     ID<br />
     <input type="text" id="product-id" /><br />
     Name<br />
@@ -60,10 +62,6 @@
     <input type="text" id="sold-description" /><br />
     Number of Likes <br />
     <input type="text" id="liked-description" /><br />
-<!--    Number of Bookmarks <br />-->
-<!--    <input type="text" id="bookmarked-description" /><br />-->
-<!--    Number of Dislikes <br />-->
-<!--    <input type="text" id="disliked-description" /><br />-->
     <br />
 
 <!--    buttons for product database-->
@@ -84,10 +82,6 @@
     <button id="product-update">Update</button>
     <button id="product-update-sold">Update Sold Flag</button>
     <button id="product-delete">Delete</button><br />
-
-<!--    buttons for user authentication-->
-<!--    <button id="user-signin">Sign In</button>-->
-<!--    <button id="user-signout">Sign Out</button>-->
 
     <script type="module" src="DBInstance.js"></script>
     <script type="module" src="UserDB/ReadDB.js"></script>

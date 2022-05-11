@@ -1,4 +1,4 @@
-import { getDatabase, ref, get, onValue, query, orderByChild, equalTo, child }
+import { getDatabase, ref, get, onValue, query, orderByChild, orderByKey, equalTo, child }
     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
 
@@ -19,41 +19,41 @@ var readOneProductInfo = (productID) => {
 }
 
 // This method filters the product data by a specific category.
-var filterProductsByCategory = (category) => {
-    var products = []
-    const q = query(ref(database, 'categories'), orderByChild('categoryName'), equalTo(category));
+var filterProductsByCategory = (categoryName) => {
+    const q = query(ref(database, 'products'), orderByChild('category'), equalTo(categoryName));
     get(q).then(snapshot => {
+        let products = []
         snapshot.forEach(function(childSnapshot) {
-            products = childSnapshot.val().productIDs
-            console.log("Product IDs filtered by category: ")
-            console.log(products)
+            products.push(childSnapshot.val().id)
         })
+        console.log(products)
     })
 }
 
 // This method filters the product data by a specific sub-category.
-var filterProductsBySubcategory = (subCategory) => {
-    var products = []
-    const q = query(ref(database, 'sub-categories'), orderByChild('subCategoryName'), equalTo(subCategory));
+var filterProductsBySubcategory = (subCategoryName) => {
+    const q = query(ref(database, 'products'), orderByChild('sub-category'), equalTo(subCategoryName));
     get(q).then(snapshot => {
+        let products = []
         snapshot.forEach(function(childSnapshot) {
-            products = childSnapshot.val().productIDs
-            console.log("Product IDs filtered by sub-category: ")
-            console.log(products)
+            products.push(childSnapshot.val().id)
         })
+        console.log(products)
     })
 }
 
 // This method filters the product data by a tag.
-var filterProductsByTags = (tag) => {
-    var products = []
-    const q = query(ref(database, 'tags'), orderByChild('tagName'), equalTo(tag));
+var filterProductsByTags = (tagName) => {
+    const q = query(ref(database, 'tags'), orderByKey(), equalTo(tagName));
     get(q).then(snapshot => {
+        let products = []
         snapshot.forEach(function(childSnapshot) {
-            products = childSnapshot.val().productIDs
-            console.log("Product IDs filtered by tag: ")
-            console.log(products)
+            var key = Object.keys(childSnapshot.val());
+            for (let i = 0; i < key.length; i++) {
+                products.push(key[i])
+            }
         })
+        console.log(products)
     })
 }
 
@@ -67,8 +67,8 @@ document.querySelector('#product-readFiltered').addEventListener("click", () => 
     filterProductsByCategory("Room Decor");
 })
 document.querySelector('#product-readFilteredSubCategory').addEventListener("click", () => {
-    filterProductsBySubcategory("Posters");
+    filterProductsBySubcategory("Lights");
 })
 document.querySelector('#product-readFilteredTag').addEventListener("click", () => {
-    filterProductsByTags("Gift");
+    filterProductsByTags("Used");
 })

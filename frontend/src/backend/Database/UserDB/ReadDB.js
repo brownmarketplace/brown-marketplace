@@ -10,7 +10,6 @@ const database = getDatabase();
 var readOneUserInfo = (id) => {
     onValue(ref(database, 'users/' + id), (snapshot) => {
         console.log(snapshot.val())
-        // console.log(snapshot.val().id);
     })
 }
 
@@ -18,7 +17,6 @@ var readAllUserInfo = () => {
     onValue(ref(database, 'users'), (snapshot) => {
         snapshot.forEach(function(childSnapshot) {
             console.log(childSnapshot.val())
-            // console.log(childSnapshot.val().id);
         })
     })
 }
