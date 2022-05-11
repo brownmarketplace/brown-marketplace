@@ -24,49 +24,49 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 // Database Imports
-import { ref, get, onValue, query, orderByChild, equalTo, child }
+import { ref, set, get, onValue, query, orderByChild, equalTo, child }
   from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
-import database from '../backend/Database/DBInstance'
+import database from '../../backend/Database/DBInstance'
 
 function ProductCards() {
-    const [products, setProducts] = useState([
-        {
-            name: 'Frog',
-            url: 'https://www.aquariumofpacific.org/images/exhibits/Magnificent_Tree_Frog_900.jpg',
-            description: 'Cool animal that lives on Earth',
-            price: '$10'
-        },
-        {
-            name: 'Flamingo',
-            url: 'https://i.pinimg.com/564x/e6/33/34/e63334958361afd77c65e8cdf0ad62ac.jpg',
-            description: 'Cool animal that lives on Earth',
-            price: '$10'
-        },
-        {
-            name: 'Fox',
-            url: 'https://i.pinimg.com/564x/ef/49/37/ef493790714a037449d62d3f2a6fccbf.jpg',
-            description: 'Cool animal that lives on Earth',
-            price: '$10'
-        },
-        {
-            name: 'Seal',
-            url: 'https://i.pinimg.com/564x/0e/81/6e/0e816e21de2f3ed8f12b3b8426a35bac.jpg',
-            description: 'Cool animal that lives on Earth and is really cute!',
-            price: '$10'
-        },
-        {
-            name: 'Meerkat',
-            url: 'https://i.pinimg.com/564x/94/d4/ac/94d4acf4890271614be7018e7f035efe.jpg',
-            description: 'Cool animal that lives on Earth',
-            price: '$10000'
-        },
-        {
-            name: 'Mushroom Crochets',
-            url: 'https://embed.filekitcdn.com/e/pZVtAQBFhqs4ADp3yRAnVv/6J9S2S2ez1N2JNCkbxCfKt',
-            description: 'Cool animal that lives on Earth',
-            price: '$10'
-        },
-        ]);    
+    const [products, setProducts] = useState([]);    
+
+    // {
+    //     name: 'Frog',
+    //     url: 'https://www.aquariumofpacific.org/images/exhibits/Magnificent_Tree_Frog_900.jpg',
+    //     description: 'Cool animal that lives on Earth',
+    //     price: '$10'
+    // },
+    // {
+    //     name: 'Flamingo',
+    //     url: 'https://i.pinimg.com/564x/e6/33/34/e63334958361afd77c65e8cdf0ad62ac.jpg',
+    //     description: 'Cool animal that lives on Earth',
+    //     price: '$10'
+    // },
+    // {
+    //     name: 'Fox',
+    //     url: 'https://i.pinimg.com/564x/ef/49/37/ef493790714a037449d62d3f2a6fccbf.jpg',
+    //     description: 'Cool animal that lives on Earth',
+    //     price: '$10'
+    // },
+    // {
+    //     name: 'Seal',
+    //     url: 'https://i.pinimg.com/564x/0e/81/6e/0e816e21de2f3ed8f12b3b8426a35bac.jpg',
+    //     description: 'Cool animal that lives on Earth and is really cute!',
+    //     price: '$10'
+    // },
+    // {
+    //     name: 'Meerkat',
+    //     url: 'https://i.pinimg.com/564x/94/d4/ac/94d4acf4890271614be7018e7f035efe.jpg',
+    //     description: 'Cool animal that lives on Earth',
+    //     price: '$10000'
+    // },
+    // {
+    //     name: 'Mushroom Crochets',
+    //     url: 'https://embed.filekitcdn.com/e/pZVtAQBFhqs4ADp3yRAnVv/6J9S2S2ez1N2JNCkbxCfKt',
+    //     description: 'Cool animal that lives on Earth',
+    //     price: '$10'
+    // },
 
     const [currentIndex, setCurrentIndex] = useState(products.length - 1)
     const [lastDirection, setLastDirection] = useState()
@@ -74,7 +74,28 @@ function ProductCards() {
     const currentIndexRef = useRef(currentIndex)
     const navigate = useNavigate()
 
+    const getAllProducts = () => {
+        console.log("Calling getAllProds")
+        onValue(ref(database, 'products'), (snapshot) => {
+            snapshot.forEach(function (childSnapshot) {
+                // populate the products array with the data from the database
+                // console.log(childSnapshot.val())
+                setProducts([...products, childSnapshot.val()])
+            })
+        })
+    }
 
+    const addToLikedList = (userID, productID) => {
+        console.log("Added to liked list")
+        const likedListRef = ref(database, 'users/' + userID + '/liked-items/' + productID);
+        set(likedListRef, "true")
+    }
+
+    useEffect(() => {
+        getAllProducts()
+        console.log("These are the products")
+        console.log(products)
+    }, [])
 
     const childRefs = useMemo(
         () =>
@@ -147,8 +168,8 @@ function ProductCards() {
                             <CardMedia
                                 component="img"
                                 height="300"
-                                image={product.url}
-                                alt="green iguana"
+                                image={product.pictures}
+                                alt="product picture"
                             />
                             <CardContent className='product-card'>
                                 <Typography gutterBottom variant="h5" component="div">
@@ -177,7 +198,7 @@ function ProductCards() {
                 <IconButton style={{ backgroundColor: !canGoBack && '#c3c4d3' }} className="repeat" onClick={() => goBack()}>
                     <ReplayIcon fontSize="large" />
                 </IconButton>
-                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="bookmark" onClick={() => alert("Boomarked!")}>
+                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}>
                     <StarRateIcon fontSize="large" />
                 </IconButton>
                 <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="right" onClick={() => swipe('right')}>
