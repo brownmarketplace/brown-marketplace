@@ -5,7 +5,7 @@ const database = getDatabase();
 /*
   This method reads the information of a particular user in the database. It listens for changes and uses
   onValue() to observe events. This method is triggered once when the listener is attached and again every time the
-  data, including children, changes
+  data, including children, changes.
  */
 var readOneUserInfo = (id) => {
     onValue(ref(database, 'users/' + id), (snapshot) => {
@@ -29,23 +29,12 @@ var filterUsersByClassYear = (classYear) => {
     })
 }
 
-// This method reads the data of a specific user.
-var getSpecificUserData = (userID) => {
-    const q = query(ref(database, 'users/'), orderByChild('id'), equalTo(userID));
-    get(q).then(snapshot => {
-        console.log(snapshot.val())
-    })
-}
-
 document.querySelector('#read').addEventListener("click", () => {
-    readOneUserInfo(1);
+    readOneUserInfo("u3");
 })
 document.querySelector('#readAll').addEventListener("click", () => {
     readAllUserInfo();
 })
 document.querySelector('#readFiltered').addEventListener("click", () => {
     filterUsersByClassYear("sophomore");
-})
-document.querySelector('#readSpecificUser').addEventListener("click", () => {
-    getSpecificUserData("2");
 })

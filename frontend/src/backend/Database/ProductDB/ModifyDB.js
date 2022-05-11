@@ -217,16 +217,17 @@ var modifyNumLiked = (id, change) => {
             })
         })
     })
+    console.log("number of likes modified")
 }
 
 // This method toggles the sold flag.
 var updateSoldFlag = (id) => {
     const q = query(ref(database, 'products/'), orderByChild('id'), equalTo(id));
-    let currSoldFlag = "No";
+    let currSoldFlag = "false";
     get(q).then(snapshot => {
         snapshot.forEach(function(childSnapshot) {
             if (childSnapshot.val().sold === "No") {
-                currSoldFlag = "Yes";
+                currSoldFlag = "true";
             }
             update(ref(database, 'products/' + id), {
                 sold: currSoldFlag
@@ -248,9 +249,9 @@ document.querySelector('#product-add-tag').addEventListener("click", () => {
     addTagToProduct("p1", "Cute")
 })
 document.querySelector('#product-add-liked').addEventListener("click", () => {
-    modifyNumLiked("1", 1)
+    modifyNumLiked("p1", -1)
 })
 document.querySelector('#product-update-sold').addEventListener("click", () => {
-    updateSoldFlag("1")
+    updateSoldFlag("p1")
 })
 
