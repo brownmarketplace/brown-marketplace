@@ -27,7 +27,7 @@ public class FrontendStructureTest {
   @BeforeClass
   public static void setup() {
     try {
-      frontendPath = "http://localhost:3000/";
+      frontendPath = "http://localhost:3000/explore";
       WebDriverManager.chromedriver().setup();
       ChromeOptions options = new ChromeOptions();
       chrome = new ChromeDriver(options);
@@ -44,10 +44,8 @@ public class FrontendStructureTest {
    */
   @Test
   public void testTitle() {
-    WebElement title = chrome.findElement(By.className("title"));
-    assertEquals("Database Visualization", title.getText());
-    assertEquals("p", title.getTagName());
-    assertEquals("center", title.getCssValue("text-align"));
+    WebElement title = chrome.findElement(By.className("boilerplate-title"));
+    assertEquals("Brown Marketplace", title.getText());
     assertTrue(title.isDisplayed());
   }
 
