@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 
 // Component Imports
@@ -16,13 +16,17 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-
 // MUI Icons
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ReplayIcon from '@mui/icons-material/Replay';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+
+// Database Imports
+import { ref, get, onValue, query, orderByChild, equalTo, child }
+  from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import database from '../backend/Database/DBInstance'
 
 function ProductCards() {
     const [products, setProducts] = useState([
@@ -69,6 +73,8 @@ function ProductCards() {
     // used for outOfFrame closure
     const currentIndexRef = useRef(currentIndex)
     const navigate = useNavigate()
+
+
 
     const childRefs = useMemo(
         () =>
