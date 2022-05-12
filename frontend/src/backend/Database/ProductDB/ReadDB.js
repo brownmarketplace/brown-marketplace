@@ -1,8 +1,14 @@
+/*
+    This class handles reading the products in the database. It includes methods that read all the products,
+    read a product by its ID, filter the products by category, sub-category and tag.
+ */
 import { getDatabase, ref, get, onValue, query, orderByChild, orderByKey, equalTo, child }
     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
 
-// This method returns all the products' data in the database.
+/*
+    This method returns all the products' data in the database.
+ */
 var readAllProductsInfo = () => {
     onValue(ref(database, 'products'), (snapshot) => {
         snapshot.forEach(function(childSnapshot) {
@@ -11,14 +17,18 @@ var readAllProductsInfo = () => {
     })
 }
 
-// This method returns the data of a particular product in the database by the product ID.
+/*
+    This method finds and returns a product in the database by its ID.
+ */
 var readOneProductInfo = (productID) => {
     onValue(ref(database, 'products/' + productID), (snapshot) => {
         console.log(snapshot.val())
     })
 }
 
-// This method filters the product data by a specific category.
+/*
+    This method filters the products by a specific category.
+ */
 var filterProductsByCategory = (categoryName) => {
     const q = query(ref(database, 'products'), orderByChild('category'), equalTo(categoryName));
     get(q).then(snapshot => {
@@ -30,7 +40,9 @@ var filterProductsByCategory = (categoryName) => {
     })
 }
 
-// This method filters the product data by a specific sub-category.
+/*
+    This method filters the products by a specific sub-category.
+ */
 var filterProductsBySubcategory = (subCategoryName) => {
     const q = query(ref(database, 'products'), orderByChild('sub-category'), equalTo(subCategoryName));
     get(q).then(snapshot => {
@@ -42,7 +54,9 @@ var filterProductsBySubcategory = (subCategoryName) => {
     })
 }
 
-// This method filters the product data by a tag.
+/*
+    This method filters the products by a specific tag.
+ */
 var filterProductsByTags = (tagName) => {
     const q = query(ref(database, 'tags'), orderByKey(), equalTo(tagName));
     get(q).then(snapshot => {
