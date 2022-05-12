@@ -21,7 +21,7 @@ function RecommendApi() {
     
     return (
         <div>
-            {console.log("here")}
+            {/* {console.log("here")} */}
             {React.createElement('p', {}, explore)}
         </div>
     );

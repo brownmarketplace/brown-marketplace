@@ -286,7 +286,7 @@ function ExploreHeader(props) {
         <img src={hamburger} alt="categories" className="categories-button" onClick={() => toggleDrawer(true)} />
 
         <div>
-            <Title title={props.title} />
+            <Title className="title" title={props.title} />
             <div className="search-bar-container">
                 <SearchBar />
             </div>
