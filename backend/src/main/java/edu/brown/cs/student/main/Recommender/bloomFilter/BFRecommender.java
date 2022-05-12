@@ -14,7 +14,7 @@ import java.util.PriorityQueue;
  */
 public class BFRecommender<T extends BFInsertable> {
   private List<T> allProducts;
-  private int productID;
+  private String productID;
   private T targetProduct;
   private int numSimilarProducts;
   private final double falsePositiveRate = 0.1;
@@ -74,7 +74,7 @@ public class BFRecommender<T extends BFInsertable> {
    */
   public T findTargetProduct() {
     for (T s : this.allProducts) {
-      if (s.getId() == this.productID) {
+      if (s.getId().equals(this.productID)) {
         return s;
       }
     }
@@ -92,14 +92,14 @@ public class BFRecommender<T extends BFInsertable> {
    * @throws NoSuchAlgorithmException thrown when a particular cryptographic algorithm is requested
    * but is not available in the environment
    */
-  public List<Integer> generateRecommendations(int iD, int k, Comparator com)
+  public List<String> generateRecommendations(String iD, int k, Comparator com)
       throws NoSuchAlgorithmException {
     // set parameters
     this.productID = iD;
     this.numSimilarProducts = k;
     this.targetProduct = this.findTargetProduct();
     this.sortedProducts = new PriorityQueue<T>(this.allProducts.size(), com);
-    List<Integer> kSimilarProducts = new ArrayList<>();
+    List<String> kSimilarProducts = new ArrayList<>();
 
     // remove target product from the list of products
     this.allProducts.remove(this.targetProduct);

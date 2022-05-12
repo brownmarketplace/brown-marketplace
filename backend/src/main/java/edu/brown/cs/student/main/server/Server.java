@@ -2,8 +2,8 @@ package edu.brown.cs.student.main.server;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import edu.brown.cs.student.main.instances.Products;
-import edu.brown.cs.student.main.instances.User;
+import edu.brown.cs.student.main.Recommender.RecommenderSystem;
+import edu.brown.cs.student.main.Structures.Product;
 import org.json.JSONException;
 import org.json.JSONObject;
 import edu.brown.cs.student.main.dbProxy.dbProxy;
@@ -46,44 +46,11 @@ public class Server {
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
     // Put Routes Here
-//    Spark.get("/explore", new ExploreHandler());
     Spark.post("/recommend", new RecommendHandler());
 
     Spark.init();
   }
 
-
-  /**
-   * This Route handles the /tables GET request. It expects no req body and no URL parameters.
-   */
-  private class ExploreHandler implements Route {
-
-    /**
-     * Attempt to return a JSON object containing a list of names of the tables in the currently
-     * loaded database.
-     * @param req the request object, not used
-     * @param res the response object, not used
-     * @return Stringified JSON containing a "names" key corresponding to a list of strings,
-     *  or an error code if the database is not loaded.
-     */
-    @Override
-    public String handle(Request req, Response res) {
-
-      Gson gson = new Gson();
-      // if create_dp is null, then the database proxy has not yet been loaded, so we just
-      // return an error status.
-      if (_proxy == null) {
-        res.status(500);
-        return gson.toJson(ImmutableMap.of("error", "database not loaded into backend"));
-      }
-      List<String> resBody = new ArrayList<>();
-      resBody.add("1");
-      resBody.add("3");
-      resBody.add("5");
-
-      return gson.toJson(ImmutableMap.of("result", resBody));
-    }
-  }
 
   /**
    * Attempt to update a row in a table.
@@ -107,20 +74,24 @@ public class Server {
         return gson.toJson(error);
       }
 
-//      System.out.println(id);
+      ArrayList<Product> products = _proxy.getProduct();
+      RecommenderSystem recSys = new RecommenderSystem(products);
 
-      User user = _proxy.getUser("u1");
-      Products products = _proxy.getProduct();
-//      System.out.println(user.getListings());
+      ArrayList<Product> likedProducts = _proxy.getLiked(id);
+      List<String> recommendedProducts;
+//      if (likedProducts == null) {
+//        recommendedProducts = recSys.generateDefaultExploreRecommendations(5);
+//      } else {
+//        recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
+//      }
+      recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
+
+//      System.out.println(user.getPurchased());
 //      System.out.println(products.getProducts());
-//      System.out.println(products.getProducts().get("p1").get("date"));
+//      Map<String, Object> tags = (Map<String, Object>) products.getProducts().get("p1").get("tags");
+//      System.out.println(new ArrayList<String>(tags.keySet()));
 
-      List<String> resBody = new ArrayList<>();
-      resBody.add("apple");
-      resBody.add("orange");
-      resBody.add("peach");
-
-      return gson.toJson(ImmutableMap.of("result", resBody));
+      return gson.toJson(ImmutableMap.of("result", recommendedProducts));
     }
   }
 

@@ -31,7 +31,7 @@ public class RecommenderSystem {
    *
    * @return List of k most similar product recommendations for the target product
    */
-  public List<Integer> generateBFRecommendations(Product targetProduct, int k, double falsePosRate, int maxNum) {
+  public List<String> generateBFRecommendations(Product targetProduct, int k, double falsePosRate, int maxNum) {
     // create bloom filters for each product in the list
     for (Product product: this.productsList) {
       product.generateBF(falsePosRate, maxNum);
@@ -39,8 +39,8 @@ public class RecommenderSystem {
     // generate list of recommendations
     try {
       BFRecommender<Product> bfRecommender = new BFRecommender<>(this.productsList);
-      Integer productID = targetProduct.getId();
-      List<Integer> recommendedProducts = bfRecommender.generateRecommendations(productID, k,
+      String productID = targetProduct.getId();
+      List<String> recommendedProducts = bfRecommender.generateRecommendations(productID, k,
           new XNORSimilarity(targetProduct));
       return recommendedProducts;
     } catch (NoSuchAlgorithmException e) {
@@ -48,10 +48,10 @@ public class RecommenderSystem {
     }
   }
 
-  public List<Integer> generateDefaultExploreRecommendations(int numRecs) {
+  public List<String> generateDefaultExploreRecommendations(int numRecs) {
     List<Product> tempProducts = this.productsList;
     Collections.shuffle(tempProducts);
-    List<Integer> exploreRecommendations = new ArrayList<>();
+    List<String> exploreRecommendations = new ArrayList<>();
 
     for (int i = 0; i < numRecs; i++) {
       exploreRecommendations.add(tempProducts.get(i).getId());
@@ -60,26 +60,26 @@ public class RecommenderSystem {
     return exploreRecommendations;
   }
 
-  public List<Integer> generateRandomizedExploreRecommendations(int numRecs, int randFactor,
+  public List<String> generateRandomizedExploreRecommendations(int numRecs, int randFactor,
                                                       List<Product> likedProducts) {
     int numProducts = randFactor * numRecs;
-    List<Integer> recommendationPool = new ArrayList<>();
+    List<String> recommendationPool = new ArrayList<>();
     if (likedProducts.size() > numProducts) {
       for (int i = 0; i < likedProducts.size(); i++) {
-        int rec = this.generateBFRecommendations(likedProducts.get(i), 1, .2, 20).get(0);
+        String rec = this.generateBFRecommendations(likedProducts.get(i), 1, .2, 20).get(0);
         recommendationPool.add(rec);
       }
     } else {
       for (int j = 0; j < numRecs; j++) {
-        List<Integer> recs = this.generateBFRecommendations(likedProducts.get(j), 1, .2, 20);
+        List<String> recs = this.generateBFRecommendations(likedProducts.get(j), 1, .2, 20);
         for (int k = 0; k < randFactor; k++) {
-          int rec = recs.get(k);
+          String rec = recs.get(k);
           recommendationPool.add(rec);
         }
       }
     }
     Collections.shuffle(recommendationPool);
-    List<Integer> exploreRecommendations = new ArrayList<>();
+    List<String> exploreRecommendations = new ArrayList<>();
     for (int l = 0; l < numRecs; l++) {
       exploreRecommendations.add(recommendationPool.get(l));
     }
