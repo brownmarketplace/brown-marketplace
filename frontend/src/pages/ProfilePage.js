@@ -11,6 +11,8 @@ import './profile-page.css'
 
 function ProfilePage(props) {
   let params = useParams();
+
+  
   return (
     <div className="boilerplate">
         <BoilerplateHeader title={props.title} userPicture={props.pfp} showProfile="false"/>
@@ -21,7 +23,7 @@ function ProfilePage(props) {
                 </div>
                 <div>
                     <div className="username">
-                        blueno77 {/* {props.username} */}
+                        Nim Telson {/* {props.username} */}
                     </div>
                     <div>
                         <p className="user-info">nim_telson@brown.edu</p>
@@ -30,7 +32,7 @@ function ProfilePage(props) {
                         phoneNumber
                         location */}
                     </div>
-                    <div className="user-listing-and-referrals">
+                    <div className="user-listing">
                         <UserListings />
                     </div>
                 </div>
