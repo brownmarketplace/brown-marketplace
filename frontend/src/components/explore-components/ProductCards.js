@@ -117,7 +117,7 @@ function ProductCards() {
     useEffect(() => {
         getAllProducts()
         // getRecommendations()
-    }, [])
+    })
 
     const childRefs = useMemo(
         () => 
