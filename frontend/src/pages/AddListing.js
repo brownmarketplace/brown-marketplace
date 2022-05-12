@@ -25,8 +25,8 @@ function AddListing(props) {
         marginBottom: "30px"
     }
 
-    const newUserId = "u100"
-    const newProductId = "p100"
+    const newUserId = "u11"
+    const newProductId = "p11"
 
     const [formInputData, setFormInputData] = useState({
         productName:'',
@@ -55,8 +55,19 @@ function AddListing(props) {
         setFormInputData(NewInputValue);  
     }
 
+    const handleImgUrlChange = (event) => {
+
+        const inputFieldName = event.target.name;
+        let inputFieldValue = event.target.value;
+        if (typeof inputFieldValue === 'string') {
+            inputFieldValue = inputFieldValue.split(',')
+        }
+        
+        const NewInputValue = {...formInputData, [inputFieldName]: inputFieldValue}
+        setFormInputData(NewInputValue);
+    }
+
     const clearForm = (e) => {
-        console.log("inside clear form")
         const NewInputValue = {
             productName:'',
             productDesc: '',
@@ -73,14 +84,6 @@ function AddListing(props) {
         if (checkEmptyInput) {
             console.log(formInputData);
         }
-
-        // parse comma-separated product image urls - deal with this later
-        // const urls = formInputData.productImgUrls.split(",").map(item => item.trim());
-        // for (const url in urls) {
-        //     urlArr.push(url);
-        // }
-        // console.log("urlArr:")
-        // console.log(urlArr);
 
         validateForm();
 
@@ -141,7 +144,7 @@ function AddListing(props) {
         const tag = formInputData.productTags;
         const subcategory = formInputData.productSubcategory;
         const seller = newUserId;
-        const pictures = formInputData.productImgUrls;
+        const pictures = formInputData.productImgUrls.map(e => e.trim());
         const date = new Date().toLocaleString() + "";
     
         const sold = false;
@@ -180,10 +183,6 @@ function AddListing(props) {
     }
 
     var addCategoryAndSubCategoryToProduct = (productID, categoryName, subCategoryName) => {
-        console.log("inside addCategoryAndSubCategoryToProduct...")
-        console.log(productID)
-        console.log(categoryName)
-        console.log(subCategoryName)
 
         // Add the category to the product
         const categoryRef = ref(database, 'products/' + productID + '/category');
@@ -196,7 +195,6 @@ function AddListing(props) {
         // Add the product id to the list of product ids of the sub-category in the category
         const categoryRef2 = ref(database, 'categories/' + categoryName + '/' + subCategoryName + '/' + productID)
         set(categoryRef2, "true")
-        console.log("Added category to product")
     }
 
     var addTagToProduct = (productID, tagName) => {
@@ -207,7 +205,6 @@ function AddListing(props) {
         // Add the product id to the list of product ids of the tag
         const tagRef2 = ref(database, 'tags/' + tagName + '/' + productID);
         set(tagRef2, "true")
-        console.log("Added tag to product")
     }
 
     return (
@@ -236,7 +233,7 @@ function AddListing(props) {
                     />
                     <AddPhotos 
                         productImgUrls={formInputData.productImgUrls}
-                        handleInputChange={handleInputChange}
+                        handleInputChange={handleImgUrlChange}
                     />
                     <PublishListing
                         // userId={props.userId} // should be this
