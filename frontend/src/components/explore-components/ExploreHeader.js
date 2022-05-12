@@ -7,6 +7,7 @@ import ProfilePageButton from '../boilerplate-components/ProfilePageButton'
 import SearchBar from '../explore-components/SearchBar'
 import ProductCards from './ProductCards'
 import {GoogleLogin, GoogleLogout, useGoogleLogin} from 'react-google-login';
+// a variable that stores the categories and their respective MUI icon and subcategories
 import categories from "./categories"
 
 // Image Imports
@@ -31,6 +32,7 @@ import { ListItemIcon } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import ListItemButton from '@mui/material/ListItemButton'
 import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid'
 
 function ExploreHeader(props) {
     // State for Categories Drawer
@@ -117,15 +119,27 @@ function ExploreHeader(props) {
 
         {/* if not logged in, show GoogleLogin, else show ProfilePage */}
         {console.log(isLoggedIn)}
-        {isLoggedIn ? <div>
-        <ProfilePageButton userPicture={pfp}/>
-        <GoogleLogout
-            clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
-            buttonText="Logout"
-            onLogoutSuccess={()=>setIsLoggedIn(false)}
-            // onFailure={responseGoogle}
-        />
-    </div> : <div>
+        {isLoggedIn ? 
+        
+        // <Grid
+        // container
+        // xs={1}
+        // direction="column"
+        // justifyContent="center"
+        // alignItems="center"
+        // >
+            <div className='profile-container'>
+            <ProfilePageButton userPicture={pfp}/>
+            <GoogleLogout
+                clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
+                buttonText="Logout"
+                onLogoutSuccess={()=>setIsLoggedIn(false)}
+                // onFailure={responseGoogle}
+            />
+            </div>
+        /* </Grid> */
+    : 
+        <div>
             <GoogleLogin
                 clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
                 buttonText="Login"

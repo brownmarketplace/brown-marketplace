@@ -12,6 +12,13 @@
     width: 16rem;
 }
 
+.profile-container {
+    /*  stack items in colum */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .drawer {
     color: #FFEFD7;
 }
