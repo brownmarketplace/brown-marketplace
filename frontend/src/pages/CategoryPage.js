@@ -97,7 +97,7 @@ function CategoryPage(props) {
     <div className="boilerplate">
       <BoilerplateHeader title={"Brown Marketplace"} userPicture={props.pfp} />
       <div style={{ textAlign: 'center', marginTop: '30px' }}>
-
+        <h1>{props.userID}</h1>
         <Grid container direction="column" justifyContent="center" spacing={1} paddingLeft="10%" paddingRight="10%">
           <Grid item>
             <PageBreadcrumbs path={breadcrumbs} />

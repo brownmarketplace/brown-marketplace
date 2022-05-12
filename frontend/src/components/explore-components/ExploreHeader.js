@@ -39,18 +39,6 @@ function ExploreHeader(props) {
     const [drawerOpen, toggleDrawer] = useState(false) 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-    // State for login
-    const responseGoogle = (response) => {
-        // make the props.showprofilepage true
-        setIsLoggedIn(true)
-        console.log(response);
-    }
-
-    const logoutState = () => {
-        // make the props.showprofilepage true
-        setIsLoggedIn(false);
-    }
-
     // react-router-dom for navigation
     const navigate = useNavigate()
 
@@ -119,7 +107,7 @@ function ExploreHeader(props) {
         {/* { props.showProfile && <ProfilePageButton userPicture={pfp}/> } */}
 
         {/* if not logged in, show GoogleLogin, else show ProfilePage */}
-        {isLoggedIn ? 
+        {props.userID ? 
         
         // <Grid
         // container
@@ -133,7 +121,7 @@ function ExploreHeader(props) {
             <GoogleLogout
                 clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
                 buttonText="Logout"
-                onLogoutSuccess={()=>setIsLoggedIn(false)}
+                onLogoutSuccess={props.logoutState}
                 // onFailure={responseGoogle}
             />
         </div>
@@ -143,8 +131,8 @@ function ExploreHeader(props) {
             <GoogleLogin
                 clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
                 buttonText="Login"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
+                onSuccess={props.loginState}
+                onFailure={props.loginState}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
             />

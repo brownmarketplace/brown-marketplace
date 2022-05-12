@@ -15,6 +15,7 @@ function ProfilePage(props) {
   
   return (
     <div className="boilerplate">
+        {console.log("User ID from App", props.userID)}
         <BoilerplateHeader title={props.title} userPicture={props.pfp} showProfile="false"/>
         <div className="profile-contents">
             <div className="first-profile-section">
@@ -23,7 +24,7 @@ function ProfilePage(props) {
                 </div>
                 <div>
                     <div className="username">
-                        Nim Telson {/* {props.username} */}
+                        Nim Telson {props.userID}
                     </div>
                     <div>
                         <p className="user-info">nim_telson@brown.edu</p>
