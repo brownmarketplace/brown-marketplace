@@ -132,7 +132,7 @@ var updateSoldFlag = (id) => {
     let currSoldFlag = "false";
     get(q).then(snapshot => {
         snapshot.forEach(function(childSnapshot) {
-            if (childSnapshot.val().sold === "No") {
+            if (childSnapshot.val().sold === "false") {
                 currSoldFlag = "true";
             }
             update(ref(database, 'products/' + id), {
