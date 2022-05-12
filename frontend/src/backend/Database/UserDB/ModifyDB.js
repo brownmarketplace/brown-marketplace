@@ -1,4 +1,4 @@
-import { getDatabase, ref, set, update, remove, push } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import { getDatabase, ref, set, update, remove } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
 var validateForm = () => {
     const path = document.querySelector('#user-path').value;

@@ -84,31 +84,31 @@ var addCategoryAndSubCategoryToProduct = (productID, categoryName, subCategoryNa
 //     return category_to_ids
 // }
 
-var addSubCategoryToList = (categoryName, subCategoryName) => {
-    // Add sub-category to the list of sub-categories
-    const subCategoryRef = ref(database, 'sub-categories');
-    const newSubCategoryRef = push(subCategoryRef)
-    set(newSubCategoryRef, {
-        subCategoryName: subCategoryName,
-        categoryName: categoryName
-    })
-    console.log("Added new sub-category to the list of sub-categories")
-}
+// var addSubCategoryToList = (categoryName, subCategoryName) => {
+//     // Add sub-category to the list of sub-categories
+//     const subCategoryRef = ref(database, 'sub-categories');
+//     const newSubCategoryRef = push(subCategoryRef)
+//     set(newSubCategoryRef, {
+//         subCategoryName: subCategoryName,
+//         categoryName: categoryName
+//     })
+//     console.log("Added new sub-category to the list of sub-categories")
+// }
 
 // This method adds a subcategory to the product.
-var addSubCategoryToProduct = (productID, categoryName, subCategoryName) => {
-    // Add the sub-category to the list of subcategories under the category of the product
-    let subCategoryID = getSubCategoryIDs().get(subCategoryName)
-
-    const subCategoryRef = ref(database, 'products/' + productID + '/sub-category')
-    // const newSubCategoryRef = push(subCategoryRef)
-    set(subCategoryRef, subCategoryName)
-
-    // Add the product id to the list of product ids of the sub-category
-    const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID + '/productIDs/' + productID);
-    set(subCategoryRef2, productID)
-    console.log("Added subcategory to product")
-}
+// var addSubCategoryToProduct = (productID, categoryName, subCategoryName) => {
+//     // Add the sub-category to the list of subcategories under the category of the product
+//     let subCategoryID = getSubCategoryIDs().get(subCategoryName)
+//
+//     const subCategoryRef = ref(database, 'products/' + productID + '/sub-category')
+//     // const newSubCategoryRef = push(subCategoryRef)
+//     set(subCategoryRef, subCategoryName)
+//
+//     // Add the product id to the list of product ids of the sub-category
+//     const subCategoryRef2 = ref(database, 'sub-categories/' + subCategoryID + '/productIDs/' + productID);
+//     set(subCategoryRef2, productID)
+//     console.log("Added subcategory to product")
+// }
 
 // var getSubCategoryIDs = () => {
 //     // map to keep track of the category ids
