@@ -96,7 +96,7 @@ document.querySelector('#delete').addEventListener("click", () => {
     deleteData(4);
 })
 document.querySelector('#listing').addEventListener("click", () => {
-    addNewListing("u2", "p2");
+    addNewListing("u500", "p500");
 })
 document.querySelector('#likedList').addEventListener("click", () => {
     addToLikedList("u3", "p2");

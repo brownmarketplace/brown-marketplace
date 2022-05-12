@@ -146,10 +146,10 @@ document.querySelector('#product-register').addEventListener("click", () => {
     validateForm();
 })
 document.querySelector('#product-add-category').addEventListener("click", () => {
-    addCategoryAndSubCategoryToProduct("p3", "Room Decor", "Posters")
+    addCategoryAndSubCategoryToProduct("p7", "Room Decor", "Other room decor")
 })
 document.querySelector('#product-add-tag').addEventListener("click", () => {
-    addTagToProduct("p1", "Cute")
+    addTagToProduct("p7", "Cute")
 })
 document.querySelector('#product-add-liked').addEventListener("click", () => {
     modifyNumLiked("p1", -1)

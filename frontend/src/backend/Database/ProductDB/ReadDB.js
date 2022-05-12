@@ -75,7 +75,7 @@ document.querySelector('#product-readAll').addEventListener("click", () => {
     readAllProductsInfo();
 })
 document.querySelector('#product-read').addEventListener("click", () => {
-    readOneProductInfo("p3");
+    readOneProductInfo("p300");
 })
 document.querySelector('#product-readFiltered').addEventListener("click", () => {
     filterProductsByCategory("Room Decor");
