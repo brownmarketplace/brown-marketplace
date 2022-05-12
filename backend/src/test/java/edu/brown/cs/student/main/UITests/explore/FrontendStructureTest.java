@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.UITests;
+package edu.brown.cs.student.main.UITests.explore;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.AfterClass;

@@ -7,6 +7,8 @@ import ProfilePageButton from '../boilerplate-components/ProfilePageButton'
 import SearchBar from '../explore-components/SearchBar'
 import ProductCards from './ProductCards'
 import {GoogleLogin, GoogleLogout, useGoogleLogin} from 'react-google-login';
+// a variable that stores the categories and their respective MUI icon and subcategories
+import categories from "./categories"
 
 // Image Imports
 import hamburger from "../../images/hamburger.png"
@@ -15,16 +17,6 @@ import pfp from "../../images/profile-pic.png"
 // CSS Imports
 import '../boilerplate-header.css'
 import './explore-header.css'
-
-// MUI Icons
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import ChairIcon from '@mui/icons-material/Chair';
-import StarBorder from '@mui/icons-material/StarBorder';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import DiamondIcon from '@mui/icons-material/Diamond';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
-import PendingIcon from '@mui/icons-material/Pending';
 
 // MUI Imports
 import Drawer from '@mui/material/Drawer'
@@ -40,6 +32,7 @@ import { ListItemIcon } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import ListItemButton from '@mui/material/ListItemButton'
 import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid'
 
 function ExploreHeader(props) {
     // State for Categories Drawer
@@ -61,224 +54,6 @@ function ExploreHeader(props) {
     // react-router-dom for navigation
     const navigate = useNavigate()
 
-    // create a list of dummy categories
-    const categories = [
-        {
-            name: "Room Decor",
-            icon: <LightbulbIcon />,
-            path: "/category/Room Decor",
-            subcats: [
-                {
-                    name: "Plushies",
-                    icon: "",
-                    path: "/category/Room Decor/Plushies"
-                },
-                {
-                    name: "Plants",
-                    icon: "",
-                    path: "/category/Room Decor/Plants"
-                },
-                {
-                    name: "Lights",
-                    icon: "",
-                    path: "/category/Room Decor/Lights"
-                },
-                {
-                    name: "Posters",
-                    icon: "",
-                    path: "/category/Room Decor/Posters"
-                },
-                {
-                    name: "Tapestries", 
-                    icon: "",
-                    path: "/category/Room Decor/Tapestries"
-                },
-                {
-                    name: "Other room decor",
-                    icon: "",
-                    path: "/category/Room Decor/Other room decor"
-                },
-            ]
-        },
-        {
-            name: "Clothing",
-            icon: <LocalOfferIcon />,
-            path: "/category/Clothing",
-            subcats: [
-                {
-                    name: "Tops",
-                    icon: "",
-                    path: "/category/Clothing/Tops"
-                },
-                {
-                    name: "Pants",
-                    icon: "",
-                    path: "/category/Clothing/Pants"
-
-                },
-                {
-                    name: "Dresses",
-                    icon: "",
-                    path: "/category/Clothing/Dresses"
-                },
-                {
-                    name: "Shoes",
-                    icon: "",
-                    path: "/category/Clothing/Shoes"
-                },
-                {
-                    name: "Coats and Jackets", 
-                    icon: "",
-                    path: "/category/Clothing/Coats and Jackets"
-                },
-                {
-                    name: "Other Clothing",
-                    icon: "",
-                    path: "/category/Clothing/Other Clothing"
-                },
-            ]
-        },
-        {
-            name: "Furniture",
-            icon: <ChairIcon />,
-            path: "/category/Furniture",
-            subcats: [
-                {
-                    name: "Chairs",
-                    icon: "",
-                    path: "/category/Furniture/Chairs"
-                },
-                {
-                    name: "Couches",
-                    icon: "",
-                    path: "/category/Furniture/Couches"
-                },
-                {
-                    name: "Mattresses",
-                    icon: "",
-                    path: "/category/Furniture/Mattresses"
-                },
-                {
-                    name: "Pillows",
-                    icon: "",
-                    path: "/category/Furniture/Pillows"
-                },
-                {
-                    name: "Other furniture",
-                    icon: "",
-                    path: "/category/Furniture/Other furniture"
-                },
-            ]
-        },
-        {
-            name: "Accessories",
-            icon: <DiamondIcon />,
-            path: "/category/Accessories",
-            subcats: [
-                {
-                    name: "Necklace",
-                    icon: "",
-                    path: "/category/Accessories/Necklace"
-                },
-                {
-                    name: "Bracelet",
-                    icon: "",
-                    path: "/category/Accessories/Bracelet"
-                },
-                {
-                    name: "Earrings",
-                    icon: "",
-                    path: "/category/Accessories/Earrings"
-                },
-                {
-                    name: "Hair clips",
-                    icon: "",
-                    path: "/category/Accessories/Hair clips"
-                },
-                {
-                    name: "Other accessories", 
-                    icon: "",
-                    path: "/category/Accessories/Other accessories"
-                },
-            ]
-        },
-        {
-            name: "Books",
-            icon: <MenuBookIcon />,
-            path: "/category/Books",
-            subcats: [
-                {
-                    name: "Textbooks",
-                    icon: "",
-                    path: "/category/Books/Textbooks"
-                },
-                {
-                    name: "Fiction",
-                    icon: "",
-                    path: "/category/Books/Fiction"
-                },
-                {
-                    name: "Nonfiction",
-                    icon: "",
-                    path: "/category/Books/Nonfiction"
-                },
-                {
-                    name: "Poetry",
-                    icon: "",
-                    path: "/category/Books/Poetry"
-                },
-                {
-                    name: "Other books", 
-                    icon: "",
-                    path: "/category/Books/Other books"
-                },
-            ]
-        },
-        {
-            name: "Electronics & related",
-            icon: <PhoneIphoneIcon />,
-            path: "/category/Electronics & related",
-            subcats: [
-                {
-                    name: "Speakers",
-                    icon: "",
-                    path: "/category/Electronics & related/Speakers"
-                },
-                {
-                    name: "Phones",
-                    icon: "",
-                    path: "/category/Electronics & related/Phones"
-                },
-                {
-                    name: "Devices",
-                    icon: "",
-                    path: "/category/Electronics & related/Devices"
-                },
-                {
-                    name: "Other electronics and related",
-                    icon: "",
-                    path: "/category/Electronics & related/Other electronics and related"
-                },
-            ]
-        },
-        {
-            name: "Other",
-            icon: <PendingIcon />,
-            path: "/category/Other",
-            subcats: [
-                {
-                    name: "Miscellaneous",
-                    icon: "",
-                    path: "/category/Other/Miscellaneous"
-                },
-            ]
-        }
-    ]
-
-    const handleClick = (path) => {
-        navigate(path)
-    }
-
 
     return (
     <div className="boilerplate-header">
@@ -290,11 +65,12 @@ function ExploreHeader(props) {
             <div className="search-bar-container">
                 <SearchBar />
             </div>
-            <ProductCards />
+            {console.log("Before render, isLoggedIn is: ", isLoggedIn)}
+            <ProductCards isLoggedIn={isLoggedIn} />
         </div>
 
         {/* Define Categories Drawer */}
-        <Drawer className='drawer'
+        <Drawer
         PaperProps={{
             sx: {
               backgroundColor: "#FFEFD7",
@@ -343,16 +119,27 @@ function ExploreHeader(props) {
         {/* { props.showProfile && <ProfilePageButton userPicture={pfp}/> } */}
 
         {/* if not logged in, show GoogleLogin, else show ProfilePage */}
-        {console.log(isLoggedIn)}
-        {isLoggedIn ? <div>
-        <ProfilePageButton userPicture={pfp}/>
-        <GoogleLogout
-            clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
-            buttonText="Logout"
-            onLogoutSuccess={()=>setIsLoggedIn(false)}
-            // onFailure={responseGoogle}
-        />
-    </div> : <div>
+        {isLoggedIn ? 
+        
+        // <Grid
+        // container
+        // xs={1}
+        // direction="column"
+        // justifyContent="center"
+        // alignItems="center"
+        // >
+        <div className='profile-container'>
+            <ProfilePageButton userPicture={pfp}/>
+            <GoogleLogout
+                clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
+                buttonText="Logout"
+                onLogoutSuccess={()=>setIsLoggedIn(false)}
+                // onFailure={responseGoogle}
+            />
+        </div>
+        /* </Grid> */
+    : 
+        <div>
             <GoogleLogin
                 clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
                 buttonText="Login"
