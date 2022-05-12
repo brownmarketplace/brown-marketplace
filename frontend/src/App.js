@@ -16,15 +16,17 @@ const App = () => {
 
   // State for login
   const loginState = (response) => {
+    console.log("Before set", cookies.get("userID"))
     // make the props.showprofilepage true
     console.log("Google ID: ", response.googleId);
     
     cookies.set("userID", response.googleId)
     // add to DB if not already there
-    
+
   }
 
   const logoutState = () => {
+      console.log("logging out")
       // remove userID from cookies
       cookies.remove("userID")
   }
