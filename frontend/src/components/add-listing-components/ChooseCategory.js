@@ -6,30 +6,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-function ChooseCategory({handleInputChange, productCategory}) {
-
-  {/* var categories = ["Room Decor", "Furniture", "Clothing", "Accessories", "Books", "Electronics & related", "Other"]
-    var subcategoryMap = {
-      "Room Decor": ["Plushies", "Plants", "Lights", "Posters", "Tapestries", "Other room decor"],
-      'Furniture': ["Chairs", "Couches", "Mattresses", "Pillows", "Other furniture"],
-      'Clothing': ["Tops", "Pants", "Dresses", "Shoes", "Coats and Jackets", "Other Clothing"],
-      'Accessories': ["Necklace", "Bracelet", "Earrings", "Hair clips", "Other accessories"],
-      'Books': ["Textbooks", "Fiction", "Nonfiction", "Poetry", "Other books"],
-      'Electronics & related': ["Speakers", "Phones", "Devices", "Other electronics and related"],
-      'Other': ['Miscellaneous']
-    } */}
-
-  // const CategoryList = (props) => {
-  //   const subs = subcategoryMap[props.category]
-  //   return [
-  //       <ListSubheader>{props.category}</ListSubheader>,
-  //       subs.map(sub => {
-  //         return (
-  //           <MenuItem value={1}>{sub}</MenuItem>
-  //         )
-  //       })
-  //     ]   
-  // }
+function ChooseCategory({handleInputChange, productSubcategory}) {
 
   return (
     <div style={{ marginTop: "24px" }}>
@@ -48,19 +25,14 @@ function ChooseCategory({handleInputChange, productCategory}) {
               id="grouped-select" 
               label="Grouping"
               onChange={handleInputChange}
-              value={productCategory}
-              name="productCategory"
+              value={productSubcategory}
+              name="productSubcategory"
             >
               <MenuItem value="">
                   <em>None</em>
               </MenuItem>
-              {/* {
-                categories.map((elt) =>
-                    <CategoryList category={elt}/>
-                )
-              } */}
               
-            {/* Hardcoded for now because when I use categories.map, the categories and subcategories show up but cannot be selected. */}
+            {/* Hardcoded for now */}
               <ListSubheader>Room Decor</ListSubheader>
                 <MenuItem value="Plushies">Plushies</MenuItem>
                 <MenuItem value="Plants">Plants</MenuItem>
