@@ -141,7 +141,7 @@ function ProductCards() {
         updateCurrentIndex(index - 1)
     }
 
-    const outOfFrame = (dir, name, idx) => {
+    const outOfFrame = (dir, name, idx, id) => {
         console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current)
         
         // handle the case in which go back is pressed before card goes outOfFrame
@@ -149,7 +149,7 @@ function ProductCards() {
       
         // if swipe was right, go to "/product/product-name"
         if (dir === 'right') {
-            navigate(`/product/${name}`)
+            navigate(`/product/${id}`)
         }
     }
 
@@ -179,7 +179,7 @@ function ProductCards() {
                         // update current index when card is swiped
                         onSwipe={(dir) => swiped(dir, product.name, index)}
                         // when card leaves screen, update current index
-                        onCardLeftScreen={(dir) => outOfFrame(dir, product.name, index)}
+                        onCardLeftScreen={(dir) => outOfFrame(dir, product.name, index, product.id)}
                         // only allow swiping left or right
                         preventSwipe={['up', 'down']}
                     >
