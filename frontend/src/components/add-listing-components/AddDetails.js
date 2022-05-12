@@ -3,11 +3,11 @@ import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import './add-details.css'
 
-function AddDetails() {
+function AddDetails({handleInputChange, productDesc}) {
 
   return (
     <div className="add-details">
-        <div style={{ marginTop: "24px" }}>
+        <div>
             <Chip 
             label="Item Details" 
             className="details-chip" 
@@ -16,12 +16,15 @@ function AddDetails() {
         </div>
         <div style={{ marginTop: "10px" }}>
             <TextField
-            id="outlined-multiline-static"
-            multiline
-            rows={3}
-            variant="outlined"
-            placeholder="Enter item description."
-            className="details-text"
+              id="outlined-multiline-static"
+              multiline
+              rows={3}
+              variant="outlined"
+              placeholder="Enter item description."
+              className="details-text"
+              onChange={handleInputChange}
+              value={productDesc}
+              name="productDesc"
             />
         </div>
     </div>

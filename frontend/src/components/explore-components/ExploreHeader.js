@@ -66,210 +66,210 @@ function ExploreHeader(props) {
         {
             name: "Room Decor",
             icon: <LightbulbIcon />,
-            path: "/category/room-decor",
+            path: "/category/Room Decor",
             subcats: [
                 {
                     name: "Plushies",
                     icon: "",
-                    path: "/category/room-decor/plushies"
+                    path: "/category/Room Decor/Plushies"
                 },
                 {
                     name: "Plants",
                     icon: "",
-                    path: "/category/room-decor/plants"
+                    path: "/category/Room Decor/Plants"
                 },
                 {
                     name: "Lights",
                     icon: "",
-                    path: "/category/room-decor/lights"
+                    path: "/category/Room Decor/Lights"
                 },
                 {
                     name: "Posters",
                     icon: "",
-                    path: "/category/room-decor/posters"
+                    path: "/category/Room Decor/Posters"
                 },
                 {
                     name: "Tapestries", 
                     icon: "",
-                    path: "/category/room-decor/tapestries"
+                    path: "/category/Room Decor/Tapestries"
                 },
                 {
-                    name: "Other Room Decor",
+                    name: "Other room decor",
                     icon: "",
-                    path: "/category/room-decor/other-room-decor"
+                    path: "/category/Room Decor/Other room decor"
                 },
             ]
         },
         {
             name: "Clothing",
             icon: <LocalOfferIcon />,
-            path: "/category/clothing",
+            path: "/category/Clothing",
             subcats: [
                 {
                     name: "Tops",
                     icon: "",
-                    path: "/category/clothing/tops"
+                    path: "/category/Clothing/Tops"
                 },
                 {
                     name: "Pants",
                     icon: "",
-                    path: "/category/clothing/pants"
+                    path: "/category/Clothing/Pants"
 
                 },
                 {
                     name: "Dresses",
                     icon: "",
-                    path: "/category/clothing/dresses"
+                    path: "/category/Clothing/Dresses"
                 },
                 {
                     name: "Shoes",
                     icon: "",
-                    path: "/category/clothing/shoes"
+                    path: "/category/Clothing/Shoes"
                 },
                 {
                     name: "Coats and Jackets", 
                     icon: "",
-                    path: "/category/clothing/coats-and-jackets"
+                    path: "/category/Clothing/Coats and Jackets"
                 },
                 {
                     name: "Other Clothing",
                     icon: "",
-                    path: "/category/clothing/other-clothing"
+                    path: "/category/Clothing/Other Clothing"
                 },
             ]
         },
         {
             name: "Furniture",
             icon: <ChairIcon />,
-            path: "/category/furniture",
+            path: "/category/Furniture",
             subcats: [
                 {
                     name: "Chairs",
                     icon: "",
-                    path: "/category/clothing/chairs"
+                    path: "/category/Furniture/Chairs"
                 },
                 {
                     name: "Couches",
                     icon: "",
-                    path: "/category/clothing/couches"
+                    path: "/category/Furniture/Couches"
                 },
                 {
                     name: "Mattresses",
                     icon: "",
-                    path: "/category/clothing/mattresses"
+                    path: "/category/Furniture/Mattresses"
                 },
                 {
                     name: "Pillows",
                     icon: "",
-                    path: "/category/clothing/pillows"
+                    path: "/category/Furniture/Pillows"
                 },
                 {
-                    name: "Other Furniture",
+                    name: "Other furniture",
                     icon: "",
-                    path: "/category/clothing/other-furniture"
+                    path: "/category/Furniture/Other furniture"
                 },
             ]
         },
         {
             name: "Accessories",
             icon: <DiamondIcon />,
-            path: "/category/accessories",
+            path: "/category/Accessories",
             subcats: [
                 {
                     name: "Necklace",
                     icon: "",
-                    path: "/category/clothing/necklace"
+                    path: "/category/Accessories/Necklace"
                 },
                 {
                     name: "Bracelet",
                     icon: "",
-                    path: "/category/clothing/bracelet"
+                    path: "/category/Accessories/Bracelet"
                 },
                 {
                     name: "Earrings",
                     icon: "",
-                    path: "/category/clothing/earrings"
+                    path: "/category/Accessories/Earrings"
                 },
                 {
-                    name: "Hair Clips",
+                    name: "Hair clips",
                     icon: "",
-                    path: "/category/clothing/hair-clips"
+                    path: "/category/Accessories/Hair clips"
                 },
                 {
-                    name: "Other Accessories", 
+                    name: "Other accessories", 
                     icon: "",
-                    path: "/category/clothing/other-accessories"
+                    path: "/category/Accessories/Other accessories"
                 },
             ]
         },
         {
             name: "Books",
             icon: <MenuBookIcon />,
-            path: "/category/books",
+            path: "/category/Books",
             subcats: [
                 {
                     name: "Textbooks",
                     icon: "",
-                    path: "/category/books/textbooks"
+                    path: "/category/Books/Textbooks"
                 },
                 {
                     name: "Fiction",
                     icon: "",
-                    path: "/category/books/fiction"
+                    path: "/category/Books/Fiction"
                 },
                 {
                     name: "Nonfiction",
                     icon: "",
-                    path: "/category/books/nonfiction"
+                    path: "/category/Books/Nonfiction"
                 },
                 {
                     name: "Poetry",
                     icon: "",
-                    path: "/category/books/poetry"
+                    path: "/category/Books/Poetry"
                 },
                 {
-                    name: "Other Books", 
+                    name: "Other books", 
                     icon: "",
-                    path: "/category/books/other-books"
+                    path: "/category/Books/Other books"
                 },
             ]
         },
         {
-            name: "Electronics & Related",
+            name: "Electronics & related",
             icon: <PhoneIphoneIcon />,
-            path: "/category/electronics-and-related",
+            path: "/category/Electronics & related",
             subcats: [
                 {
                     name: "Speakers",
                     icon: "",
-                    path: "/category/electronics-and-related/speakers"
+                    path: "/category/Electronics & related/Speakers"
                 },
                 {
                     name: "Phones",
                     icon: "",
-                    path: "/category/electronics-and-related/phones"
+                    path: "/category/Electronics & related/Phones"
                 },
                 {
                     name: "Devices",
                     icon: "",
-                    path: "/category/electronics-and-related/devices"
+                    path: "/category/Electronics & related/Devices"
                 },
                 {
-                    name: "Other Electronics & Related",
+                    name: "Other electronics and related",
                     icon: "",
-                    path: "/category/electronics-and-related/other-electronics-and-related"
+                    path: "/category/Electronics & related/Other electronics and related"
                 },
             ]
         },
         {
             name: "Other",
             icon: <PendingIcon />,
-            path: "/category/other",
+            path: "/category/Other",
             subcats: [
                 {
                     name: "Miscellaneous",
                     icon: "",
-                    path: "/category/other/miscellaneous"
+                    path: "/category/Other/Miscellaneous"
                 },
             ]
         }
