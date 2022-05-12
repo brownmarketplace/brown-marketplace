@@ -65,11 +65,12 @@ function ExploreHeader(props) {
             <div className="search-bar-container">
                 <SearchBar />
             </div>
-            <ProductCards />
+            {console.log("Before render, isLoggedIn is: ", isLoggedIn)}
+            <ProductCards isLoggedIn={isLoggedIn} />
         </div>
 
         {/* Define Categories Drawer */}
-        <Drawer className='drawer'
+        <Drawer
         PaperProps={{
             sx: {
               backgroundColor: "#FFEFD7",
@@ -118,7 +119,6 @@ function ExploreHeader(props) {
         {/* { props.showProfile && <ProfilePageButton userPicture={pfp}/> } */}
 
         {/* if not logged in, show GoogleLogin, else show ProfilePage */}
-        {console.log(isLoggedIn)}
         {isLoggedIn ? 
         
         // <Grid
@@ -128,7 +128,7 @@ function ExploreHeader(props) {
         // justifyContent="center"
         // alignItems="center"
         // >
-            <div className='profile-container'>
+        <div className='profile-container'>
             <ProfilePageButton userPicture={pfp}/>
             <GoogleLogout
                 clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
@@ -136,7 +136,7 @@ function ExploreHeader(props) {
                 onLogoutSuccess={()=>setIsLoggedIn(false)}
                 // onFailure={responseGoogle}
             />
-            </div>
+        </div>
         /* </Grid> */
     : 
         <div>

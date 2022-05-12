@@ -56,7 +56,13 @@
     justify-content: space-evenly;
     /* move left more */
     left: 33.4vw;
-    /* move up more */
+}
+
+.swipe-to-get-started {
+    display: flex;
+    position: fixed;
+    bottom: 10vh;
+    left: 43vw;
 }
 
 /* Override MUI boxshadow */
