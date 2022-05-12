@@ -66,7 +66,7 @@ function ExploreHeader(props) {
         {
             name: "Room Decor",
             icon: <LightbulbIcon />,
-            path: "/category/room-decor",
+            path: "/category/Room Decor",
             subcats: [
                 {
                     name: "Plushies",
