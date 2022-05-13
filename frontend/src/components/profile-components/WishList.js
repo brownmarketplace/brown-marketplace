@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ProductPreviewWrapper from './ProductPreviewWrapper';
+import Storefronts from '../category-components/Storefronts'
 import database from "../../backend/Database/DBInstance"
 import { ref, onValue }
     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
@@ -40,6 +41,7 @@ function WishList(props) {
                         <ProductPreviewWrapper productId={id}/>
                     )
                 }) }
+                {/* <Storefronts products={}/> */}
             </div>
         </div>
     )
