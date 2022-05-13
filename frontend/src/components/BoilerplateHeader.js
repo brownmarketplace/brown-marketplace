@@ -20,7 +20,7 @@ function BoilerplateHeader(props) {
         {/* If showProfile is true, render ProfilePageButton.
         Else, render empty div to keep the header layout consistent (flex: space-around). */}
 
-        { props.showProfile && <ProfilePageButton userPicture={pfp}/> }
+        { props.showProfile && <ProfilePageButton userID={props.userID} userPicture={pfp}/> }
         { !props.showProfile && <div/> } 
     </div>
   )

@@ -109,7 +109,7 @@ function CategoryPage(props) {
 
   return (
     <div className="boilerplate">
-      <BoilerplateHeader title={"Brown Marketplace"} userPicture={props.pfp} />
+    <BoilerplateHeader title={"Brown Marketplace"} userPicture={props.pfp} userID={props.userID} />
       <div style={{ textAlign: 'center', marginTop: '30px' }}>
         <Grid container direction="column" justifyContent="center" spacing={1} paddingLeft="10%" paddingRight="10%">
           <Grid item>
