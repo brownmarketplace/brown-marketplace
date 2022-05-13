@@ -40,12 +40,18 @@ function SoldButton(props) {
     <div style={{ marginLeft: "10px" }}>
         <Button 
           variant="outlined" 
-          color="error" 
+          color="success" 
           size="small"
           disabled={isDisabled}
           onClick={updateSoldFlag}
         >
-          Sold
+          {
+            isDisabled ? (
+              "Sold"
+            ) : (
+              "Sell"
+            )
+          }
         </Button>
     </div>
   )
