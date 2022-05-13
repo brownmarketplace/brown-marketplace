@@ -9,19 +9,19 @@ import './boilerplate-header.css'
 function BoilerplateHeader(props) {
   return (
     <div className="boilerplate-header">
-        {/* On click, returns to the previous page. */}
-        <Link to={-1}>
-          <img src={xButton} alt="back" className="xButton" />
-        </Link>
-        <Link to="/explore" className="title-link">
-          <Title title="Brown Marketplace"/>
-        </Link>
+      {/* On click, returns to the previous page. */}
+      <Link to={-1}>
+        <img src={xButton} alt="back" className="xButton" style={{ width: 50, height: 50 }} />
+      </Link>
+      <Link to="/explore" className="title-link">
+        <Title title="Brown Marketplace" height={50} style={{ height: 50 }} />
+      </Link>
 
-        {/* If showProfile is true, render ProfilePageButton.
+      {/* If showProfile is true, render ProfilePageButton.
         Else, render empty div to keep the header layout consistent (flex: space-around). */}
 
-        { props.showProfile && <ProfilePageButton userID={props.userID} userPicture={pfp}/> }
-        { !props.showProfile && <div/> } 
+      {props.showProfile && <ProfilePageButton userID={props.userID} userPicture={pfp} />}
+      {!props.showProfile && <div />}
     </div>
   )
 }

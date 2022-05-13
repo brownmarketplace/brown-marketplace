@@ -5,7 +5,7 @@ import './title.css'
 function Title(props) {
   return (
     <div className="boilerplate-title">
-      <img src={logo}></img>
+      <img src={logo} ></img>
     </div>
   )
 }

@@ -17,7 +17,6 @@ function SellerCard(props) {
   const readOneUserInfo = async () => {
     onValue(ref(database, 'users/' + props.userID), (snapshot) => {
       const userInfo = snapshot.val()
-      console.log(userInfo)
       setSellerInfo(userInfo)
     })
   }
@@ -27,18 +26,10 @@ function SellerCard(props) {
   }, [props])
 
   return (
-    <Card style={{ display: 'flex', justifyContent: 'center', padding: 10, backgroundColor: '#EEEEEE' }}>
-      {/* <Grid container>
-        <Grid item xs={4}>
-        </Grid>
-        <Grid item xs={8}>
-        </Grid>
-      </Grid> */}
-
+    <Card style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', padding: 10, backgroundColor: '#EEEEEE' }}>
       <Avatar
-        alt={sellerInfo.name}
         src={sellerInfo.profilePic}
-        sx={{ width: 120, height: 120 }} />
+        sx={{ width: 90, height: 90 }} />
       <CardContent>
         <Typography variant="h5" color="text.primary">Seller Information</Typography>
         <Typography variant="body1">{sellerInfo.name}</Typography>
