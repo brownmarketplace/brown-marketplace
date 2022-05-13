@@ -4,38 +4,33 @@ import Footer from '../components/Footer'
 import WishList from '../components/profile-components/WishList'
 import UserListings from '../components/profile-components/UserListings'
 import defaultProfilePicture from '../images/pfp.png'
-// import database from "../backend/Database/DBInstance"
-// import { ref, onValue }
-//     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import database from "../backend/Database/DBInstance"
+import { ref, onValue }
+    from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 
 
 import './boilerplate-page.css'
 import './profile-page.css'
 
 function ProfilePage(props) {
-    // const [userPfp, setUserPfp] = useState("")
-    // const [img, setImg] = useState();
+    const [img, setImg] = useState();
 
-    // const readOneUserInfo = () => {
-    //     onValue(ref(database, 'users/' + props.userID), (snapshot) => {
-    //     const userInfo = snapshot.val()
-        
-    //     if (userInfo != null) {
-    //         if (userInfo.profilePic != null) {
-    //             console.log('userInfo.profilePic')
-    //             console.log(userInfo.profilePic)
-    //             setUserPfp(userInfo.profilePic)
-    //             const res = fetch(userInfo.profilePic);
-    //             const imageBlob = res.blob();
-    //             const imageObjectURL = URL.createObjectURL(imageBlob);
-    //             setImg(imageObjectURL);
-    //         }
-    //     }})
-    // }
+    useEffect(() => {
+        const readOneUserInfo = async () => {
+            onValue(ref(database, 'users/' + props.userID), (snapshot) => {
+            const userInfo = snapshot.val()
+            
+            if (userInfo) {
+                if (userInfo.profilePic) {
+                    console.log('userInfo.profilePic')
+                    console.log(userInfo.profilePic)
+                    setImg(userInfo.profilePic)
+                }
+            }})
+        }
 
-    // useEffect(() => {
-    //     readOneUserInfo();  
-    // }, [])
+        readOneUserInfo().catch(console.error);  
+    }, [props])
 
     return (
         <div className="boilerplate">
@@ -43,13 +38,22 @@ function ProfilePage(props) {
             <div className="profile-contents">
                 <div className="first-profile-section">
                     <div className="profile-picture">
-                        {/* {
+                        {console.log("img:")}
+                        {console.log(img)}
+                        {
                             img ? (
-                                <img src={img} />
+                                <div>
+                                    <img 
+                                        src={img}
+                                        width="260vw"
+                                        height="260vw"
+                                        style={{ borderRadius: "20px" }}
+                                    />
+                                </div>                                
                             ) : (
-                                <div/>
+                                <div>Loading...</div>
                             )
-                        } */}
+                        }
                     </div>
                     <div>
                         <div className="username">
