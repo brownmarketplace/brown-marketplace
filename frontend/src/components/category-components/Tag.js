@@ -7,11 +7,12 @@ function Tag(props) {
     <Button variant="text" size="large" color="inherit"
       onClick={props.setTag}
       style={{
+        textTransform: 'none',
         paddingTop: 0,
         paddingBottom: 0,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginLeft: 10,
+        // paddingLeft: 10,
+        // paddingRight: 10,
+        // marginLeft: 10,
         marginRight: 10,
       }}>
       {props.tagName}

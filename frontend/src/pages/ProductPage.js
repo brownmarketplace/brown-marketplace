@@ -54,7 +54,7 @@ function ProductPage(props) {
         }
       )
       console.log(product.pictures)
-      setImage([product.pictures][0])
+      setImage(product.pictures[0])
     })
   }
 
@@ -103,19 +103,19 @@ function ProductPage(props) {
               <Grid item xs={6}>
                 <Grid container justifyContent="space-between" spacing={2}>
                   <Grid item xs={8} align="left">
-                    <Typography variant="h4">{productInfo.title}</Typography>
+                    <Typography variant="h5">{productInfo.title}</Typography>
                     <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
                       {productInfo.tags.map((tag, idx) =>
                         <Typography variant="caption" style={{
-                          marginLeft: 10,
+                          // marginLeft: 10,
                           marginRight: 10,
                         }}>{tag}</Typography>)}
                     </div>
                   </Grid>
                   <Grid item xs={4} align="right">
                     {productInfo.sold === 'true'
-                      ? <Typography variant="h4" style={{ color: 'red' }}>Sold</Typography>
-                      : <Typography variant="h4">${parseFloat(productInfo.price).toFixed(2)}</Typography>}
+                      ? <Typography variant="h5" style={{ color: 'red' }}>Sold</Typography>
+                      : <Typography variant="h5">${parseFloat(productInfo.price).toFixed(2)}</Typography>}
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="h6" color="text.primary" align="left">Description</Typography>

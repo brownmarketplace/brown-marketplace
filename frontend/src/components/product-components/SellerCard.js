@@ -17,6 +17,7 @@ function SellerCard(props) {
   const readOneUserInfo = async () => {
     onValue(ref(database, 'users/' + props.userID), (snapshot) => {
       const userInfo = snapshot.val()
+      console.log(userInfo)
       setSellerInfo(userInfo)
     })
   }
@@ -49,8 +50,9 @@ function SellerCard(props) {
 
 SellerCard.defaultProps = {
   sellerInfo: {
-    name: "Nim Telson",
-    email: "nim_telson@brown.edu",
+    profilePic: null,
+    name: "Unknown",
+    email: "Unknown",
   },
 }
 

@@ -11,7 +11,8 @@ function ProductPreview(props) {
 
   return (
     <Card style={{
-      backgroundColor: colorPalette[props.productInfo.description.length % colorPalette.length],
+      // backgroundColor: colorPalette[props.productInfo.description.length % colorPalette.length],
+      background: 'linear-gradient(to right bottom, #ffffff, #c4f9ff)',
     }}>
       <CardActionArea disableRipple href={"/product/" + props.productInfo.id}>
         <CardMedia
@@ -19,17 +20,19 @@ function ProductPreview(props) {
           image={props.productInfo.pictures[0]}
           alt={props.productInfo.name}
           style={{ aspectRatio: 16 / 12 }}
+          // style={{ aspectRatio: 4 / 4 }}
         />
         <CardContent
           sx={{ padding: 1 }}
           style={{ aspectRatio: 16 / 3 }}
+          // style={{ aspectRatio: 4 / 1 }}
         >
           <Grid container>
             <Grid item xs={8} align="left">
-              <Typography variant="subtitle1">{props.productInfo.name}</Typography>
+              <Typography variant="subtitle1" style={{ lineHeight: "24px" }}>{props.productInfo.name}</Typography>
             </Grid>
             <Grid item xs={4} align="right">
-              <Typography variant="subtitle1">${parseFloat(props.productInfo.price).toFixed(2)}</Typography>
+              <Typography variant="subtitle1" style={{ lineHeight: "24px" }}>${parseFloat(props.productInfo.price).toFixed(2)}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="caption" color="text.secondary" align="left"
@@ -39,7 +42,8 @@ function ProductPreview(props) {
                   display: '-webkit-box',
                   WebkitLineClamp: '2',
                   WebkitBoxOrient: 'vertical',
-                }} >
+                }}
+                style={{ lineHeight: "16px" }} >
                 {props.productInfo.description}
               </Typography>
             </Grid>
