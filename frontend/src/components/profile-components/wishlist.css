@@ -6,9 +6,22 @@
 
 .wishlist-items {
     background: rgba(255, 227, 227, 0.5);
-    height: 15vw;
+    height: 3vw;
     width: 15vw;
     margin-top: 1vw;
     margin-right: 4vw;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cd8c8c;
+}
+
+.liked-id-link {
+    text-decoration: none;
+    color: #cd8c8c;
+}
+
+.liked-id-link:hover {
+    color: rgb(255, 190, 190);
 }

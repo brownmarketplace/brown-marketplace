@@ -1,16 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import BoilerplateHeader from '../components/BoilerplateHeader'
 import Footer from '../components/Footer'
 import WishList from '../components/profile-components/WishList'
 import UserListings from '../components/profile-components/UserListings'
 import defaultProfilePicture from '../images/pfp.png'
-import { useParams } from "react-router-dom";
+// import database from "../backend/Database/DBInstance"
+// import { ref, onValue }
+//     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+
 
 import './boilerplate-page.css'
 import './profile-page.css'
 
 function ProfilePage(props) {
-    // const { userId } = useParams();
+    // const [userPfp, setUserPfp] = useState("")
+    // const [img, setImg] = useState();
+
+    // const readOneUserInfo = () => {
+    //     onValue(ref(database, 'users/' + props.userID), (snapshot) => {
+    //     const userInfo = snapshot.val()
+        
+    //     if (userInfo != null) {
+    //         if (userInfo.profilePic != null) {
+    //             console.log('userInfo.profilePic')
+    //             console.log(userInfo.profilePic)
+    //             setUserPfp(userInfo.profilePic)
+    //             const res = fetch(userInfo.profilePic);
+    //             const imageBlob = res.blob();
+    //             const imageObjectURL = URL.createObjectURL(imageBlob);
+    //             setImg(imageObjectURL);
+    //         }
+    //     }})
+    // }
+
+    // useEffect(() => {
+    //     readOneUserInfo();  
+    // }, [])
 
     return (
         <div className="boilerplate">
@@ -18,29 +43,30 @@ function ProfilePage(props) {
             <div className="profile-contents">
                 <div className="first-profile-section">
                     <div className="profile-picture">
-                        {/* props.pfp */}
+                        {/* {
+                            img ? (
+                                <img src={img} />
+                            ) : (
+                                <div/>
+                            )
+                        } */}
                     </div>
                     <div>
                         <div className="username">
-                            {/* {props.name} */}
-                            Nim Telson
+                            {props.name}
                         </div>
                         <div>
                             <p className="user-info">
-                                {/* {props.email} */}
-                                {/* Seller Id: {userId} */}
-                                Brown Verified
+                                {props.email}
                             </p>
                         </div>
                         <div className="user-listings">
-                            {console.log("Passing a userId into UserListings, userId is:")}
-                            {console.log(props.userID)}
                             <UserListings userId={props.userID} />
                         </div>
                     </div>
                 </div>
                 <div className="second-profile-section">
-                    <WishList/>
+                    <WishList userID={props.userID}/>
                 </div>
             </div>
             {/* <Footer/> */}
@@ -51,8 +77,8 @@ function ProfilePage(props) {
 ProfilePage.defaultProps = {
   title: "Profile",
   pfp: defaultProfilePicture,
-  name: "Nim Telson",
-  email: "nim_telson.brown.edu"  
+  name: "New User",
+  email: "new_user.brown.edu"  
 }
 
 export default ProfilePage

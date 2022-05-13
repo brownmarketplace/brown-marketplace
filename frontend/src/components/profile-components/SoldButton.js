@@ -8,8 +8,16 @@ function SoldButton(props) {
   /*
     This method toggles the sold flag of the product. The sold flag is either true or false.
     */
-    var updateSoldFlag = () => {
+    var updateSoldFlag = (e) => {
+
+      // execute frontend change
+      e.target.disabled = true; // untested TODO
+
+      // now execute backend change
       const id = props.productId;
+      console.log("in update sold flag...")
+      console.log("props.productId is:")
+      console.log(props.productId)
 
       const q = query(ref(database, 'products/'), orderByChild('id'), equalTo(id));
       let currSoldFlag = "false";
@@ -32,7 +40,8 @@ function SoldButton(props) {
           variant="outlined" 
           color="error" 
           size="small"
-          onClick={updateSoldFlag}
+          disabled={false}
+          onClick={e => updateSoldFlag(e)}
         >
           Sold
         </Button>
