@@ -13,12 +13,14 @@ function BoilerplateHeader(props) {
         <Link to={-1}>
           <img src={xButton} alt="back" className="xButton" />
         </Link>
-        <Title title={props.title}/>
+        <Link to="/explore" className="title-link">
+          <Title title="Brown Marketplace"/>
+        </Link>
 
         {/* If showProfile is true, render ProfilePageButton.
         Else, render empty div to keep the header layout consistent (flex: space-around). */}
 
-        { props.showProfile && <ProfilePageButton userPicture={pfp}/> }
+        { props.showProfile && <ProfilePageButton userID={props.userID} userPicture={pfp}/> }
         { !props.showProfile && <div/> } 
     </div>
   )

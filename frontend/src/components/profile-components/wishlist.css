@@ -6,9 +6,46 @@
 
 .wishlist-items {
     background: rgba(255, 227, 227, 0.5);
-    height: 15vw;
-    width: 15vw;
+    height: 22vw;
+    width: 22vw;
     margin-top: 1vw;
     margin-right: 4vw;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cd8c8c;
+}
+
+.wish-list-item-spacing {
+    margin-top: 10px;
+}
+
+.liked-id-link {
+    text-decoration: none;
+    color: #cd8c8c;
+}
+
+.liked-id-link:hover {
+    color: rgb(255, 190, 190);
+}
+
+/* When screen width is narrower, adjust vertical spacing between
+    the words Liked List and liked item product box grid. */
+@media screen and (max-width: 1080px) {
+    .wish-list-item-spacing {
+        margin-top: 40px;
+    }
+}
+
+@media screen and (max-width: 840px) {
+    .wish-list-item-spacing {
+        margin-top: 60px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .wish-list-item-spacing {
+        margin-top: 80px;
+    }
 }

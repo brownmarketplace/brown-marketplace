@@ -9,6 +9,7 @@ import './App.css'
 import RecommendApi from './Recommend-api';
 import GoogleAuth from './backend/google';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 // Database Imports
 import { ref, set, get, onValue, query, orderByChild, equalTo, child }
@@ -21,14 +22,42 @@ const App = () => {
 
   // State for login
   const loginState = (response) => {  
-    console.log("response", response)
-    cookies.set("userID", response.googleId)
+    const id = "u" + response.googleId
+    const postConfig = {headers: {}}
+    // Send the user id to backend
+    let toSend = {user: id}
+    // Fetch the recommended result from backend
+    const userUrl = "http://127.0.0.1:4567/userReq"
+    axios.post(userUrl, toSend, postConfig)
+        .then((response) => {
+            console.log("user loaded successfully in backend");
+            console.log(response.data['result'])
+        })
+        .catch(e => console.log(e))
+
+    cookies.set("userID", id)
+    cookies.set("name", response.profileObj.name)
+    cookies.set("email", response.profileObj.email)
+    cookies.set("pfp", response.profileObj.imageUrl)
     
     // add to DB if not already there
+    const userRef  = ref(database, 'users/' + "u" + response.googleId)
+    const q = query(userRef)
+    get(q).then(snapshot => {
+      if (snapshot.val() === null) {
+        // add user to DB
+        set(ref(database, 'users/' + "u" + response.googleId), {
+          classYear: "sophomore",
+          email: response.profileObj.email,
+          id: response.googleId,
+          name: response.profileObj.name,
+          profilePic: response.profileObj.imageUrl
+        })
+      }
+    })
   }
 
   const logoutState = () => {
-      console.log("logging out")
       // remove userID from cookies
       cookies.remove("userID")
   }
@@ -40,8 +69,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
         <Route path="/explore" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
-        <Route path="/profile" element={<ProfilePage  userID={cookies.get("userID")} />}>
-          <Route path=":userid" element={<ProfilePage userID={cookies.get("userID")} />} />
+        <Route path="/profile" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />}>
+          <Route path=":userid" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />} />
         </Route>
         <Route path="/sell" element={<AddListing userID={cookies.get("userID")} />} />
         <Route path="/product/:productId" element={<ProductPage userID={cookies.get("userID")} />} />

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is a generic bloom filter. It has three java.main functionalities: creating, adding and
- * querying. It uses an array of binary numbers as its underlying data structure.
+ * This class is a generic bloom filter. It has three java.main functionalities: creating,
+ * adding and querying. It uses an array of binary numbers as its underlying data structure.
  */
 public class BloomFilter {
   private int[] bitArray;
@@ -17,6 +17,9 @@ public class BloomFilter {
   private int maxNum;
   private int bitNum;
   private int numHash;
+  private static final int RADIX = 20;
+  private static final int HEX1 = 0xFF;
+  private static final int HEX2 = 0x0F;
 
   /**
    * The constructor for a generic bloom filter.
@@ -58,7 +61,7 @@ public class BloomFilter {
    * @param inputData a string to be added to the bloom filter
    * @return an array of integers representing the bit array
    * @throws NoSuchAlgorithmException thrown when a particular cryptographic algorithm is requested
-   * but is not available in the environment
+   *                                  but is not available in the environment
    */
   public int[] add(String inputData) throws NoSuchAlgorithmException {
     byte[] data = inputData.getBytes(StandardCharsets.UTF_8);
@@ -81,7 +84,7 @@ public class BloomFilter {
    * @param inputData the string to be queried in the bloom filter
    * @return a boolean representing if the string is in the bloom filter
    * @throws NoSuchAlgorithmException thrown when a particular cryptographic algorithm is requested
-   * but is not available in the environment
+   *                                  but is not available in the environment
    */
   public boolean query(String inputData) throws NoSuchAlgorithmException {
     byte[] data = inputData.getBytes(StandardCharsets.UTF_8);
@@ -107,9 +110,9 @@ public class BloomFilter {
     byte[] hexArray = "0123456789ABCDEF".getBytes(StandardCharsets.UTF_8);
     byte[] hexChars = new byte[bytes.length * 2];
     for (int j = 0; j < bytes.length; j++) {
-      int v = bytes[j] & 0xFF;
+      int v = bytes[j] & HEX1;
       hexChars[j * 2] = hexArray[v >>> 4];
-      hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+      hexChars[j * 2 + 1] = hexArray[v & HEX2];
     }
     return new String(hexChars, StandardCharsets.UTF_8);
   }
@@ -125,7 +128,7 @@ public class BloomFilter {
    * @param numHashes number of hashes/BigIntegers to produce.
    * @return array of BigInteger hashes
    * @throws NoSuchAlgorithmException thrown when a particular cryptographic algorithm is requested
-   *    * but is not available in the environment
+   *                                  * but is not available in the environment
    */
   public static BigInteger[] createHashes(byte[] data, int numHashes)
       throws NoSuchAlgorithmException {
@@ -141,7 +144,7 @@ public class BloomFilter {
       md.reset();
       // convert hash byte array to hex string, then to BigInteger
       String hexHash = bytesToHex(hash);
-      result[k] = new BigInteger(hexHash, 16);
+      result[k] = new BigInteger(hexHash, RADIX);
       k++;
     }
     return result;
@@ -154,7 +157,7 @@ public class BloomFilter {
    * @param data a byte array used to generate hashes
    * @return a list of integers representing the indices
    * @throws NoSuchAlgorithmException thrown when a particular cryptographic algorithm is requested
-   *    * but is not available in the environment
+   *                                  * but is not available in the environment
    */
   public List<Integer> mapHashToIndex(byte[] data) throws NoSuchAlgorithmException {
     BigInteger[] result = this.createHashes(data, this.numHash);

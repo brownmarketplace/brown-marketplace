@@ -16,6 +16,8 @@ import { ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-dat
 
 import './boilerplate-page.css'
 
+import { v4 as uuid } from 'uuid';
+
 function AddListing(props) {
     const addListingStyle = {
         display: "flex",
@@ -25,8 +27,8 @@ function AddListing(props) {
         marginBottom: "30px"
     }
 
-    const newUserId = "u11"
-    const newProductId = "p11"
+    const newUserId = props.userID
+    const newProductId = 'p' + uuid();
 
     const [formInputData, setFormInputData] = useState({
         productName:'',
@@ -56,7 +58,6 @@ function AddListing(props) {
     }
 
     const handleImgUrlChange = (event) => {
-
         const inputFieldName = event.target.name;
         let inputFieldValue = event.target.value;
         if (typeof inputFieldValue === 'string') {
@@ -97,7 +98,7 @@ function AddListing(props) {
 
         addNewListing(newUserId, newProductId);
 
-        console.log("Published listing!");
+        alert("Published listing!");
     }
 
     var getCategoryFromSubcategory = (sub) => {
@@ -144,7 +145,7 @@ function AddListing(props) {
         const tag = formInputData.productTags;
         const subcategory = formInputData.productSubcategory;
         const seller = newUserId;
-        const pictures = formInputData.productImgUrls.map(e => e.trim());
+        let pictures = formInputData.productImgUrls;
         const date = new Date().toLocaleString() + "";
     
         const sold = false;
@@ -153,8 +154,8 @@ function AddListing(props) {
         if (id.trim() == "" || name.trim() == "" || description == "" || tag == ""
             || subcategory == "" || seller.trim() == "" || pictures == "") {
             alert("form not completely filled");
-        } 
-        else {
+        } else {
+            pictures = pictures.map(e => e.trim());
             writeBasicInfoToDatabase(id, name, description, price, seller, pictures, date, sold,
                 numLiked);
         }
@@ -209,7 +210,7 @@ function AddListing(props) {
 
     return (
         <div className="boilerplate">
-            <BoilerplateHeader title="Make A Listing!" userPicture={defaultProfilePicture} showProfile={false}/>
+            <BoilerplateHeader title="Brown Marketplace" userPicture={defaultProfilePicture} showProfile={false}/>
             <div style={addListingStyle}>
                     <AddName 
                         productName={formInputData.productName}
@@ -235,13 +236,16 @@ function AddListing(props) {
                         productImgUrls={formInputData.productImgUrls}
                         handleInputChange={handleImgUrlChange}
                     />
-                    <PublishListing
-                        // userId={props.userId} // should be this
-                        userId={newUserId} // used to test
-                        productId={newProductId}
-                        handleFormSubmit={handleFormSubmit}
-                    />
-                    <ClearButton handleSubmit={clearForm}/>
+                    <div style={{ display: 'flex', justifyContent: "center" }}>
+                        <PublishListing
+                            // userId={props.userId} // should be this
+                            userId={newUserId} // used to test
+                            productId={newProductId}
+                            handleFormSubmit={handleFormSubmit}
+                        />
+                        <div style={{ width: "20px" }}></div>
+                        <ClearButton handleSubmit={clearForm}/>
+                    </div>
             </div>
             {/* <Footer/> */}
         </div>

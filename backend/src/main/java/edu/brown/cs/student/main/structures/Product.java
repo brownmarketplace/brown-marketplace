@@ -9,25 +9,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class models a Product. Although a Product is instantiated from the fields relevant to the
- * recommender system (our primary backend functionality), the rest of the fields are still
- * maintained with getters and setters in the case of extended functionality in the future.
+ * This class models a Product.
  */
 public class Product implements BFInsertable {
   private Map<String, Object> attributes;
   private BloomFilter bf;
-//  private double xnorSimilarity;
 
   /**
-   * The constructor of Product. Since the overall dataset isn't being stored and consistently
-   * updated in the back end, a Product is instantiated using only the fields relevant to the
-   * recommender system.
+   * The constructor of Product.
+   *
+   * @param attributes a Map with attribute names as the keys and the corresponding attributes as
+   *                   values
    */
   public Product(Map<String, Object> attributes) {
     this.attributes = attributes;
   }
 
-
+  /**
+   * This is the getter for the product ID.
+   *
+   * @return product ID
+   */
   @Override
   public String getId() {
     return (String) (this.attributes.get("id"));
@@ -47,11 +49,12 @@ public class Product implements BFInsertable {
     String name = (String) this.attributes.get("name");
     String category = (String) this.attributes.get("category");
     String subCategory = (String) this.attributes.get("sub-category");
-    ArrayList<String> tags = new ArrayList<String> (((Map<String, Object>) this.attributes.get("tags")).keySet());
+    ArrayList<String> tags =
+        new ArrayList<String>(((Map<String, Object>) this.attributes.get("tags")).keySet());
 
     // split and add each word in the name of a product
     String[] wordsInName = name.trim().split(" ");
-    for (String word: wordsInName) {
+    for (String word : wordsInName) {
       if (!bfAttributes.contains(word) && !word.equals(category) && !word.equals(subCategory)) {
         bfAttributes.add(word);
       }
@@ -80,7 +83,7 @@ public class Product implements BFInsertable {
    * in an ArrayList.
    *
    * @param falsePositiveRate the desired false positive rate
-   * @param maxNum the max number of elements to be inserted into the bf
+   * @param maxNum            the max number of elements to be inserted into the bf
    * @return
    */
   @Override
@@ -100,12 +103,13 @@ public class Product implements BFInsertable {
     return filter;
   }
 
+  /**
+   * This is the getter for the product's bloom filter.
+   *
+   * @return bloom filter of the product
+   */
   @Override
   public BloomFilter getBf() {
     return this.bf;
   }
-
-//  public void setXNORSimilarity(double similarity) {
-//    this.xnorSimilarity = (double) similarity;
-//  }
 }

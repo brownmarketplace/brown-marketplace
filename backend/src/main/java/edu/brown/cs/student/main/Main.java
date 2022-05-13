@@ -1,13 +1,12 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.proxy.dbProxy;
+import edu.brown.cs.student.main.proxy.DbProxy;
 import edu.brown.cs.student.main.server.Server;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
 /**
  * The Main class of our project. This is where execution begins.
- *
  */
 
 public final class Main {
@@ -30,7 +29,7 @@ public final class Main {
   }
 
   private void run() {
-	  
+
     OptionParser parser = new OptionParser();
     parser.accepts("gui");
     parser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(DEFAULT_PORT);
@@ -38,10 +37,9 @@ public final class Main {
     OptionSet options = parser.parse(args);
 
     if (options.has("gui")) {
-      dbProxy proxy = new dbProxy();
+      DbProxy proxy = new DbProxy();
       Server server = new Server(proxy);
       server.runSparkServer((int) options.valueOf("port"));
     }
   }
-
 }

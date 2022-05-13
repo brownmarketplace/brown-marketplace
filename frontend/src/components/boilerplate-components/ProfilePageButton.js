@@ -4,7 +4,7 @@ import './profile-page-button.css'
 
 function ProfilePageButton(props) {
   return (
-    <Link to="/profile"> {/* need to change to actual user profile path later */}
+    <Link to={`/profile/${props.userID}`}>
       <img src={props.userPicture} className="profile-page-button"></img>
     </Link>
   );

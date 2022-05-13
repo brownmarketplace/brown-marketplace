@@ -1,55 +1,82 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import BoilerplateHeader from '../components/BoilerplateHeader'
 import Footer from '../components/Footer'
 import WishList from '../components/profile-components/WishList'
 import UserListings from '../components/profile-components/UserListings'
 import defaultProfilePicture from '../images/pfp.png'
-import { useParams } from "react-router-dom";
+import database from "../backend/Database/DBInstance"
+import { ref, onValue }
+    from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+
 
 import './boilerplate-page.css'
 import './profile-page.css'
 
 function ProfilePage(props) {
-  let params = useParams();
+    const [img, setImg] = useState();
 
-  
-  return (
-    <div className="boilerplate">
-        {console.log("User ID from App", props.userID)}
-        <BoilerplateHeader title={props.title} userPicture={props.pfp} showProfile="false"/>
-        <div className="profile-contents">
-            <div className="first-profile-section">
-                <div className="profile-picture">
-                    {/* props.pfp */}
-                </div>
-                <div>
-                    <div className="username">
-                        Nim Telson {props.userID}
+    useEffect(() => {
+        const readOneUserInfo = async () => {
+            onValue(ref(database, 'users/' + props.userID), (snapshot) => {
+            const userInfo = snapshot.val()
+            
+            if (userInfo) {
+                if (userInfo.profilePic) {
+                    setImg(userInfo.profilePic)
+                }
+            }})
+        }
+
+        readOneUserInfo().catch(console.error);  
+    }, [props])
+
+    return (
+        <div className="boilerplate">
+            <BoilerplateHeader title="Brown Marketplace" userPicture={props.pfp} showProfile={false}/>
+            <div className="profile-contents">
+                <div className="first-profile-section">
+                    <div>
+                        {
+                            img ? (
+                                <div>
+                                    <img 
+                                        src={img}
+                                        className="profile-picture-source"
+                                    />
+                                </div>                                
+                            ) : (
+                                <div>Loading...</div>
+                            )
+                        }
                     </div>
                     <div>
-                        <p className="user-info">nim_telson@brown.edu</p>
-                        {/* props.user.userID
-                        email
-                        phoneNumber
-                        location */}
-                    </div>
-                    <div className="user-listing">
-                        <UserListings />
+                        <div className="username">
+                            {props.name}
+                        </div>
+                        <div>
+                            <p className="user-info">
+                                {props.email}
+                            </p>
+                        </div>
+                        <div className="user-listings">
+                            <UserListings userId={props.userID} />
+                        </div>
                     </div>
                 </div>
+                <div className="second-profile-section">
+                    <WishList userID={props.userID}/>
+                </div>
             </div>
-            <div className="second-profile-section">
-                <WishList/>
-            </div>
+            {/* <Footer/> */}
         </div>
-        {/* <Footer/> */}
-    </div>
-  )
+    )
 }
 
 ProfilePage.defaultProps = {
   title: "Profile",
-  pfp: defaultProfilePicture
+  pfp: defaultProfilePicture,
+  name: "New User",
+  email: "new_user.brown.edu"  
 }
 
 export default ProfilePage
