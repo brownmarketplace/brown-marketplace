@@ -7,7 +7,7 @@ function ClearButton(props) {
   return (
     <div style={{ marginTop: "24px" }}>
         <AwesomeButton type="secondary" onPress={(e) => props.handleSubmit(e)}>
-            Clear Form
+            Clear
         </AwesomeButton>        
     </div>
   )

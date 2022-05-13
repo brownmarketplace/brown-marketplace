@@ -11,7 +11,7 @@ const database = getDatabase();
     a method that adds a product to the database.
  */
 var validateForm = () => {
-    const path = document.querySelector('#path-id').value;
+    // const path = document.querySelector('#path-id').value;
     const id = document.querySelector("#product-id").value;
     const name = document.querySelector("#product-name").value;
     const description = document.querySelector("#product-description").value;
@@ -22,12 +22,12 @@ var validateForm = () => {
     const sold = document.querySelector("#sold-description").value;
     const numLiked = document.querySelector("#liked-description").value;
 
-    if (path.trim() == "" || id.trim() == "" || name.trim() == "" || description == "" || price.trim() == ""
+    if (id.trim() == "" || name.trim() == "" || description == "" || price.trim() == ""
         || seller.trim() == "" || pictures == "" || date.trim() == "" || sold == ""
         || numLiked == "") {
         alert("form not completely filled");
     } else {
-        writeBasicInfoToDatabase(path, id, name, description, price, seller, pictures, date, sold,
+        writeBasicInfoToDatabase(id, name, description, price, seller, pictures, date, sold,
             numLiked);
     }
 };
@@ -35,9 +35,9 @@ var validateForm = () => {
 /*
     This method adds a new product to the database with the basic fields. It replaces any existing data at that path.
  */
-var writeBasicInfoToDatabase = (path, id, name, description, price, seller, pictures, date, sold, numLiked) => {
+var writeBasicInfoToDatabase = (id, name, description, price, seller, pictures, date, sold, numLiked) => {
     console.log("here")
-    set(ref(database, 'products/' + path), {
+    set(ref(database, 'products/' + id), {
         id: id,
         name: name,
         description: description,
@@ -146,10 +146,10 @@ document.querySelector('#product-register').addEventListener("click", () => {
     validateForm();
 })
 document.querySelector('#product-add-category').addEventListener("click", () => {
-    addCategoryAndSubCategoryToProduct("p7", "Room Decor", "Other room decor")
+    addCategoryAndSubCategoryToProduct("p14", "Furniture", "Chairs")
 })
 document.querySelector('#product-add-tag').addEventListener("click", () => {
-    addTagToProduct("p7", "Cute")
+    addTagToProduct("p14", "Lightly Used")
 })
 document.querySelector('#product-add-liked').addEventListener("click", () => {
     modifyNumLiked("p1", -1)

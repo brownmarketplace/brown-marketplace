@@ -19,3 +19,23 @@
     border: rgba(220, 255, 219) 1px solid;
     display: flex;    
 }
+
+.user-listing-item-sold {
+    background: rgba(255, 228, 228, 1);
+    color: #ff4747;
+    margin-left: 4px;
+    margin-right: 6px;
+    padding: 10px 20px;
+    border: rgba(220, 255, 219) 1px solid;
+    display: flex;  
+}
+
+.add-listing-link {
+    text-decoration: none;
+    color: #175E15;
+}
+
+.add-listing-link:hover {
+    text-decoration: none;
+    color: #5db359;
+}

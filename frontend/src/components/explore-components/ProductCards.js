@@ -34,7 +34,7 @@ import database from '../../backend/Database/DBInstance'
 function ProductCards(props) {
     const [products, setProducts] = useState([]);  
     // const [products, setProducts] = useState(sample);  
-    const [pids, setPids] = useState(["p1"])  
+    const [pids, setPids] = useState([])  
 
     const [currentIndex, setCurrentIndex] = useState(products.length - 1)
     const [lastDirection, setLastDirection] = useState()
@@ -94,14 +94,41 @@ function ProductCards(props) {
         console.log("Calling getRecommendations")
         
         // clear current products
-        setProducts([])            
+        setProducts([])   
+        
+        
+        const postConfig = {headers: {
+            // 'Content-Type': 'application/json;charset=UTF-8',
+            // "Access-Control-Allow-Origin": "*",
+        }}
 
-        // loop through the pids array to get the product IDs from the database, and set products to the products array
-        pids.forEach(pid => {
-            onValue(ref(database, 'products/' + pid), (snapshot) => {
-                setProducts(products => [...products, snapshot.val()])
-            }
-        )})
+        // Send the user id to backend
+        let toSend = {user: "u1"}
+        const recommendUrl = "http://127.0.0.1:4567/recommend"
+        
+        console.log("Entering post request")
+        
+        axios.post(recommendUrl, toSend, postConfig)
+            // .then(() => console.log("post ran"))
+            .then((response) => {
+                console.log("recommendation loaded successfully");
+                console.log("data: " + response.data['result'])
+                setPids(response.data['result']);
+                console.log("pids: " + pids)
+                // loop through the pids array to get the product IDs from the database, and set products to the products array
+                response.data['result'].forEach(pid => {
+                    onValue(ref(database, 'products/' + pid), (snapshot) => {
+                        setProducts(products => [...products, snapshot.val()])
+                    }
+                )})
+                console.log("current products: " + products)
+            })
+            .catch(e => console.log("Erroring"))
+            .then(() => {
+                console.log("FINISHED")
+            })
+
+        console.log("Finished loading recc's")
     }
 
     const addToLikedList = (userID, productID) => {
@@ -198,7 +225,8 @@ function ProductCards(props) {
                             />
                             <CardContent className='product-card'>
                                 <Typography gutterBottom variant="h5" component="div">
-                                    {product.name}
+                                    {/* If name exceeds limit, replace with ellipsis */}
+                                    {product.name.length > 25 ? product.name.substring(0, 20) + "..." : product.name}
                                 </Typography>
                                 {/* Set character limit so all cards are uniform */}
                                 <Typography variant="body2" color="text.secondary">
@@ -235,10 +263,10 @@ function ProductCards(props) {
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
                     <ShoppingBagIcon fontSize="large" />
                 </IconButton>
-                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="rec" onClick={postRequestRecommendations}>
+                {/* <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="rec" onClick={postRequestRecommendations}>
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
-                    <CloseIcon fontSize="large" />
-                </IconButton>
+                    {/* <CloseIcon fontSize="large" /> */}
+                {/* </IconButton> */} 
             </div>
             {/* If can't swipe, display "Swipe to get Started" */}
             {/* {firstSwipe && <div className='swipe-to-get-started'>

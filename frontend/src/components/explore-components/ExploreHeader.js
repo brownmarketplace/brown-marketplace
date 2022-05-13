@@ -127,7 +127,7 @@ function ExploreHeader(props) {
         // alignItems="center"
         // >
         <div className='profile-container'>
-            <ProfilePageButton userPicture={pfp}/>
+            <ProfilePageButton userPicture={pfp} userID={props.userID}/>
             <GoogleLogout
                 clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
                 buttonText="Logout"
