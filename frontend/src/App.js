@@ -39,8 +39,11 @@ const App = () => {
           classYear: "sophomore",
           email: response.profileObj.email,
           id: response.googleId,
+          "liked-items": [],
+          listings: [],
           name: response.profileObj.name,
           profilePic: response.profileObj.imageUrl,
+          "purchased-items": []
         })
       }
     })
