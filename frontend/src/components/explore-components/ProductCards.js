@@ -72,7 +72,7 @@ function ProductCards(props) {
         }}
 
         // Send the user id to backend
-        let toSend = {user: "1"}
+        let toSend = {user: "u2"}
         const recommendUrl = "http://127.0.0.1:4567/recommend"
         
         console.log("Entering post request")
