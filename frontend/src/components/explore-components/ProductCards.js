@@ -65,25 +65,33 @@ function ProductCards(props) {
 
     const getRecommendations = () => {
         console.log("Calling getRecommendations")
-        // loop through the pids array to get the product IDs from the database, and set products to the products array
+        
         // clear current products
         setProducts([])
 
-        const postConfig = {headers: {}}
+        const postConfig = {headers: {
+            // 'Content-Type': 'application/json;charset=UTF-8',
+            // "Access-Control-Allow-Origin": "*",
+        }}
 
         // Send the user id to backend
         let toSend = {user: "1"}
         const recommendUrl = "http://127.0.0.1:4567/recommend"
+        console.log("Entering post request")
+        
         axios.post(recommendUrl, toSend, postConfig)
             .then((response) => {
                 console.log("recommendation loaded successfully");
-                setPids(response.data['result']);
+                // setPids(response.data['result']);
                 console.log("Making call", response.data)
+
+                console.log("pids: " + pids)
             })
             .catch(e => console.log("Erroring"))
-        
-        console.log("pids: " + pids)
+            // wait for the response to come back, then set the products
+            
 
+        // loop through the pids array to get the product IDs from the database, and set products to the products array
         pids.forEach(pid => {
             onValue(ref(database, 'products/' + pid), (snapshot) => {
                 setProducts(products => [...products, snapshot.val()])
@@ -98,7 +106,6 @@ function ProductCards(props) {
     }
 
     useEffect(() => {
-        console.log("UseEffect called, logged in state  is: " + props.isLoggedIn)
         // if not logged in, show all products, else show recommendations
         if (!props.isLoggedIn) {
             console.log("Not logged in")
@@ -107,8 +114,6 @@ function ProductCards(props) {
             console.log("Logged in")
             getRecommendations()
         }
-        // getAllProducts();
-        // getRecommendations()
     }, [props.isLoggedIn])
 
     const childRefs = useMemo(

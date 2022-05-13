@@ -33,7 +33,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-    {/* <GoogleAuth/> */}
+    <GoogleAuth/>
     <RecommendApi/>
       <Routes>
         <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
