@@ -15,14 +15,10 @@ const App = () => {
   const cookies = new Cookies();
 
   // State for login
-  const loginState = (response) => {
-    console.log("Before set", cookies.get("userID"))
-    // make the props.showprofilepage true
-    console.log("Google ID: ", response.googleId);
-    
+  const loginState = (response) => {  
     cookies.set("userID", response.googleId)
+    
     // add to DB if not already there
-
   }
 
   const logoutState = () => {
@@ -33,7 +29,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-    <GoogleAuth/>
+    {/* <GoogleAuth/> */}
     <RecommendApi/>
       <Routes>
         <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />

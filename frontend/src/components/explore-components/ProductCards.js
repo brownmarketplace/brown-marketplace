@@ -63,12 +63,8 @@ function ProductCards(props) {
         }
     }
 
-    const getRecommendations = () => {
-        console.log("Calling getRecommendations")
-        
-        // clear current products
-        setProducts([])
-
+    const postRequestRecommendations = () => {
+        console.log("Calling postRequestRecommendations")
         const postConfig = {headers: {
             // 'Content-Type': 'application/json;charset=UTF-8',
             // "Access-Control-Allow-Origin": "*",
@@ -84,12 +80,22 @@ function ProductCards(props) {
                 console.log("recommendation loaded successfully");
                 // setPids(response.data['result']);
                 console.log("Making call", response.data)
-
                 console.log("pids: " + pids)
             })
             .catch(e => console.log("Erroring"))
             // wait for the response to come back, then set the products
-            
+            .then(() => {
+                console.log("Setting products")
+                setProducts(pids)
+            })
+    }
+
+
+    const getRecommendations = () => {
+        console.log("Calling getRecommendations")
+        
+        // clear current products
+        setProducts([])            
 
         // loop through the pids array to get the product IDs from the database, and set products to the products array
         pids.forEach(pid => {
@@ -229,6 +235,10 @@ function ProductCards(props) {
                 <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="right" onClick={() => swipe('right')}>
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
                     <ShoppingBagIcon fontSize="large" />
+                </IconButton>
+                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="rec" onClick={postRequestRecommendations}>
+                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
+                    <CloseIcon fontSize="large" />
                 </IconButton>
             </div>
             {/* If can't swipe, display "Swipe to get Started" */}

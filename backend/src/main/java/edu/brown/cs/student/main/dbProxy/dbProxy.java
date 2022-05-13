@@ -91,7 +91,7 @@ public class dbProxy {
     synchronized (_succeed) {
       while (!_succeed) {
         try {
-          _succeed.wait(1000);
+          _succeed.wait(5000);
         } catch (InterruptedException e) {
           System.out.println("Error: cannot load the users.");
         }

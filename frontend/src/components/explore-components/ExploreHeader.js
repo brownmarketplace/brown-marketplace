@@ -117,7 +117,6 @@ function ExploreHeader(props) {
         {/* { props.showProfile && <ProfilePageButton userPicture={pfp}/> } */}
 
         {/* if not logged in, show GoogleLogin, else show ProfilePage */}
-        {console.log("User ID in ExploreHeader", props.userID)}
         {isLoggedIn ? 
         
         // <Grid
