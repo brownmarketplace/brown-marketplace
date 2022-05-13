@@ -20,7 +20,7 @@ function AddPhotos({handleInputChange, productImgUrls}) {
                         multiline
                         rows={5}
                         variant="outlined"
-                        placeholder="Enter up to 6 comma-separated image urls."
+                        placeholder="Enter comma-separated image urls. Note: please do not include urls with commas in them."
                         className="details-text"
                         onChange={handleInputChange}
                         name="productImgUrls"
