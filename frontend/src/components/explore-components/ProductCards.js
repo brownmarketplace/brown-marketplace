@@ -23,7 +23,6 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ReplayIcon from '@mui/icons-material/Replay';
-import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AddIcon from '@mui/icons-material/Add';
