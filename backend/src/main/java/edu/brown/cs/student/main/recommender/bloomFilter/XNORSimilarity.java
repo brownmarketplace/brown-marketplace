@@ -1,6 +1,6 @@
-package edu.brown.cs.student.main.Recommender.bloomFilter;
+package edu.brown.cs.student.main.recommender.bloomFilter;
 
-import edu.brown.cs.student.main.Structures.Product;
+import edu.brown.cs.student.main.structures.Product;
 import java.util.Comparator;
 
 /**
@@ -41,9 +41,9 @@ public class XNORSimilarity implements Comparator {
 
     // perform XNOR similarity with both bit arrays and the target student
     int countOne = this.computeXNOR(targetBitArray, bitArrayOne);
-    ((Product) o1).setXNORSimilarity(countOne);
+//    ((Product) o1).setXNORSimilarity(countOne);
     int countTwo = this.computeXNOR(targetBitArray, bitArrayTwo);
-    ((Product) o2).setXNORSimilarity(countTwo);
+//    ((Product) o2).setXNORSimilarity(countTwo);
 
     // compare the number of bits set to 1 in the two result bit arrays
     if (countOne > countTwo) { //sort in descending order

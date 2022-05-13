@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 // Load the data from backend
@@ -8,20 +8,25 @@ function RecommendApi() {
 
     const postConfig = {headers: {}}
 
-    // Send the user id to backend
-    let toSend = {user: "1"}
+    // useEffect(() => {
+    let toSend = {user: "u1"}
     const recommendUrl = "http://127.0.0.1:4567/recommend"
     axios.post(recommendUrl, toSend, postConfig)
         .then((response) => {
             console.log("recommendation loaded successfully");
+            console.log("here too")
             setExplore(response.data['result']);
             console.log(response.data)
         })
         .catch(e => console.log("Erroring"))
+        // }, []);
+
+    // Send the user id to backend
+    
     
     return (
         <div>
-            {/* {console.log("here")} */}
+            {console.log("here")}
             {React.createElement('p', {}, explore)}
         </div>
     );

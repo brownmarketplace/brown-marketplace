@@ -52,8 +52,17 @@
     /* Center */
     justify-content: center;
     width: 30%;
-    bottom: 3vh;
+    bottom: 16vh;
     justify-content: space-evenly;
+    /* move left more */
+    left: 33.4vw;
+}
+
+.swipe-to-get-started {
+    display: flex;
+    position: fixed;
+    bottom: 10vh;
+    left: 43vw;
 }
 
 /* Override MUI boxshadow */
@@ -63,21 +72,21 @@
 }
   
 .left {
-    padding: 1.5rem !important;
+    padding: 1.25rem !important;
     color: #ec5e6f !important;
 }
 
 .repeat {
-    padding: 1.5rem !important;
+    padding: 1.25rem !important;
     color: #f5b748 !important;
 }
 
 .bookmark {
-    padding: 1.5rem !important;
+    padding: 1.25rem !important;
     color: #62b4f9 !important;
 }
 
 .right {
-    padding: 1.5rem !important;
+    padding: 1.25rem !important;
     color: #76e2b3 !important;
 }

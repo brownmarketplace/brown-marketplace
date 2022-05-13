@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 // Component Imports
 import TinderCard from "react-tinder-card";
@@ -22,53 +23,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import ReplayIcon from '@mui/icons-material/Replay';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 // Database Imports
 import { ref, set, get, onValue, query, orderByChild, equalTo, child }
   from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 import database from '../../backend/Database/DBInstance'
 
-function ProductCards() {
-    const sample = [{
-        name: 'Frog',
-        pictures: 'https://www.aquariumofpacific.org/images/exhibits/Magnificent_Tree_Frog_900.jpg',
-        description: 'Cool animal that lives on Earth',
-        price: '$10'
-    },
-    {
-        name: 'Flamingo',
-        pictures: 'https://i.pinimg.com/564x/e6/33/34/e63334958361afd77c65e8cdf0ad62ac.jpg',
-        description: 'Cool animal that lives on Earth',
-        price: '$10'
-    },
-    {
-        name: 'Fox',
-        pictures: 'https://i.pinimg.com/564x/ef/49/37/ef493790714a037449d62d3f2a6fccbf.jpg',
-        description: 'Cool animal that lives on Earth',
-        price: '$10'
-    },
-    {
-        name: 'Seal',
-        pictures: 'https://i.pinimg.com/564x/0e/81/6e/0e816e21de2f3ed8f12b3b8426a35bac.jpg',
-        description: 'Cool animal that lives on Earth and is really cute!',
-        price: '$10'
-    },
-    {
-        name: 'Meerkat',
-        pictures: 'https://i.pinimg.com/564x/94/d4/ac/94d4acf4890271614be7018e7f035efe.jpg',
-        description: 'Cool animal that lives on Earth',
-        price: '$10000'
-    },
-    {
-        name: 'Mushroom Crochets',
-        pictures: 'https://embed.filekitcdn.com/e/pZVtAQBFhqs4ADp3yRAnVv/6J9S2S2ez1N2JNCkbxCfKt',
-        description: 'Cool animal that lives on Earth',
-        price: '$10'
-    }]
 
+function ProductCards(props) {
     const [products, setProducts] = useState([]);  
     // const [products, setProducts] = useState(sample);  
-    const [pids, setPids] = useState(["p3", "p6", "p1"])  
+    const [pids, setPids] = useState([])  
 
     const [currentIndex, setCurrentIndex] = useState(products.length - 1)
     const [lastDirection, setLastDirection] = useState()
@@ -86,7 +52,6 @@ function ProductCards() {
             // save all of the childSnapshots in an array
             let i = 1;
             snapshot.forEach(childSnapshot => {
-                console.log(`childSnapshot ${i}`)
                 setProducts(products => [...products, childSnapshot.val()])
                 i++;
             })      
@@ -98,14 +63,72 @@ function ProductCards() {
         }
     }
 
+    const postRequestRecommendations = () => {
+        console.log("Calling postRequestRecommendations")
+        
+        const postConfig = {headers: {
+            // 'Content-Type': 'application/json;charset=UTF-8',
+            // "Access-Control-Allow-Origin": "*",
+        }}
+
+        // Send the user id to backend
+        let toSend = {user: "u1"}
+        const recommendUrl = "http://127.0.0.1:4567/recommend"
+        
+        console.log("Entering post request")
+        
+        axios.post(recommendUrl, toSend, postConfig)
+            // .then(() => console.log("post ran"))
+            .then((response) => {
+                console.log("recommendation loaded successfully");
+                // setPids(response.data['result']);
+                console.log("Making call", response.data)
+                console.log("pids: " + pids)
+            })
+            .catch(e => console.log("Erroring"))
+            // wait for the response to come back, then set the products
+    }
+
+
     const getRecommendations = () => {
         console.log("Calling getRecommendations")
-        // loop through the pids array to get the product IDs from the database, and set products to the products array
-        pids.forEach(pid => {
-            onValue(ref(database, 'products/' + pid), (snapshot) => {
-                setProducts(products => [...products, snapshot.val()])
-            }
-        )})
+        
+        // clear current products
+        setProducts([])   
+        
+        
+        const postConfig = {headers: {
+            // 'Content-Type': 'application/json;charset=UTF-8',
+            // "Access-Control-Allow-Origin": "*",
+        }}
+
+        // Send the user id to backend
+        let toSend = {user: "u1"}
+        const recommendUrl = "http://127.0.0.1:4567/recommend"
+        
+        console.log("Entering post request")
+        
+        axios.post(recommendUrl, toSend, postConfig)
+            // .then(() => console.log("post ran"))
+            .then((response) => {
+                console.log("recommendation loaded successfully");
+                console.log("data: " + response.data['result'])
+                setPids(response.data['result']);
+                console.log("pids: " + pids)
+                // loop through the pids array to get the product IDs from the database, and set products to the products array
+                response.data['result'].forEach(pid => {
+                    onValue(ref(database, 'products/' + pid), (snapshot) => {
+                        setProducts(products => [...products, snapshot.val()])
+                    }
+                )})
+                console.log("current products: " + products)
+            })
+            .catch(e => console.log("Erroring"))
+            .then(() => {
+                console.log("FINISHED")
+            })
+
+        console.log("Finished loading recc's")
     }
 
     const addToLikedList = (userID, productID) => {
@@ -115,15 +138,21 @@ function ProductCards() {
     }
 
     useEffect(() => {
-        getAllProducts()
-        // getRecommendations()
-    }, [])
+        // if not logged in, show all products, else show recommendations
+        if (!props.isLoggedIn) {
+            console.log("Not logged in")
+            getAllProducts()
+        } else {
+            console.log("Logged in")
+            getRecommendations()
+        }
+    }, [props.isLoggedIn])
 
     const childRefs = useMemo(
         () => 
         Array(products.length)
             .fill(0)
-            .map((i) => React.createRef())
+            .map((i) => React.createRef()), [props.isLoggedIn]
     )
 
     const updateCurrentIndex = (val) => {
@@ -135,13 +164,15 @@ function ProductCards() {
 
     const canSwipe = currentIndex >= 0
 
+    const firstSwipe = currentIndex === -1 && products.length > 0
+
     // set last direction and decrease current index
     const swiped = (direction, nameToDelete, index) => {
         setLastDirection(direction)
         updateCurrentIndex(index - 1)
     }
 
-    const outOfFrame = (dir, name, idx) => {
+    const outOfFrame = (dir, name, idx, id) => {
         console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current)
         
         // handle the case in which go back is pressed before card goes outOfFrame
@@ -149,11 +180,12 @@ function ProductCards() {
       
         // if swipe was right, go to "/product/product-name"
         if (dir === 'right') {
-            navigate(`/product/${name}`)
+            navigate(`/product/${id}`)
         }
     }
 
     const swipe = async (dir) => {
+        console.log("refs: ", childRefs)
         if (canSwipe && currentIndex < products.length) {
         await childRefs[currentIndex].current.swipe(dir) // Swipe the card!
         }
@@ -161,6 +193,7 @@ function ProductCards() {
 
     // increase current index and show card
     const goBack = async () => {
+        console.log("refs: ", childRefs)
         if (!canGoBack) return
         const newIndex = currentIndex + 1
         updateCurrentIndex(newIndex)
@@ -175,11 +208,11 @@ function ProductCards() {
                         ref={childRefs[index]}
                         className="swipe"
                         // give each card a unique key, efficient to re-render
-                        // key={product.name}
+                        key={product.id}
                         // update current index when card is swiped
                         onSwipe={(dir) => swiped(dir, product.name, index)}
                         // when card leaves screen, update current index
-                        onCardLeftScreen={(dir) => outOfFrame(dir, product.name, index)}
+                        onCardLeftScreen={(dir) => outOfFrame(dir, product.name, index, product.id)}
                         // only allow swiping left or right
                         preventSwipe={['up', 'down']}
                     >
@@ -196,12 +229,14 @@ function ProductCards() {
                                 </Typography>
                                 {/* Set character limit so all cards are uniform */}
                                 <Typography variant="body2" color="text.secondary">
-                                    {product.description}
+                                    {/* If description exceeds on line, replace with ellipsis */}
+                                    {product.description.length > 70 ? product.description.substring(0, 70) + " [...]" : product.description}    
                                 </Typography>
                                 <div className='price'>
                                 {/* <Paper backgroundColor="#7fadff" className="price" elevation={1}> */}
                                     <Typography variant="h5" color="white">
-                                        {product.price}
+                                        {/* If the price's first digit is not dollar sign, add it */}
+                                        {product.price.charAt(0) !== '$' ? `$${product.price}` : product.price}
                                     </Typography>
                                 {/* </Paper> */}
                                 </div>
@@ -212,18 +247,32 @@ function ProductCards() {
             </div>
             <div className='product-buttons'>
                 <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="left" onClick={() => swipe('left')}>
+                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="left" onClick={() => swipe('left')}> */}
                     <CloseIcon fontSize="large" />
                 </IconButton>
                 <IconButton style={{ backgroundColor: !canGoBack && '#c3c4d3' }} className="repeat" onClick={() => goBack()}>
+                {/* <IconButton style={{ backgroundColor: (!canGoBack || firstSwipe) && '#c3c4d3' }} className="repeat" onClick={() => goBack()}> */}
                     <ReplayIcon fontSize="large" />
                 </IconButton>
-                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}>
-                    <StarRateIcon fontSize="large" />
-                </IconButton>
-                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="right" onClick={() => swipe('right')}>
+                <IconButton style={{ backgroundColor: !canSwipe  && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}>
+                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}> */}
                     <FavoriteIcon fontSize="large" />
                 </IconButton>
+                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="right" onClick={() => swipe('right')}>
+                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
+                    <ShoppingBagIcon fontSize="large" />
+                </IconButton>
+                {/* <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="rec" onClick={postRequestRecommendations}>
+                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
+                    {/* <CloseIcon fontSize="large" /> */}
+                {/* </IconButton> */} 
             </div>
+            {/* If can't swipe, display "Swipe to get Started" */}
+            {/* {firstSwipe && <div className='swipe-to-get-started'>
+                <Typography variant="h5" color="textPrimary">
+                    Swipe to get started
+                </Typography>
+            </div>} */}
         </div>
     );
 }

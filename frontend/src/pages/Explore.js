@@ -20,7 +20,7 @@ import defaultProfilePicture from '../images/pfp.png'
 function Explore(props) {
   return (
     <div className="boilerplate">
-        <ExploreHeader title={props.title} userPicture={props.pfp}/>
+        <ExploreHeader userID={props.userID} loginState={props.loginState} logoutState={props.logoutState} title={props.title} userPicture={props.pfp}/>
         <div style={{ textAlign: 'center', marginTop: '30px' }}>
            Empty
         </div>
