@@ -39,7 +39,7 @@ function UserListings(props) {
   const UserListingsMapper = (props) => {
 
     const listingIds = []
-    for (const [_, prodId] of Object.entries(props.listings)) {
+    for (const [prodId, _] of Object.entries(props.listings)) {
       listingIds.push(prodId);
     }
     

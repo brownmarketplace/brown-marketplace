@@ -9,6 +9,7 @@ import './App.css'
 import RecommendApi from './Recommend-api';
 import GoogleAuth from './backend/google';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 // Database Imports
 import { ref, set, get, onValue, query, orderByChild, equalTo, child }
@@ -24,6 +25,21 @@ const App = () => {
     console.log("response", response)
     
     const id = "u" + response.googleId
+
+
+    console.log("Entering post request")
+    const postConfig = {headers: {}}
+    // Send the user id to backend
+    let toSend = {user: id}
+    // Fetch the recommended result from backend
+    const userUrl = "http://127.0.0.1:4567/userReq"
+    axios.post(userUrl, toSend, postConfig)
+        .then((response) => {
+            console.log("user loaded successfully");
+            console.log(response.data['result'])
+        })
+        .catch(e => console.log(e))
+
     cookies.set("userID", id)
     cookies.set("name", response.profileObj.name)
     cookies.set("email", response.profileObj.email)

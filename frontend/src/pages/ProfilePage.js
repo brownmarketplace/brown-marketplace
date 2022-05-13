@@ -22,8 +22,6 @@ function ProfilePage(props) {
             
             if (userInfo) {
                 if (userInfo.profilePic) {
-                    console.log('userInfo.profilePic')
-                    console.log(userInfo.profilePic)
                     setImg(userInfo.profilePic)
                 }
             }})

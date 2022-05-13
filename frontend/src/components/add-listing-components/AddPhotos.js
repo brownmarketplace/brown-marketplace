@@ -18,7 +18,7 @@ function AddPhotos({handleInputChange, productImgUrls}) {
                     <TextField
                         id="outlined-multiline-static"
                         multiline
-                        rows={1}
+                        rows={5}
                         variant="outlined"
                         placeholder="Enter up to 6 comma-separated image urls."
                         className="details-text"

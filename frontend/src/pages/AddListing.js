@@ -58,7 +58,6 @@ function AddListing(props) {
     }
 
     const handleImgUrlChange = (event) => {
-
         const inputFieldName = event.target.name;
         let inputFieldValue = event.target.value;
         if (typeof inputFieldValue === 'string') {
