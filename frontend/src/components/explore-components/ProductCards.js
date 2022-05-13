@@ -225,7 +225,8 @@ function ProductCards(props) {
                             />
                             <CardContent className='product-card'>
                                 <Typography gutterBottom variant="h5" component="div">
-                                    {product.name}
+                                    {/* If name exceeds limit, replace with ellipsis */}
+                                    {product.name.length > 25 ? product.name.substring(0, 20) + "..." : product.name}
                                 </Typography>
                                 {/* Set character limit so all cards are uniform */}
                                 <Typography variant="body2" color="text.secondary">

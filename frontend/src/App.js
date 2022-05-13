@@ -25,6 +25,19 @@ const App = () => {
     cookies.set("userID", response.googleId)
     
     // add to DB if not already there
+    const userRef  = ref(database, 'users/' + response.googleId)
+    const q = query(userRef)
+    get(q).then(snapshot => {
+      if (snapshot.val() === null) {
+        // add user to DB
+        set(ref(database, 'users/' + response.googleId), {
+          classYear: "sophomore",
+          email: response.profileObj.email,
+          id: response.googleId,
+          profilePic: response.profileObj.imageUrl,
+        })
+      }
+    })
   }
 
   const logoutState = () => {
