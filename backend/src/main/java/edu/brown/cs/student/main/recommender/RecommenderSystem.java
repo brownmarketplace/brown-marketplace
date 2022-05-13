@@ -1,8 +1,8 @@
-package edu.brown.cs.student.main.Recommender;
+package edu.brown.cs.student.main.recommender;
 
-import edu.brown.cs.student.main.Recommender.bloomFilter.BFRecommender;
-import edu.brown.cs.student.main.Recommender.bloomFilter.XNORSimilarity;
-import edu.brown.cs.student.main.Structures.Product;
+import edu.brown.cs.student.main.recommender.bloomFilter.BFRecommender;
+import edu.brown.cs.student.main.recommender.bloomFilter.XNORSimilarity;
+import edu.brown.cs.student.main.structures.Product;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -32,6 +32,9 @@ public class RecommenderSystem {
    * @return List of k most similar product recommendations for the target product
    */
   public List<String> generateBFRecommendations(Product targetProduct, int k, double falsePosRate, int maxNum) {
+    if (targetProduct.getBf() == null) {
+      targetProduct.generateBF(.2, 20);
+    }
     // create bloom filters for each product in the list
     for (Product product: this.productsList) {
       product.generateBF(falsePosRate, maxNum);
@@ -70,9 +73,9 @@ public class RecommenderSystem {
         recommendationPool.add(rec);
       }
     } else {
-      for (int j = 0; j < numRecs; j++) {
-        List<String> recs = this.generateBFRecommendations(likedProducts.get(j), 1, .2, 20);
-        for (int k = 0; k < randFactor; k++) {
+      for (int j = 0; j < likedProducts.size(); j++) {
+        List<String> recs = this.generateBFRecommendations(likedProducts.get(j), numRecs, .2, 20);
+        for (int k = 0; k < numRecs; k++) {
           String rec = recs.get(k);
           recommendationPool.add(rec);
         }

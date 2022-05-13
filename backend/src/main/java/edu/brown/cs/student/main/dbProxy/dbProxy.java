@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import edu.brown.cs.student.main.Structures.Product;
+import edu.brown.cs.student.main.structures.Product;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,12 +20,12 @@ public class dbProxy {
 
   private Set<String> _userLikes;
   private Map<String, Map<String, Object>> _productMap;
+  private Boolean _succeed;
 
   public dbProxy(){
     _productMap = null;
     _userLikes = null;
-//    _user = new User();
-//    _productList = new ArrayList<Product>();
+    _succeed = false;
 
     try {
       this.connectDb();
@@ -56,14 +56,8 @@ public class dbProxy {
     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-//        Set<String> purchased = ((Map<String, Object>) dataSnapshot.child("purchased-items").getValue()).keySet();
         _userLikes = ((Map<String, Object>) dataSnapshot.child("liked-items").getValue()).keySet();
-
-//        for (String likedID: likes) {
-//
-//        }
-//        _user.setListings(purchased);
-//        _user.setLikes(likes);
+        _succeed = true;
       }
 
       @Override
@@ -77,18 +71,10 @@ public class dbProxy {
     DatabaseReference productRef = FirebaseDatabase.getInstance()
         .getReference("/products");
 
-    // get first 100 product reference
-    //orderByChild("sold").limitToLast(100).
     productRef.orderByChild("sold").addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-//        System.out.println(dataSnapshot.getValue());
         _productMap = (Map<String, Map<String, Object>>) dataSnapshot.getValue();
-//        _productList.setProducts(products);
-//        Iterator<DataSnapshot> products = dataSnapshot.getChildren().iterator();
-//        while (products.hasNext()) {
-//          System.out.println(products.next().getValue());
-//        }
       }
 
       @Override
@@ -99,32 +85,38 @@ public class dbProxy {
   }
 
   public ArrayList<Product> getLiked(String id){
-
+    // Get user liked-items from db
     this.queryUser(id);
-    try {
-      Thread.sleep(5000);
-    } catch (Exception e) {
-      System.out.println(e);
+    // Wait for db loading
+    synchronized (_succeed) {
+      while (!_succeed) {
+        try {
+          _succeed.wait(5000);
+        } catch (InterruptedException e) {
+          System.out.println("Error: cannot load the users.");
+        }
+      }
     }
+    _succeed = false;
 
-    System.out.println(_userLikes);
-
-    ArrayList<Product> likedList = new ArrayList<>();
+    // Check if products are loaded
     if (_productMap == null) {
       System.out.println("Error: failed to load the product information");
-    } else if (_userLikes == null || _userLikes.size() == 0) {
-      System.out.println("Error: failed to load the user information");
-    } else {
+      return null;
+    }
+    // Check if there exists liked items
+    else if (_userLikes == null || _userLikes.size() == 0) {
+      return null;
+    }
+    // Match the liked items with product info
+    else {
+      ArrayList<Product> likedList = new ArrayList<>();
       for (String productID : _productMap.keySet()) {
         Map<String, Object> temp = _productMap.get(productID);
         if (_userLikes.contains(productID)) {
           likedList.add(new Product(temp));
         }
       }
-    }
-    if (likedList.size() == 0) {
-      return null;
-    } else {
       return likedList;
     }
   }

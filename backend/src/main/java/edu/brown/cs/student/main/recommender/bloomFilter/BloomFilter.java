@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.Recommender.bloomFilter;
+package edu.brown.cs.student.main.recommender.bloomFilter;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

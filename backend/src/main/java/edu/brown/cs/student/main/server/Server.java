@@ -2,8 +2,8 @@ package edu.brown.cs.student.main.server;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import edu.brown.cs.student.main.Recommender.RecommenderSystem;
-import edu.brown.cs.student.main.Structures.Product;
+import edu.brown.cs.student.main.recommender.RecommenderSystem;
+import edu.brown.cs.student.main.structures.Product;
 import org.json.JSONException;
 import org.json.JSONObject;
 import edu.brown.cs.student.main.dbProxy.dbProxy;
@@ -16,10 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class sets up a Spark server that connects the recommender to the frontend.
+ */
 public class Server {
 
   private dbProxy _proxy;
 
+  /**
+   * Initialize the Server with database proxy.
+   * @param proxy the database
+   */
   public Server(dbProxy proxy){
     _proxy = proxy;
   }
@@ -58,14 +65,12 @@ public class Server {
   private class RecommendHandler implements Route {
     @Override
     public String handle(Request req, Response res) {
-      //initiate db
       Gson gson = new Gson();
 
       JSONObject reqJson;
       String id;
-
+      // Parse for user id
       try {
-        // Parse the request's body
         reqJson = new JSONObject(req.body());
         id = reqJson.getString("user");
       } catch (JSONException e) {
@@ -74,22 +79,18 @@ public class Server {
         return gson.toJson(error);
       }
 
+      // Get products and liked-items from db
       ArrayList<Product> products = _proxy.getProduct();
-      RecommenderSystem recSys = new RecommenderSystem(products);
-
       ArrayList<Product> likedProducts = _proxy.getLiked(id);
-      List<String> recommendedProducts;
-//      if (likedProducts == null) {
-//        recommendedProducts = recSys.generateDefaultExploreRecommendations(5);
-//      } else {
-//        recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
-//      }
-      recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
 
-//      System.out.println(user.getPurchased());
-//      System.out.println(products.getProducts());
-//      Map<String, Object> tags = (Map<String, Object>) products.getProducts().get("p1").get("tags");
-//      System.out.println(new ArrayList<String>(tags.keySet()));
+      // Recommend
+      RecommenderSystem recSys = new RecommenderSystem(products);
+      List<String> recommendedProducts;
+      if (likedProducts == null) { // Random recommendations
+        recommendedProducts = recSys.generateDefaultExploreRecommendations(6);
+      } else { // Preference based recommendations
+        recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
+      }
 
       return gson.toJson(ImmutableMap.of("result", recommendedProducts));
     }

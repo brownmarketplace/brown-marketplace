@@ -1,7 +1,7 @@
-package edu.brown.cs.student.main.Structures;
+package edu.brown.cs.student.main.structures;
 
-import edu.brown.cs.student.main.Recommender.bloomFilter.BFInsertable;
-import edu.brown.cs.student.main.Recommender.bloomFilter.BloomFilter;
+import edu.brown.cs.student.main.recommender.bloomFilter.BFInsertable;
+import edu.brown.cs.student.main.recommender.bloomFilter.BloomFilter;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class Product implements BFInsertable {
   private Map<String, Object> attributes;
   private BloomFilter bf;
-  private double xnorSimilarity;
+//  private double xnorSimilarity;
 
   /**
    * The constructor of Product. Since the overall dataset isn't being stored and consistently
@@ -105,7 +105,7 @@ public class Product implements BFInsertable {
     return this.bf;
   }
 
-  public void setXNORSimilarity(double similarity) {
-    this.xnorSimilarity = (double) similarity;
-  }
+//  public void setXNORSimilarity(double similarity) {
+//    this.xnorSimilarity = (double) similarity;
+//  }
 }
