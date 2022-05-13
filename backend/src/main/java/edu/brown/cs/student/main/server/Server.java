@@ -2,11 +2,12 @@ package edu.brown.cs.student.main.server;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import edu.brown.cs.student.main.proxy.dbProxy;
 import edu.brown.cs.student.main.recommender.RecommenderSystem;
 import edu.brown.cs.student.main.structures.Product;
 import org.json.JSONException;
 import org.json.JSONObject;
-import edu.brown.cs.student.main.dbProxy.dbProxy;
+
 import spark.Request;
 import spark.Response;
 import spark.Route;

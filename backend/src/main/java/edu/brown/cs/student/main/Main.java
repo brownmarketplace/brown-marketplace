@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.dbProxy.dbProxy;
+import edu.brown.cs.student.main.proxy.dbProxy;
 import edu.brown.cs.student.main.server.Server;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
