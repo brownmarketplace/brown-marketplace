@@ -1,11 +1,8 @@
-import React from 'react';
+import React from 'react'
+
+import ProductPreview from './ProductPreview'
 
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography';
-import { ImageList } from '@mui/material'
-import { ImageListItem } from '@mui/material'
-
-import ProductPreview from './ProductPreview';
 
 function Storefront(props) {
     return (
@@ -17,10 +14,10 @@ function Storefront(props) {
         //     </Grid>)}
         // </Grid>
 
-        <Grid container spacing={2}>
-            {props.productIDs.map((e, idx) =>
+        <Grid container spacing={4}>
+            {props.products.map((item, idx) =>
                 <Grid item key={idx} xs={6} md={4} lg={3}>
-                    <ProductPreview productId={e} />
+                    <ProductPreview productInfo={item} />
                 </Grid>)}
         </Grid>
 
@@ -44,11 +41,11 @@ function Storefront(props) {
         // <ul className="product-holder">
         //     {productIds.map((e) => <li><ProductPreview productId={e} /></li>)}
         // </ul>
-    );
+    )
 }
 
 Storefront.defaultProps = {
     productIDs: [],
 }
 
-export default Storefront;
+export default Storefront
