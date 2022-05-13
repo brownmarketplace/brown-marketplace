@@ -80,9 +80,13 @@ public class Server {
         return gson.toJson(error);
       }
 
+      System.out.println(id);
+
       // Get products and liked-items from db
       ArrayList<Product> products = _proxy.getProduct();
       ArrayList<Product> likedProducts = _proxy.getLiked(id);
+
+      System.out.println("query made");
 
       // Recommend
       RecommenderSystem recSys = new RecommenderSystem(products);
@@ -92,6 +96,8 @@ public class Server {
       } else { // Preference based recommendations
         recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
       }
+
+      System.out.println("recommender made");
 
       return gson.toJson(ImmutableMap.of("result", recommendedProducts));
     }

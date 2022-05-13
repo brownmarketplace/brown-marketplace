@@ -30,7 +30,7 @@ const App = () => {
   return (
     <BrowserRouter>
     {/* <GoogleAuth/> */}
-    <RecommendApi/>
+    {/* <RecommendApi/> */}
       <Routes>
         <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
         <Route path="/explore" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
