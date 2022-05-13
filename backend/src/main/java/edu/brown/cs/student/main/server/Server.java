@@ -2,7 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import edu.brown.cs.student.main.proxy.dbProxy;
+import edu.brown.cs.student.main.proxy.DbProxy;
 import edu.brown.cs.student.main.recommender.RecommenderSystem;
 import edu.brown.cs.student.main.structures.Product;
 import org.json.JSONException;
@@ -22,16 +22,22 @@ import java.util.Map;
  */
 public class Server {
 
-  private dbProxy _proxy;
+  private DbProxy proxy;
 
   /**
    * Initialize the Server with database proxy.
-   * @param proxy the database
+   *
+   * @param proxy the Firebase database proxy that performs query
    */
-  public Server(dbProxy proxy){
-    _proxy = proxy;
+  public Server(DbProxy proxy) {
+    this.proxy = proxy;
   }
 
+  /**
+   * Run the Server with given routes.
+   *
+   * @param port the port number that the server runs on
+   */
   public void runSparkServer(int port) {
     Spark.port(port);
     Spark.externalStaticFileLocation("src/main/resources/static");
@@ -54,16 +60,24 @@ public class Server {
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
     // Put Routes Here
+    Spark.post("/userReq", new UserHandler());
     Spark.post("/recommend", new RecommendHandler());
 
     Spark.init();
   }
 
-
   /**
-   * Attempt to update a row in a table.
+   * This handler uses post request to receive a JsonObject of user id, and performs the user liked
+   * object query.
    */
-  private class RecommendHandler implements Route {
+  private class UserHandler implements Route {
+    /**
+     * This method loads the given user into the backend cache.
+     *
+     * @param req the request user id
+     * @param res the response object
+     * @return success message or an error code if the user id cannot be parsed
+     */
     @Override
     public String handle(Request req, Response res) {
       Gson gson = new Gson();
@@ -80,13 +94,37 @@ public class Server {
         return gson.toJson(error);
       }
 
-      System.out.println(id);
+      // Query for user id
+      proxy.queryUser(id);
+      System.out.println("User id received: " + id);
+
+      return gson.toJson(ImmutableMap.of("result", "user id successfully read"));
+    }
+  }
+
+  /**
+   * This handler performs the recommendation and sends the results to the front end.
+   */
+  private class RecommendHandler implements Route {
+    /**
+     * Attempt to return a JSON object containing a list of recommended product ids.
+     * Returns randomized recommended objects if the user liked information is not found.
+     *
+     * @param req the request object, not used
+     * @param res the response object
+     * @return list of product ids or an error code if the products are not loaded.
+     */
+    @Override
+    public String handle(Request req, Response res) {
+      Gson gson = new Gson();
 
       // Get products and liked-items from db
-      ArrayList<Product> products = _proxy.getProduct();
-      ArrayList<Product> likedProducts = _proxy.getLiked(id);
-
-      System.out.println("query made");
+      ArrayList<Product> products = proxy.getProduct();
+      if (products == null || products.size() == 0) {
+        res.status(500);
+        return gson.toJson(ImmutableMap.of("error", "products not loaded into backend"));
+      }
+      ArrayList<Product> likedProducts = proxy.getLiked();
 
       // Recommend
       RecommenderSystem recSys = new RecommenderSystem(products);
@@ -96,11 +134,9 @@ public class Server {
       } else { // Preference based recommendations
         recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
       }
-
-      System.out.println("recommender made");
+      System.out.println("Recommendations are successfully sent! \n");
 
       return gson.toJson(ImmutableMap.of("result", recommendedProducts));
     }
   }
-
 }

@@ -25,3 +25,8 @@
     align-items: center;
     height: 5vw;
 }
+
+.boilerplate-title:hover {
+    text-decoration: none;
+    color: #c4d9ff;
+}
