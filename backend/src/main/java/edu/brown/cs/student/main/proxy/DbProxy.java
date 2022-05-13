@@ -38,7 +38,7 @@ public class DbProxy {
     try {
       this.connectDb();
     } catch (IOException e) {
-      System.out.println("Error: cannot connect to the firebase. \n");
+      System.out.println("Error: cannot connect to the firebase.");
     }
 
     this.queryProducts();
@@ -80,7 +80,7 @@ public class DbProxy {
       public void onDataChange(DataSnapshot dataSnapshot) {
         userLikes = ((Map<String, Object>) dataSnapshot.child("liked-items").getValue()).keySet();
         succeed = true;
-        System.out.println("User query succeed!\n");
+        System.out.println("User query succeed!");
       }
 
       /**
@@ -112,7 +112,8 @@ public class DbProxy {
        */
       public void onDataChange(DataSnapshot dataSnapshot) {
         productMap = (Map<String, Map<String, Object>>) dataSnapshot.getValue();
-        System.out.println("Product query succeed! \n");
+        succeed = true;
+        System.out.println("Product query succeed!");
       }
 
       /**
@@ -136,7 +137,7 @@ public class DbProxy {
         try {
           succeed.wait(WAIT_TIME);
         } catch (InterruptedException e) {
-          System.out.println("Error: cannot load from database.\n");
+          System.out.println("Error: cannot load from database.");
         }
       }
     }
@@ -149,6 +150,7 @@ public class DbProxy {
    * @return an arraylist of liked product (null if cannot find the user like items)
    */
   public ArrayList<Product> getLiked() {
+    this.waitSucceed();
     // Check if there exists liked items
     if (userLikes == null || userLikes.size() == 0) {
       return null;
@@ -170,6 +172,7 @@ public class DbProxy {
    * @return an arraylist of unsold product (max size 100)
    */
   public ArrayList<Product> getProduct() {
+    this.waitSucceed();
     int count = 0;
     ArrayList<Product> productList = new ArrayList<>();
     for (String id : productMap.keySet()) {
