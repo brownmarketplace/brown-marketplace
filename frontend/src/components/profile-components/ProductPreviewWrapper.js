@@ -7,8 +7,7 @@ import { ref, onValue }
 import "./wishlist.css"
 
 function ProductPreviewWrapper(props) {
-    let productId = props.productId.substring(1);
-    productId = productId.substring(0, productId.length - 1);
+    let productId = props.productId;
 
     const [productInfo, setProductInfo] = useState({
         id: productId,
