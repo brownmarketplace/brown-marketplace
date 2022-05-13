@@ -45,7 +45,9 @@ public class DbProxy {
   }
 
   /**
-   * The proxy connects to database and cache the products.
+   * The proxy connects to database.
+   *
+   * @throws IOException if the connection fails
    */
   private void connectDb() throws IOException {
     FileInputStream refreshToken = new FileInputStream("config/secret/firebase-key.json");
@@ -69,6 +71,11 @@ public class DbProxy {
 
     // get the user reference
     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+      /**
+       * This async method performs query based on liked-items and store them as a set.
+       *
+       * @param dataSnapshot the map object returned from database
+       */
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
         userLikes = ((Map<String, Object>) dataSnapshot.child("liked-items").getValue()).keySet();
@@ -76,6 +83,11 @@ public class DbProxy {
         System.out.println("User query succeed!\n");
       }
 
+      /**
+       * This method prints out the error message when the query is interrupted.
+       *
+       * @param error database
+       */
       @Override
       public void onCancelled(DatabaseError error) {
         System.out.println(error);
@@ -90,13 +102,24 @@ public class DbProxy {
     DatabaseReference productRef = FirebaseDatabase.getInstance()
         .getReference("/products");
 
+    // Prioritize products that are not sold
     productRef.orderByChild("sold").addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
+      /**
+       * This async method performs query based on all the products and store them as a map.
+       *
+       * @param dataSnapshot the map object returned from database
+       */
       public void onDataChange(DataSnapshot dataSnapshot) {
         productMap = (Map<String, Map<String, Object>>) dataSnapshot.getValue();
         System.out.println("Product query succeed! \n");
       }
 
+      /**
+       * This method prints out the error message when the query is interrupted.
+       *
+       * @param error database
+       */
       @Override
       public void onCancelled(DatabaseError error) {
         System.out.println(error);
@@ -123,19 +146,9 @@ public class DbProxy {
   /**
    * This method waits for the async calls to the database until successful queries are made.
    *
-   * @param id user id
    * @return an arraylist of liked product (null if cannot find the user like items)
    */
-  public ArrayList<Product> getLiked(String id) {
-    // Check if products are loaded
-    if (productMap == null) {
-      System.out.println("Error: failed to load the product information\n");
-      return null;
-    }
-    // Get user liked-items from db
-    this.queryUser(id);
-    this.waitSucceed();
-
+  public ArrayList<Product> getLiked() {
     // Check if there exists liked items
     if (userLikes == null || userLikes.size() == 0) {
       return null;

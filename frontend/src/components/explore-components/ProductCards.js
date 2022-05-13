@@ -95,20 +95,22 @@ function ProductCards(props) {
         
         // clear current products
         setProducts([])   
-        
-        
-        const postConfig = {headers: {
-            // 'Content-Type': 'application/json;charset=UTF-8',
-            // "Access-Control-Allow-Origin": "*",
-        }}
 
+        console.log("Entering post request")
+        const postConfig = {headers: {}}
         // Send the user id to backend
         let toSend = {user: "u1"}
+        // Fetch the recommended result from backend
+        const userUrl = "http://127.0.0.1:4567/userReq"
+        axios.post(userUrl, toSend, postConfig)
+            .then((response) => {
+                console.log("user loaded successfully");
+                console.log(response.data['result'])
+            })
+            .catch(e => console.log(e))
+        
         const recommendUrl = "http://127.0.0.1:4567/recommend"
-        
-        console.log("Entering post request")
-        
-        axios.post(recommendUrl, toSend, postConfig)
+        axios.post(recommendUrl, postConfig)
             // .then(() => console.log("post ran"))
             .then((response) => {
                 console.log("recommendation loaded successfully");

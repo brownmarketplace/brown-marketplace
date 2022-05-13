@@ -60,17 +60,24 @@ public class Server {
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
     // Put Routes Here
+    Spark.post("/userReq", new UserHandler());
     Spark.post("/recommend", new RecommendHandler());
 
     Spark.init();
   }
 
-
   /**
-   * This handler uses post request to receive a JsonObject of user id, and returns an immutable map
-   * containing recommended product ids to the front end.
+   * This handler uses post request to receive a JsonObject of user id, and performs the user liked
+   * object query.
    */
-  private class RecommendHandler implements Route {
+  private class UserHandler implements Route {
+    /**
+     * This method loads the given user into the backend cache.
+     *
+     * @param req the request user id
+     * @param res the response object
+     * @return success message or an error code if the user id cannot be parsed
+     */
     @Override
     public String handle(Request req, Response res) {
       Gson gson = new Gson();
@@ -86,11 +93,38 @@ public class Server {
         Map<String, String> error = ImmutableMap.of("error", "JSON is in the wrong format");
         return gson.toJson(error);
       }
+
+      // Query for user id
+      proxy.queryUser(id);
       System.out.println("User id received: " + id);
+
+      return gson.toJson(ImmutableMap.of("result", "user id successfully read"));
+    }
+  }
+
+  /**
+   * This handler performs the recommendation and sends the results to the front end.
+   */
+  private class RecommendHandler implements Route {
+    /**
+     * Attempt to return a JSON object containing a list of recommended product ids.
+     * Returns randomized recommended objects if the user liked information is not found.
+     *
+     * @param req the request object, not used
+     * @param res the response object
+     * @return list of product ids or an error code if the products are not loaded.
+     */
+    @Override
+    public String handle(Request req, Response res) {
+      Gson gson = new Gson();
 
       // Get products and liked-items from db
       ArrayList<Product> products = proxy.getProduct();
-      ArrayList<Product> likedProducts = proxy.getLiked(id);
+      if (products == null || products.size() == 0) {
+        res.status(500);
+        return gson.toJson(ImmutableMap.of("error", "products not loaded into backend"));
+      }
+      ArrayList<Product> likedProducts = proxy.getLiked();
 
       // Recommend
       RecommenderSystem recSys = new RecommenderSystem(products);
@@ -105,5 +139,4 @@ public class Server {
       return gson.toJson(ImmutableMap.of("result", recommendedProducts));
     }
   }
-
 }
