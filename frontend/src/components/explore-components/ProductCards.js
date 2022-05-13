@@ -65,6 +65,7 @@ function ProductCards(props) {
 
     const postRequestRecommendations = () => {
         console.log("Calling postRequestRecommendations")
+        
         const postConfig = {headers: {
             // 'Content-Type': 'application/json;charset=UTF-8',
             // "Access-Control-Allow-Origin": "*",
@@ -73,9 +74,11 @@ function ProductCards(props) {
         // Send the user id to backend
         let toSend = {user: "1"}
         const recommendUrl = "http://127.0.0.1:4567/recommend"
+        
         console.log("Entering post request")
         
         axios.post(recommendUrl, toSend, postConfig)
+        .then(() => console.log("post ran"))
             .then((response) => {
                 console.log("recommendation loaded successfully");
                 // setPids(response.data['result']);
@@ -84,10 +87,6 @@ function ProductCards(props) {
             })
             .catch(e => console.log("Erroring"))
             // wait for the response to come back, then set the products
-            .then(() => {
-                console.log("Setting products")
-                setProducts(pids)
-            })
     }
 
 
