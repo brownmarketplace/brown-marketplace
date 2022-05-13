@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 
 function CopyToClipboard() {
     const copyContent = () => {
-        console.log('coplied to clipboard');
-        navigator.clipboard.writeText(window.location.href);
+        console.log('coplied to clipboard')
+        navigator.clipboard.writeText(window.location.href)
     }
 
     return (
@@ -18,7 +18,7 @@ function CopyToClipboard() {
                 {/* <Typography variant='caption'>Copy to Clipboard</Typography> */}
             </IconButton>
         </Tooltip>
-    );
+    )
 }
 
-export default CopyToClipboard;
+export default CopyToClipboard

@@ -1,6 +1,6 @@
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography'
 
 function PageBreadcrumbs(props) {
     return (
@@ -23,7 +23,7 @@ function PageBreadcrumbs(props) {
                     </Link>
             )}
         </Breadcrumbs>
-    );
+    )
 }
 
 PageBreadcrumbs.defaultProps = {
@@ -33,4 +33,4 @@ PageBreadcrumbs.defaultProps = {
     { title: "Current Page", href: null }],
 }
 
-export default PageBreadcrumbs;
+export default PageBreadcrumbs

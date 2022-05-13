@@ -7,7 +7,7 @@ import './boilerplate-page.css'
 import BoilerplateHeader from '../components/BoilerplateHeader'
 import Footer from '../components/Footer'
 import PageBreadcrumbs from '../components/product-components/PageBreadcrumbs'
-import AddToWishList from '../components/product-components/AddToWishList'
+import AddToLikedList from '../components/product-components/AddToLikedList'
 import CopyToClipboard from '../components/product-components/CopyToClipboard'
 
 // mui
@@ -31,12 +31,9 @@ function ProductPage(props) {
   // product info
   const [image, setImage] = useState(props.productInfo.images[0])
   const [productInfo, setProductInfo] = useState(props.productInfo)
-  // recommendation
-  const [recommendation, setRecommendation] = useState([])
 
   // read from database
   const getProductInfo = () => {
-    console.log('reading from firebase database')
     onValue(ref(database, 'products/' + productId), (snapshot) => {
       const product = snapshot.val()
       if (product == null) {
@@ -46,6 +43,7 @@ function ProductPage(props) {
         {
           category: product.category,
           subcategory: product['sub-category'],
+          id: product.id,
           title: product.name,
           price: product.price,
           description: product.description,
@@ -59,15 +57,9 @@ function ProductPage(props) {
     })
   }
 
-  const getRecommendation = () => {
-    console.log('reading from spark server')
-    setRecommendation(Array.from({ length: 5 }, (v, k) => k + 1))
-  }
-
   // retrieve data from database
   useEffect(() => {
     getProductInfo()
-    getRecommendation()
   }, [])
 
   // navigate to the seller's profile page
@@ -135,7 +127,7 @@ function ProductPage(props) {
                     {productInfo.sold === 'true'
                       ? <Button variant="contained" disabled color="error" style={{ width: '100%' }}>Sold</Button>
                       : <Button variant="contained" onClick={contactSeller} style={{ width: '100%' }}>Contact Seller</Button>}
-                    <AddToWishList productID={1} userID={null} />
+                    <AddToLikedList productID={productInfo.id} userID={props.userID} />
                     <CopyToClipboard />
                   </Grid>
                 </Grid>
@@ -145,7 +137,7 @@ function ProductPage(props) {
         </Grid>
 
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div >
   )
 }
@@ -154,6 +146,7 @@ ProductPage.defaultProps = {
   productInfo: {
     category: "",
     subcategory: "",
+    id: "",
     title: "",
     price: "",
     description: "",

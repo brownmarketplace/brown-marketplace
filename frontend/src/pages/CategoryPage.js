@@ -132,7 +132,7 @@ function CategoryPage(props) {
         </Grid>
 
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
