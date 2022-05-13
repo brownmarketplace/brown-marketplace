@@ -26,12 +26,16 @@ public class Server {
 
   /**
    * Initialize the Server with database proxy.
-   * @param proxy the database
+   * @param proxy the Firebase database proxy that performs query
    */
   public Server(dbProxy proxy){
     _proxy = proxy;
   }
 
+  /**
+   * Run the Server with given routes.
+   * @param port the port number that the server runs on
+   */
   public void runSparkServer(int port) {
     Spark.port(port);
     Spark.externalStaticFileLocation("src/main/resources/static");
@@ -61,7 +65,8 @@ public class Server {
 
 
   /**
-   * Attempt to update a row in a table.
+   * This handler uses post request to receive a JsonObject of user id, and returns an immutable map
+   * containing recommended product ids to the front end.
    */
   private class RecommendHandler implements Route {
     @Override
@@ -79,14 +84,11 @@ public class Server {
         Map<String, String> error = ImmutableMap.of("error", "JSON is in the wrong format");
         return gson.toJson(error);
       }
-
-      System.out.println(id);
+      System.out.println("User id received: " + id);
 
       // Get products and liked-items from db
       ArrayList<Product> products = _proxy.getProduct();
       ArrayList<Product> likedProducts = _proxy.getLiked(id);
-
-      System.out.println("query made");
 
       // Recommend
       RecommenderSystem recSys = new RecommenderSystem(products);
@@ -96,8 +98,7 @@ public class Server {
       } else { // Preference based recommendations
         recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
       }
-
-      System.out.println("recommender made");
+      System.out.println("Recommendations are successfully sent! \n");
 
       return gson.toJson(ImmutableMap.of("result", recommendedProducts));
     }
