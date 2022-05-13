@@ -180,7 +180,7 @@ function AddListing(props) {
     // This method adds a new listing to the user's list of listings.
     var addNewListing = (userID, productID) => {
         const listingRef = ref(database, 'users/' + userID + '/listings/' + productID);
-        set(listingRef, productID)
+        set(listingRef, "true")
     }
 
     var addCategoryAndSubCategoryToProduct = (productID, categoryName, subCategoryName) => {
