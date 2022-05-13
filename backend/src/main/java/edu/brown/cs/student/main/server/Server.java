@@ -2,7 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import edu.brown.cs.student.main.proxy.dbProxy;
+import edu.brown.cs.student.main.proxy.DbProxy;
 import edu.brown.cs.student.main.recommender.RecommenderSystem;
 import edu.brown.cs.student.main.structures.Product;
 import org.json.JSONException;
@@ -22,18 +22,20 @@ import java.util.Map;
  */
 public class Server {
 
-  private dbProxy _proxy;
+  private DbProxy proxy;
 
   /**
    * Initialize the Server with database proxy.
+   *
    * @param proxy the Firebase database proxy that performs query
    */
-  public Server(dbProxy proxy){
-    _proxy = proxy;
+  public Server(DbProxy proxy) {
+    this.proxy = proxy;
   }
 
   /**
    * Run the Server with given routes.
+   *
    * @param port the port number that the server runs on
    */
   public void runSparkServer(int port) {
@@ -87,8 +89,8 @@ public class Server {
       System.out.println("User id received: " + id);
 
       // Get products and liked-items from db
-      ArrayList<Product> products = _proxy.getProduct();
-      ArrayList<Product> likedProducts = _proxy.getLiked(id);
+      ArrayList<Product> products = proxy.getProduct();
+      ArrayList<Product> likedProducts = proxy.getLiked(id);
 
       // Recommend
       RecommenderSystem recSys = new RecommenderSystem(products);

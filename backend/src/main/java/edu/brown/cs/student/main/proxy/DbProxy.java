@@ -19,19 +19,21 @@ import java.util.Set;
 /**
  * This class creates a proxy for the Google Firebase that handles user and product query.
  */
-public class dbProxy {
+public class DbProxy {
 
-  private Set<String> _userLikes;
-  private Map<String, Map<String, Object>> _productMap;
-  private Boolean _succeed;
+  private Set<String> userLikes;
+  private Map<String, Map<String, Object>> productMap;
+  private Boolean succeed;
+  private static final int MAX_PRODUCT_NUM = 100;
+  private static final int WAIT_TIME = 1000;
 
   /**
-   * The proxy connects to database and cache the products
+   * The proxy connects to database and cache the products.
    */
-  public dbProxy(){
-    _productMap = null;
-    _userLikes = null;
-    _succeed = false;
+  public DbProxy() {
+    productMap = null;
+    userLikes = null;
+    succeed = false;
 
     try {
       this.connectDb();
@@ -58,9 +60,10 @@ public class dbProxy {
 
   /**
    * This method makes an user id query and sets the liked items of the user.
+   *
    * @param id the user id
    */
-  public void queryUser(String id){
+  public void queryUser(String id) {
     DatabaseReference userRef = FirebaseDatabase.getInstance()
         .getReference("/users/" + id);
 
@@ -68,10 +71,11 @@ public class dbProxy {
     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-        _userLikes = ((Map<String, Object>) dataSnapshot.child("liked-items").getValue()).keySet();
-        _succeed = true;
+        userLikes = ((Map<String, Object>) dataSnapshot.child("liked-items").getValue()).keySet();
+        succeed = true;
         System.out.println("User query succeed!\n");
       }
+
       @Override
       public void onCancelled(DatabaseError error) {
         System.out.println(error);
@@ -82,16 +86,17 @@ public class dbProxy {
   /**
    * This method makes a product query and stores the products in a map.
    */
-  public void queryProducts(){
+  public void queryProducts() {
     DatabaseReference productRef = FirebaseDatabase.getInstance()
         .getReference("/products");
 
     productRef.orderByChild("sold").addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-        _productMap = (Map<String, Map<String, Object>>) dataSnapshot.getValue();
+        productMap = (Map<String, Map<String, Object>>) dataSnapshot.getValue();
         System.out.println("Product query succeed! \n");
       }
+
       @Override
       public void onCancelled(DatabaseError error) {
         System.out.println(error);
@@ -102,44 +107,43 @@ public class dbProxy {
   /**
    * This method waits for the async calls to the database until successful queries are made.
    */
-  private void waitSucceed(){
-    synchronized (_succeed) {
-      while (!_succeed) {
+  private void waitSucceed() {
+    synchronized (succeed) {
+      while (!succeed) {
         try {
-          _succeed.wait(1000);
+          succeed.wait(WAIT_TIME);
         } catch (InterruptedException e) {
           System.out.println("Error: cannot load from database.\n");
         }
       }
     }
-    _succeed = false;
+    succeed = false;
   }
 
   /**
    * This method waits for the async calls to the database until successful queries are made.
+   *
    * @param id user id
    * @return an arraylist of liked product (null if cannot find the user like items)
    */
-  public ArrayList<Product> getLiked(String id){
+  public ArrayList<Product> getLiked(String id) {
+    // Check if products are loaded
+    if (productMap == null) {
+      System.out.println("Error: failed to load the product information\n");
+      return null;
+    }
     // Get user liked-items from db
     this.queryUser(id);
     this.waitSucceed();
 
-    // Check if products are loaded
-    if (_productMap == null) {
-      System.out.println("Error: failed to load the product information\n");
-      return null;
-    }
     // Check if there exists liked items
-    else if (_userLikes == null || _userLikes.size() == 0) {
+    if (userLikes == null || userLikes.size() == 0) {
       return null;
-    }
-    // Match the liked items with product info
-    else {
+    } else { // Match the liked items with product info
       ArrayList<Product> likedList = new ArrayList<>();
-      for (String productID : _productMap.keySet()) {
-        Map<String, Object> temp = _productMap.get(productID);
-        if (_userLikes.contains(productID)) {
+      for (String productID : productMap.keySet()) {
+        Map<String, Object> temp = productMap.get(productID);
+        if (userLikes.contains(productID)) {
           likedList.add(new Product(temp));
         }
       }
@@ -149,18 +153,19 @@ public class dbProxy {
 
   /**
    * This methods gets the products from the stored product map to generate an unsold product list.
+   *
    * @return an arraylist of unsold product (max size 100)
    */
-  public ArrayList<Product> getProduct(){
+  public ArrayList<Product> getProduct() {
     int count = 0;
     ArrayList<Product> productList = new ArrayList<>();
-    for (String id : _productMap.keySet()) {
-      Map<String, Object> temp = _productMap.get(id);
+    for (String id : productMap.keySet()) {
+      Map<String, Object> temp = productMap.get(id);
       if (temp.get("sold").equals("false")) {
         productList.add(new Product(temp));
         count++;
       }
-      if (count >= 100) {
+      if (count >= MAX_PRODUCT_NUM) {
         break;
       }
     }
