@@ -6,8 +6,6 @@ import ProductPage from './pages/ProductPage';
 import CategoryPage from './pages/CategoryPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
-import RecommendApi from './Recommend-api';
-import GoogleAuth from './backend/google';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
@@ -64,8 +62,6 @@ const App = () => {
 
   return (
     <BrowserRouter>
-    {/* <GoogleAuth/> */}
-    {/* <RecommendApi/> */}
       <Routes>
         <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
         <Route path="/explore" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
