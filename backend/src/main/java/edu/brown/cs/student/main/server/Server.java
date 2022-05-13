@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.min;
+
 /**
  * This class sets up a Spark server that connects the recommender to the frontend.
  */
@@ -24,7 +26,9 @@ public class Server {
 
   private DbProxy proxy;
   private RecommenderSystem recSys;
-  private static final int RAND_FACTOR = 20;
+  private int maxProduct;
+  private static final int NUM_PRODUCT = 4;
+  private static final int RAND_FACTOR = 3;
 
   /**
    * Initialize the Server with database proxy.
@@ -34,6 +38,7 @@ public class Server {
   public Server(DbProxy proxy) {
     this.proxy = proxy;
     ArrayList<Product> products = proxy.getProduct();
+    this.maxProduct = min(products.size(), NUM_PRODUCT);
     this.recSys = new RecommenderSystem(products);
   }
 
@@ -128,10 +133,10 @@ public class Server {
       // Recommend
       List<String> recommendedProducts;
       if (likedProducts == null) { // Random recommendations
-        recommendedProducts = recSys.generateDefaultExploreRecommendations(6);
+        recommendedProducts = recSys.generateDefaultExploreRecommendations(maxProduct);
       } else { // Preference based recommendations
         recommendedProducts =
-            recSys.generateRandomizedExploreRecommendations(3, RAND_FACTOR, likedProducts);
+            recSys.generateRandomizedExploreRecommendations(maxProduct, RAND_FACTOR, likedProducts);
       }
       System.out.println("Recommendations are successfully sent!");
 

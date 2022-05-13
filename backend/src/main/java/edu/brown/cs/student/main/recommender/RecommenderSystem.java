@@ -104,7 +104,9 @@ public class RecommenderSystem {
     if (likedProducts.size() > recPoolSize) {
       for (int i = 0; i < likedProducts.size(); i++) {
         String rec = this.generateBFRecommendations(likedProducts.get(i), 1).get(0);
-        recommendationPool.add(rec);
+        if (!recommendationPool.contains(rec)) {
+          recommendationPool.add(rec);
+        }
       }
     } else {
       int recsPerProduct = recPoolSize / likedProducts.size();
@@ -112,14 +114,15 @@ public class RecommenderSystem {
         List<String> recs = this.generateBFRecommendations(likedProducts.get(j), recsPerProduct);
         for (int k = 0; k < recsPerProduct; k++) {
           String rec = recs.get(k);
-          recommendationPool.add(rec);
+          if (!recommendationPool.contains(rec)) {
+            recommendationPool.add(rec);
+          }
         }
       }
     }
     Collections.shuffle(recommendationPool);
     List<String> exploreRecommendations = new ArrayList<>();
     int count = 0;
-
     // gets items from the recommendation pool until count reaches the requested number of recs
     for (int l = 0; (l < recommendationPool.size() && count < numRecs); l++) {
       String recommendation = recommendationPool.get(l);
