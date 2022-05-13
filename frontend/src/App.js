@@ -10,12 +10,18 @@ import RecommendApi from './Recommend-api';
 import GoogleAuth from './backend/google';
 import Cookies from 'universal-cookie';
 
+// Database Imports
+import { ref, set, get, onValue, query, orderByChild, equalTo, child }
+  from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import database from './backend/Database/DBInstance'
+
 const App = () => {
 
   const cookies = new Cookies();
 
   // State for login
   const loginState = (response) => {  
+    console.log("response", response)
     cookies.set("userID", response.googleId)
     
     // add to DB if not already there
