@@ -10,7 +10,7 @@ const database = getDatabase();
     a method that adds a user to the database.
  */
 var validateForm = () => {
-    const path = document.querySelector('#user-path').value;
+    // const path = document.querySelector('#user-path').value;
     const id = document.querySelector("#form-id").value;
     const username = document.querySelector("#form-username").value;
     const name = document.querySelector("#form-name").value;
@@ -18,20 +18,20 @@ var validateForm = () => {
     const profilePic = document.querySelector("#form-profilePic").value;
     const classYear = document.querySelector("#form-classYear").value;
 
-    if (path.trim() == "" || id.trim() == "" || username.trim() == "" || name == "" || email.trim() == "" || profilePic == ""
+    if (id.trim() == "" || username.trim() == "" || name == "" || email.trim() == "" || profilePic == ""
     || classYear == "") {
         alert("form not completely filled");
     } else {
-        addUser(path, id, username, name, email, profilePic, classYear);
+        addUser(id, username, name, email, profilePic, classYear);
     }
 };
 
 /*
     This method adds a new user to the database with the basic fields. It replaces any existing data at that path.
  */
-var addUser = (path, id, username, name, email, profilePic, classYear) => {
+var addUser = (id, username, name, email, profilePic, classYear) => {
     console.log("here")
-    set(ref(database, 'users/' + path), {
+    set(ref(database, 'users/' + id), {
         id: id,
         username: username,
         name: name,
