@@ -22,18 +22,23 @@ const App = () => {
   // State for login
   const loginState = (response) => {  
     console.log("response", response)
-    cookies.set("userID", response.googleId)
+    
+    const id = "u" + response.googleId
+    cookies.set("userID", id)
+    cookies.set("name", response.profileObj.name)
+    cookies.set("email", response.profileObj.email)
     
     // add to DB if not already there
-    const userRef  = ref(database, 'users/' + response.googleId)
+    const userRef  = ref(database, 'users/' + "u" + response.googleId)
     const q = query(userRef)
     get(q).then(snapshot => {
       if (snapshot.val() === null) {
         // add user to DB
-        set(ref(database, 'users/' + response.googleId), {
+        set(ref(database, 'users/' + "u" + response.googleId), {
           classYear: "sophomore",
           email: response.profileObj.email,
           id: response.googleId,
+          name: response.profileObj.name,
           profilePic: response.profileObj.imageUrl,
         })
       }
@@ -53,8 +58,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
         <Route path="/explore" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
-        <Route path="/profile" element={<ProfilePage  userID={cookies.get("userID")} />}>
-          <Route path=":userid" element={<ProfilePage userID={cookies.get("userID")} />} />
+        <Route path="/profile" element={<ProfilePage name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />}>
+          <Route path=":userid" element={<ProfilePage name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />} />
         </Route>
         <Route path="/sell" element={<AddListing userID={cookies.get("userID")} />} />
         <Route path="/product/:productId" element={<ProductPage userID={cookies.get("userID")} />} />
