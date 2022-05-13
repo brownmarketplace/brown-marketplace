@@ -23,6 +23,8 @@ import java.util.Map;
 public class Server {
 
   private DbProxy proxy;
+  private RecommenderSystem recSys;
+  private static final int RAND_FACTOR = 20;
 
   /**
    * Initialize the Server with database proxy.
@@ -31,6 +33,8 @@ public class Server {
    */
   public Server(DbProxy proxy) {
     this.proxy = proxy;
+    ArrayList<Product> products = proxy.getProduct();
+    this.recSys = new RecommenderSystem(products);
   }
 
   /**
@@ -119,22 +123,17 @@ public class Server {
       Gson gson = new Gson();
 
       // Get products and liked-items from db
-      ArrayList<Product> products = proxy.getProduct();
-      if (products == null || products.size() == 0) {
-        res.status(500);
-        return gson.toJson(ImmutableMap.of("error", "products not loaded into backend"));
-      }
       ArrayList<Product> likedProducts = proxy.getLiked();
 
       // Recommend
-      RecommenderSystem recSys = new RecommenderSystem(products);
       List<String> recommendedProducts;
       if (likedProducts == null) { // Random recommendations
         recommendedProducts = recSys.generateDefaultExploreRecommendations(6);
       } else { // Preference based recommendations
-        recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
+        recommendedProducts =
+            recSys.generateRandomizedExploreRecommendations(3, RAND_FACTOR, likedProducts);
       }
-      System.out.println("Recommendations are successfully sent! \n");
+      System.out.println("Recommendations are successfully sent!");
 
       return gson.toJson(ImmutableMap.of("result", recommendedProducts));
     }
