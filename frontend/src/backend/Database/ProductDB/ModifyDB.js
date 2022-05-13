@@ -11,7 +11,6 @@ const database = getDatabase();
     a method that adds a product to the database.
  */
 var validateForm = () => {
-    // const path = document.querySelector('#path-id').value;
     const id = document.querySelector("#product-id").value;
     const name = document.querySelector("#product-name").value;
     const description = document.querySelector("#product-description").value;
@@ -146,10 +145,11 @@ document.querySelector('#product-register').addEventListener("click", () => {
     validateForm();
 })
 document.querySelector('#product-add-category').addEventListener("click", () => {
-    addCategoryAndSubCategoryToProduct("p14", "Furniture", "Chairs")
+    addCategoryAndSubCategoryToProduct("p15", "Electronics & related",
+        "Other electronics and related")
 })
 document.querySelector('#product-add-tag').addEventListener("click", () => {
-    addTagToProduct("p14", "Lightly Used")
+    addTagToProduct("p15", "School Essentials")
 })
 document.querySelector('#product-add-liked').addEventListener("click", () => {
     modifyNumLiked("p1", -1)
