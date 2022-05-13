@@ -98,7 +98,7 @@ function AddListing(props) {
 
         addNewListing(newUserId, newProductId);
 
-        console.log("Published listing!");
+        alert("Published listing!");
     }
 
     var getCategoryFromSubcategory = (sub) => {
