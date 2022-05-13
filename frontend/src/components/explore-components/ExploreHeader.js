@@ -64,7 +64,7 @@ function ExploreHeader(props) {
                 <SearchBar />
             </div>
             {console.log("Before render, isLoggedIn is: ", isLoggedIn)}
-            <ProductCards isLoggedIn={isLoggedIn} />
+            <ProductCards userID={props.userID} isLoggedIn={isLoggedIn} />
         </div>
 
         {/* Define Categories Drawer */}

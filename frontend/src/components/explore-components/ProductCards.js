@@ -65,33 +65,6 @@ function ProductCards(props) {
         }
     }
 
-    const postRequestRecommendations = () => {
-        console.log("Calling postRequestRecommendations")
-        
-        const postConfig = {headers: {
-            // 'Content-Type': 'application/json;charset=UTF-8',
-            // "Access-Control-Allow-Origin": "*",
-        }}
-
-        // Send the user id to backend
-        let toSend = {user: "u1"}
-        const recommendUrl = "http://127.0.0.1:4567/recommend"
-        
-        console.log("Entering post request")
-        
-        axios.post(recommendUrl, toSend, postConfig)
-            // .then(() => console.log("post ran"))
-            .then((response) => {
-                console.log("recommendation loaded successfully");
-                // setPids(response.data['result']);
-                console.log("Making call", response.data)
-                console.log("pids: " + pids)
-            })
-            .catch(e => console.log("Erroring"))
-            // wait for the response to come back, then set the products
-    }
-
-
     const getRecommendations = () => {
         console.log("Calling getRecommendations")
         
@@ -121,8 +94,6 @@ function ProductCards(props) {
         // get produt id of current product
         const pid = products[currentIndex].id
 
-        console.log(pid)
-
         const likedListRef = ref(database, 'users/' + props.userID + '/liked-items/' + pid);
         set(likedListRef, "true")
     }
@@ -138,11 +109,11 @@ function ProductCards(props) {
         }
     }, [props.isLoggedIn])
 
-    const childRefs = useMemo(
+    let childRefs = useMemo(
         () => 
         Array(products.length)
             .fill(0)
-            .map((i) => React.createRef()), [props.isLoggedIn]
+            .map((i) => React.createRef()), [products]
     )
 
     const updateCurrentIndex = (val) => {
@@ -157,7 +128,7 @@ function ProductCards(props) {
     const firstSwipe = currentIndex === -1 && products.length > 0
 
     // set last direction and decrease current index
-    const swiped = (direction, nameToDelete, index) => {
+    const swiped = (direction, index) => {
         setLastDirection(direction)
         updateCurrentIndex(index - 1)
     }
@@ -200,7 +171,7 @@ function ProductCards(props) {
                         // give each card a unique key, efficient to re-render
                         key={product.id}
                         // update current index when card is swiped
-                        onSwipe={(dir) => swiped(dir, product.name, index)}
+                        onSwipe={(dir) => swiped(dir, index)}
                         // when card leaves screen, update current index
                         onCardLeftScreen={(dir) => outOfFrame(dir, product.name, index, product.id)}
                         // only allow swiping left or right
@@ -237,6 +208,12 @@ function ProductCards(props) {
                 ))}
             </div>
             <div className='product-buttons'>
+                {/* Log currentIndex */}
+                {console.log("currentIndex: ", currentIndex)}
+                {/* Log can swipe and canGoBack */}
+                {console.log("canSwipe: ", canSwipe, "canGoBack: ", canGoBack)}
+                {/* Log refs */}
+                {console.log("refs: ", childRefs)}
                 <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="left" onClick={() => swipe('left')}>
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="left" onClick={() => swipe('left')}> */}
                     <CloseIcon fontSize="large" />
@@ -255,15 +232,6 @@ function ProductCards(props) {
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
                     <ShoppingBagIcon fontSize="large" />
                 </IconButton>
-                {/* <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="new-listing" onClick={() => navigate('/sell')}>
-                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
-                    {/* <AddIcon fontSize="large" /> Add new listing
-                </IconButton>  */}
-                
-                {/* <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="rec" onClick={postRequestRecommendations}>
-                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
-                    {/* <CloseIcon fontSize="large" /> */}
-                {/* </IconButton> */} 
             </div>
 
             {/* If user is logged in, display the listing button, else blank */}

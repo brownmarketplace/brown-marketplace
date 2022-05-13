@@ -22,12 +22,7 @@ const App = () => {
 
   // State for login
   const loginState = (response) => {  
-    console.log("response", response)
-    
     const id = "u" + response.googleId
-
-
-    console.log("Entering post request")
     const postConfig = {headers: {}}
     // Send the user id to backend
     let toSend = {user: id}
@@ -35,7 +30,7 @@ const App = () => {
     const userUrl = "http://127.0.0.1:4567/userReq"
     axios.post(userUrl, toSend, postConfig)
         .then((response) => {
-            console.log("user loaded successfully");
+            console.log("user loaded successfully in backend");
             console.log(response.data['result'])
         })
         .catch(e => console.log(e))
@@ -55,18 +50,14 @@ const App = () => {
           classYear: "sophomore",
           email: response.profileObj.email,
           id: response.googleId,
-          "liked-items": [],
-          listings: [],
           name: response.profileObj.name,
-          profilePic: response.profileObj.imageUrl,
-          "purchased-items": []
+          profilePic: response.profileObj.imageUrl
         })
       }
     })
   }
 
   const logoutState = () => {
-      console.log("logging out")
       // remove userID from cookies
       cookies.remove("userID")
   }
