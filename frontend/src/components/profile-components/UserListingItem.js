@@ -11,7 +11,7 @@ function UserListingItem(props) {
     const [sold, setSold] = useState(false);
     const [name, setName] = useState("")
 
-     useEffect(() => {
+    useEffect(() => {
         const readOneProductInfo = async (productID) => {
             onValue(ref(database, 'products/' + productID), (snapshot) => {
                 const product = snapshot.val()
@@ -30,7 +30,7 @@ function UserListingItem(props) {
         }
 
         readOneProductInfo(props.prodId).catch(console.error)
-      }, [])
+    }, [])
 
     return (
         <div className="user-listing-item">
