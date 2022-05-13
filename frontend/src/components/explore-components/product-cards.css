@@ -90,3 +90,25 @@
     padding: 1.25rem !important;
     color: #76e2b3 !important;
 }
+
+.listing-container {
+    margin: 20px;
+    display: flex;
+    position: fixed;
+    /* Center */
+    justify-content: center;
+    width: 30%;
+    bottom: 5vh;
+    /* move left more */
+    left: 33.4vw;
+}
+
+.listing-container .MuiIconButton-root {
+    background-color: white;
+    box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.30) !important;
+}
+
+.new-listing {
+    padding: 1.15rem !important;
+    color: #c3c4d3 !important;
+}

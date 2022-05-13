@@ -16,6 +16,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 
 // MUI Icons
 import IconButton from '@mui/material/IconButton';
@@ -24,6 +25,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import AddIcon from '@mui/icons-material/Add';
 
 // Database Imports
 import { ref, set, get, onValue, query, orderByChild, equalTo, child }
@@ -96,46 +98,32 @@ function ProductCards(props) {
         // clear current products
         setProducts([])   
 
-        console.log("Entering post request")
         const postConfig = {headers: {}}
-        // Send the user id to backend
-        let toSend = {user: "u1"}
-        // Fetch the recommended result from backend
-        const userUrl = "http://127.0.0.1:4567/userReq"
-        axios.post(userUrl, toSend, postConfig)
-            .then((response) => {
-                console.log("user loaded successfully");
-                console.log(response.data['result'])
-            })
-            .catch(e => console.log(e))
         
         const recommendUrl = "http://127.0.0.1:4567/recommend"
         axios.post(recommendUrl, postConfig)
-            // .then(() => console.log("post ran"))
             .then((response) => {
-                console.log("recommendation loaded successfully");
-                console.log("data: " + response.data['result'])
                 setPids(response.data['result']);
-                console.log("pids: " + pids)
+
                 // loop through the pids array to get the product IDs from the database, and set products to the products array
                 response.data['result'].forEach(pid => {
                     onValue(ref(database, 'products/' + pid), (snapshot) => {
                         setProducts(products => [...products, snapshot.val()])
                     }
                 )})
-                console.log("current products: " + products)
             })
             .catch(e => console.log("Erroring"))
-            .then(() => {
-                console.log("FINISHED")
-            })
-
-        console.log("Finished loading recc's")
     }
 
-    const addToLikedList = (userID, productID) => {
+    const addToLikedList = (userID) => {
         console.log("Added to liked list")
-        const likedListRef = ref(database, 'users/' + userID + '/liked-items/' + productID);
+
+        // get produt id of current product
+        const pid = products[currentIndex].id
+
+        console.log(pid)
+
+        const likedListRef = ref(database, 'users/' + props.userID + '/liked-items/' + pid);
         set(likedListRef, "true")
     }
 
@@ -233,7 +221,7 @@ function ProductCards(props) {
                                 {/* Set character limit so all cards are uniform */}
                                 <Typography variant="body2" color="text.secondary">
                                     {/* If description exceeds on line, replace with ellipsis */}
-                                    {product.description.length > 70 ? product.description.substring(0, 70) + " [...]" : product.description}    
+                                    {product.description.length > 60 ? product.description.substring(0, 60) + " [...]" : product.description}    
                                 </Typography>
                                 <div className='price'>
                                 {/* <Paper backgroundColor="#7fadff" className="price" elevation={1}> */}
@@ -257,7 +245,9 @@ function ProductCards(props) {
                 {/* <IconButton style={{ backgroundColor: (!canGoBack || firstSwipe) && '#c3c4d3' }} className="repeat" onClick={() => goBack()}> */}
                     <ReplayIcon fontSize="large" />
                 </IconButton>
-                <IconButton style={{ backgroundColor: !canSwipe  && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}>
+                <IconButton style={{ backgroundColor: !canSwipe  && '#c3c4d3' }} className="bookmark" onClick={() => 
+                    // add product
+                    addToLikedList()}>
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}> */}
                     <FavoriteIcon fontSize="large" />
                 </IconButton>
@@ -265,17 +255,39 @@ function ProductCards(props) {
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
                     <ShoppingBagIcon fontSize="large" />
                 </IconButton>
+                {/* <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="new-listing" onClick={() => navigate('/sell')}>
+                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
+                    {/* <AddIcon fontSize="large" /> Add new listing
+                </IconButton>  */}
+                
                 {/* <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="rec" onClick={postRequestRecommendations}>
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
                     {/* <CloseIcon fontSize="large" /> */}
                 {/* </IconButton> */} 
             </div>
-            {/* If can't swipe, display "Swipe to get Started" */}
-            {/* {firstSwipe && <div className='swipe-to-get-started'>
-                <Typography variant="h5" color="textPrimary">
-                    Swipe to get started
-                </Typography>
-            </div>} */}
+
+            {/* If user is logged in, display the listing button, else blank */}
+            {props.isLoggedIn ?
+            <div className="listing-container">
+            <Tooltip title="Add new listing">
+                <Button
+                    className='new-listing'
+                    variant={'outlined'}
+                    // add more border radius
+                    sx={{
+                        borderRadius: '25%',
+                        border: '1px solid #c3c4d3',
+                        // on hover, change border color
+                        '&:hover': {
+                            borderColor: '#c3c4d3',
+                        },
+                    }}
+                    onClick={() => navigate('/sell')}
+                >
+                    <AddIcon fontSize="large" />
+                </Button>   
+            </Tooltip>
+        </div> : null}
         </div>
     );
 }
