@@ -34,20 +34,16 @@ function ProfilePage(props) {
 
     return (
         <div className="boilerplate">
-            <BoilerplateHeader title={props.title} userPicture={props.pfp} showProfile="false"/>
+            <BoilerplateHeader title="Brown Marketplace" userPicture={props.pfp} showProfile={false}/>
             <div className="profile-contents">
                 <div className="first-profile-section">
-                    <div className="profile-picture">
-                        {console.log("img:")}
-                        {console.log(img)}
+                    <div>
                         {
                             img ? (
                                 <div>
                                     <img 
                                         src={img}
-                                        width="260vw"
-                                        height="260vw"
-                                        style={{ borderRadius: "20px" }}
+                                        className="profile-picture-source"
                                     />
                                 </div>                                
                             ) : (

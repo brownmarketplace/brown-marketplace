@@ -211,7 +211,7 @@ function AddListing(props) {
 
     return (
         <div className="boilerplate">
-            <BoilerplateHeader title="Make A Listing!" userPicture={defaultProfilePicture} showProfile={false}/>
+            <BoilerplateHeader title="Brown Marketplace" userPicture={defaultProfilePicture} showProfile={false}/>
             <div style={addListingStyle}>
                     <AddName 
                         productName={formInputData.productName}

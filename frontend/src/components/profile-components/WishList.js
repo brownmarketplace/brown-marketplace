@@ -34,7 +34,7 @@ function WishList(props) {
             <div className="wish-list-header">
                 Liked Items
             </div>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", marginTop: "20px" }}>
                 { likedItemIds.map((id) => {
                     return (
                         <ProductPreviewWrapper productId={id}/>

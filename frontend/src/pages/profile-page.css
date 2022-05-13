@@ -11,11 +11,10 @@
     margin-top: 4vw;
 }
 
-.profile-picture {
-    background-color: #E3EBFF;
-    border-radius: 20px;
+.profile-picture-source {
     width: 20vw;
     height: 20vw;
+    border-radius: 10px;
 }
 
 .username {
