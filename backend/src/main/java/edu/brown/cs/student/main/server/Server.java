@@ -84,7 +84,7 @@ public class Server {
 //      } else {
 //        recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
 //      }
-      recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 20, likedProducts);
+      recommendedProducts = recSys.generateRandomizedExploreRecommendations(3, 3, likedProducts);
 
 //      System.out.println(user.getPurchased());
 //      System.out.println(products.getProducts());
