@@ -27,6 +27,7 @@ const App = () => {
     cookies.set("userID", id)
     cookies.set("name", response.profileObj.name)
     cookies.set("email", response.profileObj.email)
+    cookies.set("pfp", response.profileObj.imageUrl)
     
     // add to DB if not already there
     const userRef  = ref(database, 'users/' + "u" + response.googleId)
@@ -58,8 +59,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
         <Route path="/explore" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
-        <Route path="/profile" element={<ProfilePage name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />}>
-          <Route path=":userid" element={<ProfilePage name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />} />
+        <Route path="/profile" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />}>
+          <Route path=":userid" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />} />
         </Route>
         <Route path="/sell" element={<AddListing userID={cookies.get("userID")} />} />
         <Route path="/product/:productId" element={<ProductPage userID={cookies.get("userID")} />} />
