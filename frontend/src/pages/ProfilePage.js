@@ -10,46 +10,49 @@ import './boilerplate-page.css'
 import './profile-page.css'
 
 function ProfilePage(props) {
-  let params = useParams();
+    // const { userId } = useParams();
 
-  
-  return (
-    <div className="boilerplate">
-        {console.log("User ID from App", props.userID)}
-        <BoilerplateHeader title={props.title} userPicture={props.pfp} showProfile="false"/>
-        <div className="profile-contents">
-            <div className="first-profile-section">
-                <div className="profile-picture">
-                    {/* props.pfp */}
-                </div>
-                <div>
-                    <div className="username">
-                        Nim Telson {props.userID}
+    return (
+        <div className="boilerplate">
+            <BoilerplateHeader title={props.title} userPicture={props.pfp} showProfile="false"/>
+            <div className="profile-contents">
+                <div className="first-profile-section">
+                    <div className="profile-picture">
+                        {/* props.pfp */}
                     </div>
                     <div>
-                        <p className="user-info">nim_telson@brown.edu</p>
-                        {/* props.user.userID
-                        email
-                        phoneNumber
-                        location */}
-                    </div>
-                    <div className="user-listing">
-                        <UserListings />
+                        <div className="username">
+                            {/* {props.name} */}
+                            Nim Telson
+                        </div>
+                        <div>
+                            <p className="user-info">
+                                {/* {props.email} */}
+                                {/* Seller Id: {userId} */}
+                                Brown Verified
+                            </p>
+                        </div>
+                        <div className="user-listings">
+                            {console.log("Passing a userId into UserListings, userId is:")}
+                            {console.log(props.userID)}
+                            <UserListings userId={props.userID} />
+                        </div>
                     </div>
                 </div>
+                <div className="second-profile-section">
+                    <WishList/>
+                </div>
             </div>
-            <div className="second-profile-section">
-                <WishList/>
-            </div>
+            {/* <Footer/> */}
         </div>
-        {/* <Footer/> */}
-    </div>
-  )
+    )
 }
 
 ProfilePage.defaultProps = {
   title: "Profile",
-  pfp: defaultProfilePicture
+  pfp: defaultProfilePicture,
+  name: "Nim Telson",
+  email: "nim_telson.brown.edu"  
 }
 
 export default ProfilePage
