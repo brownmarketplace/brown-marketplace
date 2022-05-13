@@ -17,6 +17,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 // MUI Icons
 import IconButton from '@mui/material/IconButton';
@@ -37,6 +38,18 @@ function ProductCards(props) {
     const [products, setProducts] = useState([]);  
     // const [products, setProducts] = useState(sample);  
     const [pids, setPids] = useState([])  
+
+    // state for liked ToolTip component
+    const [open, setOpen] = React.useState(false);
+
+    const handleTooltipClose = () => {
+        setOpen(false);
+    };
+
+    const handleTooltipOpen = () => {
+        setOpen(true);
+        addToLikedList();
+    };
 
     const [currentIndex, setCurrentIndex] = useState(products.length - 1)
     const [lastDirection, setLastDirection] = useState()
@@ -88,7 +101,7 @@ function ProductCards(props) {
             .catch(e => console.log("Erroring"))
     }
 
-    const addToLikedList = (userID) => {
+    const addToLikedList = () => {
         console.log("Added to liked list")
 
         // get produt id of current product
@@ -107,7 +120,7 @@ function ProductCards(props) {
             console.log("Logged in")
             getRecommendations()
         }
-    }, [props.isLoggedIn])
+    }, [products])
 
     let childRefs = useMemo(
         () => 
@@ -222,12 +235,31 @@ function ProductCards(props) {
                 {/* <IconButton style={{ backgroundColor: (!canGoBack || firstSwipe) && '#c3c4d3' }} className="repeat" onClick={() => goBack()}> */}
                     <ReplayIcon fontSize="large" />
                 </IconButton>
-                <IconButton style={{ backgroundColor: !canSwipe  && '#c3c4d3' }} className="bookmark" onClick={() => 
-                    // add product
-                    addToLikedList()}>
-                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}> */}
-                    <FavoriteIcon fontSize="large" />
-                </IconButton>
+
+                <ClickAwayListener onClickAway={handleTooltipClose}>
+                    <div>
+                    <Tooltip
+                        PopperProps={{
+                        disablePortal: true,
+                        }}
+                        onClose={handleTooltipClose}
+                        open={open}
+                        disableFocusListener
+                        disableHoverListener
+                        disableTouchListener
+                        title="Liked!"
+                    >
+                        <IconButton style={{ backgroundColor: !canSwipe  && '#c3c4d3' }} className="like" onClick={() => 
+                            // add product
+                            handleTooltipOpen()}>
+                        {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}> */}
+                            <FavoriteIcon fontSize="large" />
+                        </IconButton>
+                        {/* <Button onClick={handleTooltipOpen}>Click</Button> */}
+                    </Tooltip>
+                    </div>
+                </ClickAwayListener>
+
                 <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="right" onClick={() => swipe('right')}>
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
                     <ShoppingBagIcon fontSize="large" />
