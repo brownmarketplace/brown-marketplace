@@ -14,7 +14,6 @@ import java.util.Map;
 public class Product implements BFInsertable {
   private Map<String, Object> attributes;
   private BloomFilter bf;
-  private double xnorSimilarity;
 
   /**
    * The constructor of Product.
@@ -50,11 +49,12 @@ public class Product implements BFInsertable {
     String name = (String) this.attributes.get("name");
     String category = (String) this.attributes.get("category");
     String subCategory = (String) this.attributes.get("sub-category");
-    ArrayList<String> tags = new ArrayList<String> (((Map<String, Object>) this.attributes.get("tags")).keySet());
+    ArrayList<String> tags =
+        new ArrayList<String>(((Map<String, Object>) this.attributes.get("tags")).keySet());
 
     // split and add each word in the name of a product
     String[] wordsInName = name.trim().split(" ");
-    for (String word: wordsInName) {
+    for (String word : wordsInName) {
       if (!bfAttributes.contains(word) && !word.equals(category) && !word.equals(subCategory)) {
         bfAttributes.add(word);
       }
@@ -83,7 +83,7 @@ public class Product implements BFInsertable {
    * in an ArrayList.
    *
    * @param falsePositiveRate the desired false positive rate
-   * @param maxNum the max number of elements to be inserted into the bf
+   * @param maxNum            the max number of elements to be inserted into the bf
    * @return
    */
   @Override
@@ -111,14 +111,5 @@ public class Product implements BFInsertable {
   @Override
   public BloomFilter getBf() {
     return this.bf;
-  }
-
-  /**
-   * This is the setter for the XNOR similarity of the product.
-   *
-   * @param similarity XNOR similarity of the product
-   */
-  public void setXNORSimilarity(double similarity) {
-    this.xnorSimilarity = (double) similarity;
   }
 }
