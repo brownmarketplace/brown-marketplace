@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ProductPreviewWrapper from './ProductPreviewWrapper';
-import Storefronts from '../category-components/Storefronts'
+import Grid from '@mui/material/Grid'
 import database from "../../backend/Database/DBInstance"
 import { ref, onValue }
     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
@@ -35,16 +35,17 @@ function WishList(props) {
             <div className="wish-list-header">
                 Liked Items
             </div>
-            <div style={{ display: "flex", marginTop: "20px" }}>
-                { likedItemIds.map((id) => {
-                    return (
-                        <ProductPreviewWrapper productId={id}/>
-                    )
-                }) }
-                {/* <Storefronts products={}/> */}
+            <div className="wish-list-item-spacing"> 
+                <Grid container spacing={4}>
+                    {likedItemIds.map((id) =>
+                        <Grid item xs={6} md={4} lg={3} display="flex">
+                            <ProductPreviewWrapper productId={id} />
+                        </Grid>)}
+                </Grid>
             </div>
         </div>
     )
 }
+
 
 export default WishList
