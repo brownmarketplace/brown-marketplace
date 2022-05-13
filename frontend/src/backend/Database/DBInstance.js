@@ -1,5 +1,5 @@
 /*
-    This is the firebase database's configuration.
+    This is the firebase database's configuration. A Firebase Realtime database instance is instantiated here.
  */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";

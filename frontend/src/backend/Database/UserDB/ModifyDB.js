@@ -10,7 +10,6 @@ const database = getDatabase();
     a method that adds a user to the database.
  */
 var validateForm = () => {
-    // const path = document.querySelector('#user-path').value;
     const id = document.querySelector("#form-id").value;
     const username = document.querySelector("#form-username").value;
     const name = document.querySelector("#form-name").value;
@@ -96,11 +95,11 @@ document.querySelector('#delete').addEventListener("click", () => {
     deleteData(4);
 })
 document.querySelector('#listing').addEventListener("click", () => {
-    addNewListing("u500", "p500");
+    addNewListing("u115151849263296139973", "p9");
 })
 document.querySelector('#likedList').addEventListener("click", () => {
-    addToLikedList("u3", "p2");
+    addToLikedList("u115151849263296139973", "p9");
 })
 document.querySelector('#purchased').addEventListener("click", () => {
-    addToPurchasedList("u3", "p3");
+    addToPurchasedList("u115151849263296139973", "p9");
 })
