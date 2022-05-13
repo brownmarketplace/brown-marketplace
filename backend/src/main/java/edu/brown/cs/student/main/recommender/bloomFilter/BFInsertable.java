@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.Recommender.bloomFilter;
+package edu.brown.cs.student.main.recommender.bloomFilter;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public interface BFInsertable {
    * This method gets the ID of the BF Insertable object.
    * @return an integer
    */
-  int getId();
+  String getId();
 
   /**
    * This method gets the bloom filter of the BF Insertable object.
