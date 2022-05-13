@@ -5,10 +5,10 @@ import './boilerplate-page.css'
 
 // components
 import BoilerplateHeader from '../components/BoilerplateHeader'
-import Footer from '../components/Footer'
 import PageBreadcrumbs from '../components/product-components/PageBreadcrumbs'
 import AddToLikedList from '../components/product-components/AddToLikedList'
 import CopyToClipboard from '../components/product-components/CopyToClipboard'
+import SellerCard from '../components/product-components/SellerCard'
 
 // mui
 import Typography from '@mui/material/Typography'
@@ -63,11 +63,6 @@ function ProductPage(props) {
     getProductInfo()
   }, [])
 
-  // navigate to the seller's profile page
-  const contactSeller = () => {
-    navigate(`/profile/${productInfo.seller}`)
-  }
-
   return (
     <div className="boilerplate">
       <BoilerplateHeader title={"Brown Marketplace"} userPicture={props.pfp} userID={props.userID} />
@@ -118,18 +113,20 @@ function ProductPage(props) {
                     </div>
                   </Grid>
                   <Grid item xs={4} align="right">
-                    <Typography variant="h4">${parseFloat(productInfo.price).toFixed(2)}</Typography>
+                    {productInfo.sold === 'true'
+                      ? <Typography variant="h4" style={{ color: 'red' }}>Sold</Typography>
+                      : <Typography variant="h4">${parseFloat(productInfo.price).toFixed(2)}</Typography>}
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="h6" color="text.primary" align="left">Description</Typography>
                     <Typography variant="body2" color="text.secondary" align="left">{productInfo.description}</Typography>
                   </Grid>
-                  <Grid item xs={12} align="center" style={{ display: 'inline-flex' }}>
-                    {productInfo.sold === 'true'
-                      ? <Button variant="contained" disabled color="error" style={{ width: '100%' }}>Sold</Button>
-                      : <Button variant="contained" onClick={contactSeller} style={{ width: '100%' }}>Contact Seller</Button>}
+                  <Grid item xs={12} align="right">
                     <AddToLikedList productID={productInfo.id} userID={props.userID} />
                     <CopyToClipboard />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SellerCard userID={productInfo.seller} />
                   </Grid>
                 </Grid>
               </Grid>
