@@ -6,17 +6,18 @@ import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 
 function ProductPreview(props) {
-  const colorPalette = ['#D7FFD7', '#E3EBFF', '#FEFFD7', '#FFE3E3', '#FFF6D7']
+  const colorPalette = ['#D7FFD7', '#E3EBFF', '#FEFFD7', '#FFE3E3', '#FFF6D7', '#F3DDF2', '#D5D6EA']
   const numColors = colorPalette.length
 
   return (
     <Card style={{
-      backgroundColor: colorPalette[props.productInfo.id.substring(1) % colorPalette.length],
+      backgroundColor: colorPalette[props.productInfo.description.length % colorPalette.length],
     }}>
       <CardActionArea disableRipple href={"/product/" + props.productInfo.id}>
         <CardMedia
           component="img"
-          image={props.productInfo.pictures}
+          image={props.productInfo.pictures[0]}
+          alt={props.productInfo.name}
           style={{ aspectRatio: 16 / 12 }}
         />
         <CardContent
@@ -28,7 +29,7 @@ function ProductPreview(props) {
               <Typography variant="subtitle1">{props.productInfo.name}</Typography>
             </Grid>
             <Grid item xs={4} align="right">
-              <Typography variant="subtitle1">{props.productInfo.price}</Typography>
+              <Typography variant="subtitle1">${parseFloat(props.productInfo.price).toFixed(2)}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="caption" color="text.secondary" align="left"

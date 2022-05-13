@@ -47,12 +47,13 @@ function ProductPage(props) {
           title: product.name,
           price: product.price,
           description: product.description,
-          images: [product.pictures],
+          images: product.pictures,
           seller: product.seller,
           sold: product.sold,
           tags: Object.keys(product.tags)
         }
       )
+      console.log(product.pictures)
       setImage([product.pictures][0])
     })
   }
@@ -117,7 +118,7 @@ function ProductPage(props) {
                     </div>
                   </Grid>
                   <Grid item xs={4} align="right">
-                    <Typography variant="h4">{productInfo.price}</Typography>
+                    <Typography variant="h4">${parseFloat(productInfo.price).toFixed(2)}</Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="h6" color="text.primary" align="left">Description</Typography>
