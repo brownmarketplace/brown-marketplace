@@ -120,7 +120,7 @@ function ProductCards(props) {
             console.log("Logged in")
             getRecommendations()
         }
-    }, [products])
+    }, [props.isLoggedIn])
 
     let childRefs = useMemo(
         () => 
