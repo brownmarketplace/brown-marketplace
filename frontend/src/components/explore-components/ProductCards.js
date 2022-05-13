@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 // Component Imports
 import TinderCard from "react-tinder-card";
@@ -68,14 +69,26 @@ function ProductCards(props) {
         // clear current products
         setProducts([])
 
+        const postConfig = {headers: {}}
+
+        // Send the user id to backend
+        let toSend = {user: "1"}
+        const recommendUrl = "http://127.0.0.1:4567/recommend"
+        axios.post(recommendUrl, toSend, postConfig)
+            .then((response) => {
+                console.log("recommendation loaded successfully");
+                setPids(response.data['result']);
+                console.log("Making call", response.data)
+            })
+            .catch(e => console.log("Erroring"))
+        
+        console.log("pids: " + pids)
+
         pids.forEach(pid => {
             onValue(ref(database, 'products/' + pid), (snapshot) => {
                 setProducts(products => [...products, snapshot.val()])
             }
         )})
-
-        // update canSwipe and currentIndex
-        setCurrentIndex(products.length)
     }
 
     const addToLikedList = (userID, productID) => {
