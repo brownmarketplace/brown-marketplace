@@ -53,7 +53,6 @@ function ProductPage(props) {
           tags: Object.keys(product.tags)
         }
       )
-      console.log(product.pictures)
       setImage(product.pictures[0])
     })
   }
@@ -150,6 +149,7 @@ ProductPage.defaultProps = {
     description: "",
     images: [],
     sold: 'false',
+    seller: null,
     tags: [],
   },
   // // for demo

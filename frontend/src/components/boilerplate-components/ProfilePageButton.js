@@ -19,7 +19,9 @@ function ProfilePageButton(props) {
   }
 
   useEffect(() => {
-    readOneUserInfo().catch(console.error)
+    if (props.userID != 'uundefined') {
+      readOneUserInfo().catch(console.error)
+    }
   }, [props])
 
   return (
@@ -27,6 +29,10 @@ function ProfilePageButton(props) {
       <Avatar src={userPicture} style={{ width: 50, height: 50 }} />
     </Link>
   );
+}
+
+ProfilePageButton.defaultProps = {
+  userID: null,
 }
 
 export default ProfilePageButton;
