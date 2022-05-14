@@ -63,7 +63,6 @@ function ExploreHeader(props) {
             <div className="search-bar-container">
                 <SearchBar />
             </div>
-            {console.log("Before render, isLoggedIn is: ", isLoggedIn)}
             <ProductCards userID={props.userID} isLoggedIn={isLoggedIn} />
         </div>
 
