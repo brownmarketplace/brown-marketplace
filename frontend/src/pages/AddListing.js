@@ -83,10 +83,14 @@ function AddListing(props) {
     const handleFormSubmit = (event) => {
         const checkEmptyInput = !Object.values(formInputData).every(res => res === "")
         if (checkEmptyInput) {
+            console.log("empty input field")
             console.log(formInputData);
         }
 
-        validateForm();
+        const ret = validateForm();
+        if (!ret) {
+            return
+        }
 
         const productCategory = getCategoryFromSubcategory(formInputData.productSubcategory);
         addCategoryAndSubCategoryToProduct(newProductId, productCategory, formInputData.productSubcategory);
@@ -154,10 +158,12 @@ function AddListing(props) {
         if (id.trim() == "" || name.trim() == "" || description == "" || tag == ""
             || subcategory == "" || seller.trim() == "" || pictures == "") {
             alert("form not completely filled");
+            return false;
         } else {
             pictures = pictures.map(e => e.trim());
             writeBasicInfoToDatabase(id, name, description, price, seller, pictures, date, sold,
                 numLiked);
+            return true;
         }
     };
     
