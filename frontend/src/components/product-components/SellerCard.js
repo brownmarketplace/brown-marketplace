@@ -22,6 +22,9 @@ function SellerCard(props) {
   }
 
   useEffect(() => {
+    if ( props.userID == null)  {
+      return
+    }
     readOneUserInfo().catch(console.error)
   }, [props])
 
