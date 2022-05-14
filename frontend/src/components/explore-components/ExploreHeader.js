@@ -111,31 +111,17 @@ function ExploreHeader(props) {
                 ))}
             </List>
         </Drawer>
-
-        {/* If showProfile is true, render ProfilePageButton.
-        Else, render empty div to keep the header layout consistent (flex: space-around). */}
-        {/* { props.showProfile && <ProfilePageButton userPicture={pfp}/> } */}
-
-        {/* if not logged in, show GoogleLogin, else show ProfilePage */}
-        {isLoggedIn ? 
-        
-        // <Grid
-        // container
-        // xs={1}
-        // direction="column"
-        // justifyContent="center"
-        // alignItems="center"
-        // >
+                            
+        {/* If the user is logged in, display the profile picture and logout button, else login button */}
+        {isLoggedIn ?         
         <div className='profile-container'>
             <ProfilePageButton userPicture={pfp} userID={props.userID}/>
             <GoogleLogout
                 clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
                 buttonText="Logout"
                 onLogoutSuccess={handleLogout}
-                // onFailure={responseGoogle}
             />
         </div>
-        /* </Grid> */
     : 
         <div>
             <GoogleLogin
@@ -147,19 +133,6 @@ function ExploreHeader(props) {
                 isSignedIn={true}
             />
         </div>}
-        {/* { !props.showProfile && <div>
-            <GoogleLogin
-                clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-            />
-        </div> } */}
-        {/* { props.showProfile && <ProfilePageButton userPicture={pfp}/> }  */}
-
-    
     </div>
     )
 }
