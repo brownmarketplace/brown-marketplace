@@ -47,7 +47,7 @@ const App = () => {
         set(ref(database, 'users/' + "u" + response.googleId), {
           classYear: "sophomore",
           email: response.profileObj.email,
-          id: response.googleId,
+          id: id,
           name: response.profileObj.name,
           profilePic: response.profileObj.imageUrl
         })
