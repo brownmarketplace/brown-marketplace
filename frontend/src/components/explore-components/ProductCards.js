@@ -89,7 +89,7 @@ function ProductCards(props) {
         axios.post(recommendUrl, postConfig)
             .then((response) => {
 
-                console.log(response.data['result'])
+                console.log("Receiving product ids from /recommend", response.data['result'])
                 setPids(response.data['result']);
 
                 // loop through the pids array to get the product IDs from the database, and set products to the products array
@@ -147,9 +147,7 @@ function ProductCards(props) {
         updateCurrentIndex(index - 1)
     }
 
-    const outOfFrame = (dir, name, idx, id) => {
-        console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current)
-        
+    const outOfFrame = (dir, name, idx, id) => {        
         // handle the case in which go back is pressed before card goes outOfFrame
         currentIndexRef.current >= idx && childRefs[idx].current.restoreCard()
       
@@ -160,7 +158,6 @@ function ProductCards(props) {
     }
 
     const swipe = async (dir) => {
-        console.log("refs: ", childRefs)
         if (canSwipe && currentIndex < products.length) {
         await childRefs[currentIndex].current.swipe(dir) // Swipe the card!
         }
@@ -168,7 +165,6 @@ function ProductCards(props) {
 
     // increase current index and show card
     const goBack = async () => {
-        console.log("refs: ", childRefs)
         if (!canGoBack) return
         const newIndex = currentIndex + 1
         updateCurrentIndex(newIndex)
@@ -222,12 +218,6 @@ function ProductCards(props) {
                 ))}
             </div>
             <div className='product-buttons'>
-                {/* Log currentIndex */}
-                {console.log("currentIndex: ", currentIndex)}
-                {/* Log can swipe and canGoBack */}
-                {console.log("canSwipe: ", canSwipe, "canGoBack: ", canGoBack)}
-                {/* Log refs */}
-                {console.log("refs: ", childRefs)}
                 <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="left" onClick={() => swipe('left')}>
                 {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="left" onClick={() => swipe('left')}> */}
                     <CloseIcon fontSize="large" />
