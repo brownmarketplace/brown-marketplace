@@ -145,11 +145,11 @@ document.querySelector('#product-register').addEventListener("click", () => {
     validateForm();
 })
 document.querySelector('#product-add-category').addEventListener("click", () => {
-    addCategoryAndSubCategoryToProduct("p15", "Electronics & related",
-        "Other electronics and related")
+    addCategoryAndSubCategoryToProduct("p17", "Clothing",
+        "Coats and Jackets")
 })
 document.querySelector('#product-add-tag').addEventListener("click", () => {
-    addTagToProduct("p15", "School Essentials")
+    addTagToProduct("p17", "Artsy")
 })
 document.querySelector('#product-add-liked').addEventListener("click", () => {
     modifyNumLiked("p1", -1)
