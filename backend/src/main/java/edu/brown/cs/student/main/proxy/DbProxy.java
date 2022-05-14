@@ -131,7 +131,7 @@ public class DbProxy {
   /**
    * This method waits for the async calls to the database until successful queries are made.
    */
-  private void waitSucceed() {
+  public void waitSucceed() {
     synchronized (succeed) {
       while (!succeed) {
         try {
@@ -152,7 +152,7 @@ public class DbProxy {
   public ArrayList<Product> getLiked() {
     this.waitSucceed();
     // Check if there exists liked items
-    if (userLikes == null || userLikes.size() == 0) {
+    if (userLikes.size() == 0) {
       return null;
     } else { // Match the liked items with product info
       ArrayList<Product> likedList = new ArrayList<>();

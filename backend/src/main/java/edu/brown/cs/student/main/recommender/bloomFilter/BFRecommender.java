@@ -73,6 +73,7 @@ public class BFRecommender<T extends BFInsertable> {
    * @return the target product
    */
   public T findTargetProduct() {
+
     for (T s : this.allProducts) {
       if (s.getId().equals(this.productID)) {
         return s;
@@ -102,7 +103,9 @@ public class BFRecommender<T extends BFInsertable> {
     List<String> kSimilarProducts = new ArrayList<>();
 
     // remove target product from the list of products
-    this.allProducts.remove(this.targetProduct);
+    if (this.targetProduct != null) {
+      this.allProducts.remove(this.targetProduct);
+    }
     //add all products except for the target product to the priority queue
     for (T s : this.allProducts) {
       this.sortedProducts.add(s);
@@ -124,7 +127,9 @@ public class BFRecommender<T extends BFInsertable> {
     }
 
     // add target product back to the list of products
-    this.allProducts.add(this.targetProduct);
+    if (this.targetProduct != null) {
+      this.allProducts.add(this.targetProduct);
+    }
     return kSimilarProducts;
   }
 
