@@ -204,7 +204,7 @@ function ProductCards(props) {
                                 {/* Set character limit so all cards are uniform */}
                                 <Typography variant="body2" color="text.secondary">
                                     {/* If description exceeds on line, replace with ellipsis */}
-                                    {product.description.length > 60 ? product.description.substring(0, 60) + " [...]" : product.description}    
+                                    {product.description.length > 50 ? product.description.substring(0, 50) + " [...]" : product.description}    
                                 </Typography>
                                 <div className='price'>
                                 {/* <Paper backgroundColor="#7fadff" className="price" elevation={1}> */}
