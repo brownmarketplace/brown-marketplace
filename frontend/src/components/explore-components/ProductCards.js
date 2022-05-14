@@ -191,7 +191,7 @@ function ProductCards(props) {
                             <CardMedia
                                 component="img"
                                 height="300"
-                                image={product.pictures}
+                                image={product.pictures[0]}
                                 alt="product picture"
                             />
                             <CardContent className='product-card'>
