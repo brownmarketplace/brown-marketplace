@@ -134,10 +134,13 @@ public class Server {
       List<String> recommendedProducts;
       if (likedProducts == null) { // Random recommendations
         recommendedProducts = recSys.generateDefaultExploreRecommendations(maxProduct);
+        System.out.println("a");
       } else { // Preference based recommendations
         recommendedProducts =
             recSys.generateRandomizedExploreRecommendations(maxProduct, RAND_FACTOR, likedProducts);
+        System.out.println("b");
       }
+      System.out.println(recommendedProducts);
       System.out.println("Recommendations are successfully sent!");
 
       return gson.toJson(ImmutableMap.of("result", recommendedProducts));

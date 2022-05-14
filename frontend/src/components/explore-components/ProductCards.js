@@ -88,6 +88,8 @@ function ProductCards(props) {
         const recommendUrl = "http://127.0.0.1:4567/recommend"
         axios.post(recommendUrl, postConfig)
             .then((response) => {
+
+                console.log(response.data['result'])
                 setPids(response.data['result']);
 
                 // loop through the pids array to get the product IDs from the database, and set products to the products array
