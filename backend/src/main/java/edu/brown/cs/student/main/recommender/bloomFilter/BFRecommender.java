@@ -14,7 +14,6 @@ import java.util.PriorityQueue;
  */
 public class BFRecommender<T extends BFInsertable> {
   private List<T> allProducts;
-  private String productID;
   private T targetProduct;
   private int numSimilarProducts;
   private final double falsePositiveRate = 0.1;
@@ -70,12 +69,12 @@ public class BFRecommender<T extends BFInsertable> {
   /**
    * This method finds the target product given the product ID.
    *
+   * @param iD target product iD
    * @return the target product
    */
-  public T findTargetProduct() {
-
+  public T findTargetProduct(String iD) {
     for (T s : this.allProducts) {
-      if (s.getId().equals(this.productID)) {
+      if (s.getId().equals(iD)) {
         return s;
       }
     }
@@ -96,9 +95,8 @@ public class BFRecommender<T extends BFInsertable> {
   public List<String> generateRecommendations(String iD, int k, Comparator com)
       throws NoSuchAlgorithmException {
     // set parameters
-    this.productID = iD;
     this.numSimilarProducts = k;
-    this.targetProduct = this.findTargetProduct();
+    this.targetProduct = this.findTargetProduct(iD);
     this.sortedProducts = new PriorityQueue<T>(this.allProducts.size(), com);
     List<String> kSimilarProducts = new ArrayList<>();
 
