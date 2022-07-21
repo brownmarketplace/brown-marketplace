@@ -1,207 +1,132 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import {
-    BasicStorage,
-    ChatMessage,
-    ChatProvider,
-    Conversation,
-    ConversationId,
-    ConversationRole,
-    IStorage,
-    MessageContentType,
-    Participant,
-    Presence,
-    TypingUsersList,
-    UpdateState,
-    User,
-    UserStatus
-} from "@chatscope/use-chat";
-import {ExampleChatService} from "@chatscope/use-chat/dist/examples";
-import {nanoid} from "nanoid";
-import {Col, Container, Row} from "react-bootstrap";
-import {akaneModel, eliotModel, emilyModel, joeModel, users} from "../components/chat-components/test-chat";
-import {AutoDraft} from "@chatscope/use-chat/dist/enums/AutoDraft";
+import React, { useState, useEffect, useRef } from "react";
 
-import {Chat} from '../components/chat-components/Chat'
-
-
-// sendMessage and addMessage methods can automagically generate id for messages and groups
-// This allows you to omit doing this manually, but you need to provide a message generator
-// The message id generator is a function that receives message and returns id for this message
-// The group id generator is a function that returns string
-const messageIdGenerator = (message) => nanoid();
-const groupIdGenerator = () => nanoid();
-
-const akaneStorage = new BasicStorage({groupIdGenerator, messageIdGenerator});
-const eliotStorage = new BasicStorage({groupIdGenerator, messageIdGenerator});
-const emilyStorage = new BasicStorage({groupIdGenerator, messageIdGenerator});
-const joeStorage = new BasicStorage({groupIdGenerator, messageIdGenerator});
-
-// Create serviceFactory
-const serviceFactory = (storage, updateState) => {
-    return new ExampleChatService(storage, updateState);
-};
-
-const akane = new User({
-    id: akaneModel.name,
-    presence: new Presence({status: UserStatus.Available, description: ""}),
-    firstName: "",
-    lastName: "",
-    username: akaneModel.name,
-    email: "",
-    avatar: akaneModel.avatar,
-    bio: ""
-});
-
-const emily = new User({
-    id: emilyModel.name,
-    presence: new Presence({status: UserStatus.Available, description: ""}),
-    firstName: "",
-    lastName: "",
-    username: emilyModel.name,
-    email: "",
-    avatar: emilyModel.avatar,
-    bio: ""
-});
-
-const eliot = new User({
-    id: eliotModel.name,
-    presence: new Presence({status: UserStatus.Available, description: ""}),
-    firstName: "",
-    lastName: "",
-    username: eliotModel.name,
-    email: "",
-    avatar: eliotModel.avatar,
-    bio: ""
-});
-
-const joe = new User({
-    id: joeModel.name,
-    presence: new Presence({status: UserStatus.Available, description: ""}),
-    firstName: "",
-    lastName: "",
-    username: joeModel.name,
-    email: "",
-    avatar: joeModel.avatar,
-    bio: ""
-});
-
-const chats = [
-    {name: "Akane", storage: akaneStorage},
-    {name: "Eliot", storage: eliotStorage},
-    {name: "Emily", storage: emilyStorage},
-    {name: "Joe", storage: joeStorage}
-];
-
-function createConversation(id, name) {
-    return new Conversation({
-        id,
-        participants: [
-            new Participant({
-                id: name,
-                role: new ConversationRole([])
-            })
-        ],
-        unreadCounter: 0,
-        typingUsers: new TypingUsersList({items: []}),
-        draft: ""
-    });
-}
-
-// Add users and conversations to the states
-chats.forEach(c => {
-
-    users.forEach(u => {
-        if (u.name !== c.name) {
-            c.storage.addUser(new User({
-                id: u.name,
-                presence: new Presence({status: UserStatus.Available, description: ""}),
-                firstName: "",
-                lastName: "",
-                username: u.name,
-                email: "",
-                avatar: u.avatar,
-                bio: ""
-            }));
-
-            const conversationId = nanoid();
-
-            const myConversation = c.storage.getState().conversations.find(cv => typeof cv.participants.find(p => p.id === u.name) !== "undefined");
-            if (!myConversation) {
-
-                c.storage.addConversation(createConversation(conversationId, u.name));
-
-                const chat = chats.find(chat => chat.name === u.name);
-
-                if (chat) {
-
-                    const hisConversation = chat.storage.getState().conversations.find(cv => typeof cv.participants.find(p => p.id === c.name) !== "undefined");
-                    if (!hisConversation) {
-                        chat.storage.addConversation(createConversation(conversationId, c.name));
-                    }
-
-                }
-
-            }
-
-        }
-    });
-});
+const sendIcon = (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M19 10L1 1L5 10L1 19L19 10Z"
+      stroke="black"
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 function ChatCentral(props) {
-    return (
-      <div className="h-100 d-flex flex-column overflow-hidden">
-            <Container fluid className="p-4 flex-grow-1 position-relative overflow-hidden">
-                <Row className="h-50 pb-2 flex-nowrap">
-                    <Col>
-                        <ChatProvider serviceFactory={serviceFactory} storage={akaneStorage} config={{
-                            typingThrottleTime: 250,
-                            typingDebounceTime: 900,
-                            debounceTyping: true,
-                            autoDraft: AutoDraft.Save | AutoDraft.Restore
-                        }}>
-                            <Chat user={akane}/>
-                        </ChatProvider>
-                    </Col>
-                    <Col>
-                        <ChatProvider serviceFactory={serviceFactory} storage={eliotStorage} config={{
-                            typingThrottleTime: 250,
-                            typingDebounceTime: 900,
-                            debounceTyping: true,
-                            autoDraft: AutoDraft.Save | AutoDraft.Restore
-                        }}>
-                            <Chat user={eliot}/>
-                        </ChatProvider>
-                    </Col>
-                </Row>
-                <Row className="h-50 pt-2 flex-nowrap">
-                    <Col>
-                        <ChatProvider serviceFactory={serviceFactory} storage={emilyStorage} config={{
-                            typingThrottleTime: 250,
-                            typingDebounceTime: 900,
-                            debounceTyping: true,
-                            autoDraft: AutoDraft.Save | AutoDraft.Restore
-                        }}>
-                            <Chat user={emily}/>
-                        </ChatProvider>
-                    </Col>
-                    <Col>
-                        <ChatProvider serviceFactory={serviceFactory} storage={joeStorage} config={{
-                            typingThrottleTime: 250,
-                            typingDebounceTime: 900,
-                            debounceTyping: true,
-                            autoDraft: AutoDraft.Save | AutoDraft.Restore
-                        }}>
-                            <Chat user={joe}/>
-                        </ChatProvider>
-                    </Col>
-                </Row>
-            </Container>
+
+  const [messages, setMessages] = useState([]);
+  const [isConnectionOpen, setConnectionOpen] = useState(false);
+  const [messageBody, setMessageBody] = useState("");
+
+  const username = "Ran";
+  //props.userID;
+
+  const ws = useRef();
+
+  // sending message function
+
+  const sendMessage = () => {
+    if (messageBody) {
+      ws.current.send(
+        JSON.stringify({
+          sender: username,
+          body: messageBody,
+        })
+      );
+      setMessageBody("");
+    }
+  };
+
+  useEffect(() => {
+    ws.current = new WebSocket("ws://localhost:8080");
+
+    ws.current.onopen = () => {
+      console.log("Connection opened");
+      setConnectionOpen(true);
+    };
+
+    ws.current.onmessage = (event) => {
+      const data = event.data;
+      console.log(data)
+      setMessages((_messages) => [..._messages, data]);
+    };
+
+    return () => {
+      console.log("Cleaning up...");
+      ws.current.close();
+    };
+  }, []);
+
+  const scrollTarget = useRef(null);
+
+  useEffect(() => {
+    if (scrollTarget.current) {
+      scrollTarget.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages.length]);
+
+  return (
+    <div>
+      <div id="chat-view-container" className="flex flex-col w-1/3">
+        {messages.map((message, index) => (
+          <div key={index} className={`my-3 rounded py-3 w-1/3 text-white ${
+            message.sender === username ? "self-end bg-purple-600" : "bg-blue-600"
+          }`}>
+            <div className="flex items-center">
+              <div className="ml-2">
+                <div className="flex flex-row">
+                  <div className="text-sm font-medium leading-5 text-gray-900">
+                    {message.sender} at
+                  </div>
+                  <div className="ml-1">
+                    <div className="text-sm font-bold leading-5 text-gray-900">
+                      {new Date(message.sentAt).toLocaleTimeString(undefined, {
+                        timeStyle: "short",
+                      })}{" "}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-1 text-sm font-semibold leading-5">
+                  {message.body}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+        <div ref={scrollTarget} />
+      </div>
+      <footer className="w-1/3">
+        <p>
+          You are chatting as <span className="font-bold">{username}</span>
+        </p>
+
+        <div className="flex flex-row">
+          <input
+            id="message"
+            type="text"
+            className="w-full border-2 border-gray-200 focus:outline-none rounded-md p-2 hover:border-purple-400"
+            placeholder="Type your message here..."
+            value={messageBody}
+            onChange={(e) => setMessageBody(e.target.value)}
+            required
+          />
+          <button
+            aria-label="Send"
+            onClick={sendMessage}
+            className="m-3"
+            disabled={!isConnectionOpen}
+          >
+            {sendIcon}
+          </button>
         </div>
-    )
-  }
-  
-  ChatCentral.defaultProps = {
-  }
-  
-  export default ChatCentral
+      </footer>
+    </div>
+  );
+}
+
+export default ChatCentral
