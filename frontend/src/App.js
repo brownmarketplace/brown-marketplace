@@ -11,6 +11,7 @@ import ProductPageV2 from './pages/ProductPageV2';
 import NavigationBar from './components/NavigationBar';
 import FooterV2 from './components/FooterV2';
 
+import Chat from './pages/ChatCentral';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
 import Cookies from 'universal-cookie';
@@ -20,6 +21,7 @@ import axios from 'axios';
 import { ref, set, get, onValue, query, orderByChild, equalTo, child }
   from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 import database from './backend/Database/DBInstance'
+import ChatCentral from './pages/ChatCentral';
 
 // Theming
 import { ThemeProvider, createTheme } from '@mui/material/styles';

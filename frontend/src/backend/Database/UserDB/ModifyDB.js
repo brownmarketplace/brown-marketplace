@@ -3,6 +3,7 @@
     user; adding to a user's listings, liked items and purchased items.
  */
 import { getDatabase, ref, set, update, remove } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import {ref as sRef, getStorage, uploadBytesResumable, listAll, getDownloadURL, deleteObject} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-storage.js";
 const database = getDatabase();
 
 /*
@@ -85,6 +86,51 @@ var deleteData = (id) => {
     remove(ref(database, 'users/' + id))
 }
 
+/*
+    This method uploads an image for a product to Firebase storage.
+ */
+var uploadImageToStorage = (productID, path) => {
+    // get the storage reference for the image to upload
+    const storage = getStorage();
+    const storageRef = sRef(storage, 'product-images/' + productID + '/' + path);
+
+    // upload the file and metadata
+    uploadBytesResumable(storageRef).then((snapshot) => {
+        console.log("Uploaded a blob or file!");
+    })
+    // const uploadTask = uploadBytesResumable(storageRef, file);
+    // use uploadTask to pause, resume or cancel the upload
+}
+
+/*
+    This method deletes an image for a product.
+ */
+var deleteImage = (productID, path) => {
+    const storage = getStorage();
+    const storageRef = sRef(storage, 'product-images/' + productID + '/' + path);
+    deleteObject(storageRef).then(() => {
+        console.log("image deleted successfully for product!");
+    });
+}
+
+/*
+    This method returns the download urls for all the images of a given product.
+ */
+var getSingleProductImages = (productID) => {
+    const storage = getStorage()
+    const storageRef = sRef(storage, 'product-images/' + productID);
+
+    listAll(storageRef).then((result) => {
+        const promises = [];
+        result.items.forEach((imageRef) => {
+            promises.push(getDownloadURL(imageRef));
+        });
+        return Promise.all(promises)
+    }).then(urls => {
+        console.log(urls)
+    })
+}
+
 document.querySelector('#register').addEventListener("click", () => {
     validateForm();
 })
@@ -102,4 +148,13 @@ document.querySelector('#likedList').addEventListener("click", () => {
 })
 document.querySelector('#purchased').addEventListener("click", () => {
     addToPurchasedList("u115151849263296139973", "p9");
+})
+document.querySelector('#upload').addEventListener("click", () => {
+    uploadImageToStorage("p2","logo.png");
+})
+document.querySelector('#getSingleProductImages').addEventListener("click", () => {
+    getSingleProductImages("p1");
+})
+document.querySelector('#deleteImage').addEventListener("click", () => {
+    deleteImage("p2", "logo.png");
 })
