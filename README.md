@@ -1,4 +1,4 @@
-# Brown Marketplace
+# Brown Marketplace 🧸
 
 ### Steps to Run
 Clone the repo. Then, cd in the `backend` folder. In the `backend` folder, run the command: `mvn package` and then `./run --gui`. Next, in the `frontend` folder, run `npm start`. Go to `localhost:3000/explore` to get started!
@@ -276,4 +276,3 @@ To make sure that our website accurately reflects user needs, most of our data w
 - We have to make sure that the user information are securely stored in the database and not accessible through code inspection. Important information like the passwords would be stored using SHA. We, as the developers of the website, would also not have direct access to the information.
 - The website should be able to work on different browsers. The UI components should automatically adapt to different screen sizes / viewports.
 - The UI components should have accessibility labels, such as “alt” for images.
-
