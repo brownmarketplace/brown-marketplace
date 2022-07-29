@@ -3,11 +3,9 @@ import * as React from "react";
 // mui
 import { Box, Stack, Typography, Avatar } from '@mui/material';
 
-type SellerInfo = {
-  profilePicture: string,
-  name: string,
-  email: string,
-}
+
+// types
+import { SellerInfo } from "../../models/types";
 
 type SellerCardV2Props = {
   sellerInfo: SellerInfo,

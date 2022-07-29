@@ -6,14 +6,8 @@ import ProductPreviewV2 from './ProductPreviewV2';
 import TagButton from './TagButton';
 import SortingDropdown from './SortingDropdown';
 
-type ProductInfo = {
-	id: number,
-	name: string,
-	price: number,
-	description: string,
-	pictures: string[],
-	tags: string[],
-};
+// types
+import { ProductInfo } from "../../models/types";
 
 type StoreFrontV2Props = {
 	products: ProductInfo[],

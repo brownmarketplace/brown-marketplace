@@ -1,26 +1,20 @@
 import * as React from "react";
 import { Card, CardContent, CardMedia, CardActionArea, Typography, Box, Stack, CardActions, styled } from "@mui/material";
 
+import { motion } from "framer-motion";
+
 // components
 import TagV2 from './TagV2';
 import AddToFavorite from './AddToFavorite';
 
-import { motion } from "framer-motion";
+// types
+import { ProductInfo } from "../../models/types";
 
 const StyledCardActionArea = styled(CardActionArea)(({ theme }) => `
     .MuiCardActionArea-focusHighlight {
         background: transparent;
     }
 `);
-
-type ProductInfo = {
-  id: number,
-  name: string,
-  price: number,
-  description: string,
-  pictures: string[],
-  tags: string[],
-}
 
 type ProductPreviewV2Props = {
   productInfo: ProductInfo,
