@@ -1,20 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, IconButton, Stack, Typography, Grid, Pagination } from '@mui/material';
+import * as React from "react";
+import { Box, Stack, Typography, Grid, Pagination } from '@mui/material';
 
+// components
 import ProductPreviewV2 from './ProductPreviewV2';
 import TagButton from './TagButton';
 import SortingDropdown from './SortingDropdown';
 
-export default function StorefrontV2(props) {
+type ProductInfo = {
+	id: number,
+	name: string,
+	price: number,
+	description: string,
+	pictures: string[],
+	tags: string[],
+};
+
+type StoreFrontV2Props = {
+	products: ProductInfo[],
+	tags: string[],
+};
+
+const NUMBER_PRODUCTS_PER_PAGE: number = 8;
+
+export default function StorefrontV2(props: StoreFrontV2Props) {
 	const {
 		products,
 		tags,
-	} = props;
+	}: StoreFrontV2Props = props;
 
 	// filter by tags
-	const [selectedTags, setSelectedTags] = useState(new Set());
+	const [selectedTags, setSelectedTags] = React.useState<Set<string>>(new Set());
 
-	function toggleTag(tagName) {
+	function toggleTag(tagName: string): void {
 		if (selectedTags.has(tagName)) {
 			selectedTags.delete(tagName);
 			setSelectedTags(new Set(selectedTags));
@@ -25,20 +42,22 @@ export default function StorefrontV2(props) {
 	}
 
 	// product sorting
-	const [sortedProducts, setSortedProducts] = useState([...products]);
+	const [sortedProducts, setSortedProducts] = React.useState<ProductInfo[]>([...products]);
 
-	useEffect(() => {
-		const numActiveTags = (product) => product.tags.reduce((counter, tag) => counter + (selectedTags.has(tag) ? 1 : 0), 0);
+	function numActiveTags(product: ProductInfo): number {
+		return product.tags.reduce((counter, tag) => counter + (selectedTags.has(tag) ? 1 : 0), 0);
+	}
+
+	React.useEffect(() => {
 		let sorted = [...products].sort((a, b) => - numActiveTags(a) + numActiveTags(b));
 		setSortedProducts(sorted);
 	}, [products, selectedTags])
 
 	// TODO: Adjust the number of products to fit the display
 	// pagination
-	const NUMPER_PRODUCTS_PER_PAGE = 8;
-	const numPages = Math.ceil(products.length / NUMPER_PRODUCTS_PER_PAGE);
+	const [page, setPage] = React.useState<number>(1);
 
-	const [page, setPage] = useState(1);
+	const numPages = Math.ceil(products.length / NUMBER_PRODUCTS_PER_PAGE);
 
 	return (
 		<Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
@@ -49,7 +68,7 @@ export default function StorefrontV2(props) {
 					<Typography variant="h5">Filter by tags</Typography>
 					<Stack>
 						{tags.map((tag, idx) =>
-							<TagButton title={tag} onClick={() => toggleTag(tag)} active={selectedTags.has(tag)} sx={{ marginLeft: "10px" }}></TagButton>
+							<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
 						)}
 					</Stack>
 				</Box>
@@ -59,9 +78,9 @@ export default function StorefrontV2(props) {
 			<Box>
 				<Stack alignItems="center" spacing={3}>
 					<Grid container spacing={3}>
-						{sortedProducts.slice((page - 1) * NUMPER_PRODUCTS_PER_PAGE, page * NUMPER_PRODUCTS_PER_PAGE).map((productInfo, idx) =>
+						{sortedProducts.slice((page - 1) * NUMBER_PRODUCTS_PER_PAGE, page * NUMBER_PRODUCTS_PER_PAGE).map((productInfo, idx) =>
 							<Grid item key={idx} xs={6} md={4} lg={3} display="flex">
-								<ProductPreviewV2 productInfo={productInfo} selectedTags={selectedTags} tagOnClick={toggleTag} numLine={productInfo} />
+								<ProductPreviewV2 productInfo={productInfo} selectedTags={selectedTags} tagOnClick={toggleTag} />
 							</Grid>)}
 					</Grid>
 					<Pagination count={numPages} page={page} onChange={(event, value) => { setPage(value); }} />
@@ -114,5 +133,5 @@ StorefrontV2.defaultProps = {
 			tags: ["Furniture"],
 		},
 	]).flat(),
-	tags: ["Furniture", "Vintage", "Decoration", "Rocking chair", "Sofa", "Nature", "Free"],
+	tags: ["Furniture", "Vintage", "Decoration", "Rocking Chair", "Sofa", "Nature", "Free"],
 };

@@ -1,8 +1,11 @@
-import React from "react";
-
+import * as React from "react";
 import Box from "@mui/material/Box";
 
-export default function CoverImage(props) {
+type CoverImageProps = {
+    image: string,
+}
+
+export default function CoverImage(props: CoverImageProps) {
     return (
         <Box
             component="img"

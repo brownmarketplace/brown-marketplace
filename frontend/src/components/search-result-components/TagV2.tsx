@@ -1,9 +1,15 @@
-import { Button, ButtonBase, Chip, Typography } from "@mui/material";
-import React from "react";
+import * as React from "react";
+import Chip from "@mui/material/Chip";
 
 import { motion } from "framer-motion";
 
-export default function TagV2(props) {
+type TagV2Props = {
+    selected: boolean,
+    title: string,
+    onClick: () => void,
+}
+
+export default function TagV2(props: TagV2Props) {
     return (
         <Chip
             label={props.title}

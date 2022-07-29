@@ -1,7 +1,10 @@
+import * as React from "react";
 import { Breadcrumbs, Link, Typography } from "@mui/material";
-import React from "react";
 
-export default function PageBreadcrumbsV2(props) {
+type PageBreadcrumbsV2Props = {
+    path: { title: string, href: string }[],
+}
+export default function PageBreadcrumbsV2(props: PageBreadcrumbsV2Props) {
     return (
         <Breadcrumbs aria-label="breadcrumb" separator={">"}>
             {props.path.map((ele, idx) =>
