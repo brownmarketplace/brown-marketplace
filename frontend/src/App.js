@@ -6,7 +6,7 @@ import ProductPage from './pages/ProductPage';
 import CategoryPage from './pages/CategoryPage';
 import SearchResultPage from './pages/SearchResultPage';
 import ProductPageV2 from './pages/ProductPageV2';
-import React from 'react's
+import React from 'react'
 
 // components
 import NavigationBar from './components/NavigationBar';
