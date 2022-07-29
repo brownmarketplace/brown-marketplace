@@ -1,11 +1,11 @@
+import * as React from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import React, { useState } from "react";
 
 export default function AddToFavoriteButton() {
-    const [inList, setInList] = useState(false);
+    const [inList, setInList] = React.useState<boolean>(false);
 
-    function onClick(event) {
+    function onClick() {
         if (inList) {
             // remove from favorite list
         } else {

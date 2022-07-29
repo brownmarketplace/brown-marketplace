@@ -1,22 +1,28 @@
+import * as React from "react";
 import { Box, IconButton, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
 
-export default function TagButton(props) {
-    const [active, setActive] = useState(props.active);
+type TagButtonProps = {
+    title: string,
+    active: boolean,
+    onClick: () => void,
+}
+
+export default function TagButton(props: TagButtonProps) {
+    const [active, setActive] = React.useState<boolean>(props.active);
 
     const Toggle = () => {
         setActive(!active);
         props.onClick();
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         setActive(props.active);
     }, [props.active])
 
     return (
-        <Box sx={props.sx}>
+        <Box sx={{ marginLeft: "10px" }}>
             <IconButton disableRipple
                 color="inherit"
                 sx={{
@@ -45,4 +51,5 @@ export default function TagButton(props) {
 TagButton.defaultProps = {
     title: "Tag Name",
     active: false,
+    onClick: () => { },
 }
