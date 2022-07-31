@@ -1,0 +1,1 @@
+{"version":3,"file":"Title.js","sourceRoot":"","sources":["../../../src/components/boilerplate-components/Title.js"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAA;AACzB,OAAO,IAAI,MAAM,uBAAuB,CAAA;AACxC,OAAO,aAAa,CAAA;AAEpB,SAAS,KAAK,CAAC,KAAK;IAClB,OAAO,CACL,6BAAK,SAAS,EAAC,mBAAmB;QAChC,6BAAK,GAAG,EAAE,IAAI,GAAS,CACnB,CACP,CAAA;AACH,CAAC;AAED,eAAe,KAAK,CAAA"}

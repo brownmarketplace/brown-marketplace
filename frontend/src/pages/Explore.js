@@ -19,12 +19,17 @@ import defaultProfilePicture from '../images/pfp.png'
 
 function Explore(props) {
   return (
-    <div className="boilerplate">
-        <ExploreHeader userID={props.userID} loginState={props.loginState} logoutState={props.logoutState} title={props.title} userPicture={props.pfp}/>
-        <div style={{ textAlign: 'center', marginTop: '30px' }}>
-           Empty
-        </div>
-    </div>
+
+  <div>
+    <ProductCards userID={props.userID} isLoggedIn={false} />
+  </div>
+    // <div className="boilerplate">
+    //     {/* <ExploreHeader userID={props.userID} loginState={props.loginState} logoutState={props.logoutState} title={props.title} userPicture={props.pfp}/> */}
+    //     {/* Notify user that there are no more cards in the pile */}
+    //     {/* <div style={{ textAlign: 'center', marginTop: '30px' }}>
+    //        Empty
+    //     </div> */}
+    // </div>
   )
 }
 

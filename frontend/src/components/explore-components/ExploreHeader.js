@@ -39,99 +39,12 @@ function ExploreHeader(props) {
     const [drawerOpen, toggleDrawer] = useState(false) 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-    // react-router-dom for navigation
-    const navigate = useNavigate()
-
-    const handleLogin = (response) => {
-        props.loginState(response)
-        setIsLoggedIn(true)
-    }
-
-    const handleLogout = () => {
-        props.logoutState()
-        setIsLoggedIn(false)
-    }
-
 
     return (
     <div className="boilerplate-header">
-        {/* On click, returns to the previous page. */}
-        <img src={hamburger} alt="categories" className="categories-button" onClick={() => toggleDrawer(true)} />
-
         <div>
-            <Title className="title" title={props.title} />
-            <div className="search-bar-container">
-                <SearchBar />
-            </div>
-            <ProductCards userID={props.userID} isLoggedIn={isLoggedIn} />
+            <ProductCards userID={props.userID} />
         </div>
-
-        {/* Define Categories Drawer */}
-        <Drawer
-        PaperProps={{
-            sx: {
-              backgroundColor: "#FFEFD7",
-            }
-          }}
-        anchor="left" 
-        open={drawerOpen} 
-        onClose={() => toggleDrawer(false)}>
-            <div>
-                <Typography ml={2} mt={2} variant="h5" className="drawer-title">
-                    Categories
-                </Typography>
-            </div>
-
-            <List className="categories">   
-                {/*Create Buttons for each category */}
-                {categories.map(category => (
-                    <><ListItemButton key={category.name}
-                    onClick={() => navigate(category.path)}>
-                        <ListItemIcon>
-                            {category.icon}
-                        </ListItemIcon>
-                        <ListItemText primary={category.name} />
-                    </ListItemButton>
-                    <List component="div" disablePadding>
-                        {/*Create Buttons for each subcategory */}
-                        {category.subcats.map(subcat =>  (
-                            <ListItemButton sx={{ pl: 4 }} key={subcat.name} 
-                            //  On click, go to the subcategory page
-                            onClick={() => navigate(subcat.path)}>
-                                <ListItemIcon>
-                                    {subcat.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={subcat.name} />
-                            </ListItemButton>
-                        ))}
-                    </List>
-                    
-                    <Divider /></>    
-                ))}
-            </List>
-        </Drawer>
-                            
-        {/* If the user is logged in, display the profile picture and logout button, else login button */}
-        {isLoggedIn ?         
-        <div className='profile-container'>
-            <ProfilePageButton userPicture={pfp} userID={props.userID}/>
-            <GoogleLogout
-                clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
-                buttonText="Logout"
-                onLogoutSuccess={handleLogout}
-            />
-        </div>
-    : 
-        <div>
-            <GoogleLogin
-                clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={handleLogin}
-                onFailure={handleLogin}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-            />
-        </div>}
     </div>
     )
 }
