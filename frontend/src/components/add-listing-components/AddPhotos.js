@@ -8,13 +8,9 @@ function AddPhotos({handleInputChange, productImgUrls}) {
     return (
         <div className="add-details">
             <div>
-                <Chip 
-                label="Item Photos" 
-                className="details-chip" 
-                color="primary" 
-                />
+                Add Photos 📸
             </div>
-            <div style={{ marginTop: "10px" }}>
+            <div style={{ marginTop: "10px", width: 400 }}>
                     <TextField
                         id="outlined-multiline-static"
                         multiline

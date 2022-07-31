@@ -1,4 +1,4 @@
-.profile-contents {
+/* .profile-contents {
     margin: 7vw 7vw;
 }
 
@@ -10,13 +10,15 @@
 .second-profile-section {
     margin-top: 4vw;
 }
+*/
 
 .profile-picture-source {
-    width: 20vw;
-    height: 20vw;
+    width: 10vw;
+    height: 10vw;
     border-radius: 10px;
 }
 
+/*
 .username {
     font-size: 26px;
     margin-bottom: 12px;
@@ -33,11 +35,11 @@
 .user-listings {
     display: grid;
     margin-top: 20px;
-}
+} */
 
 /* When screen width is narrower, widen the horizontal gap between the columns of the 1st section 
    so they're not squished. In addition, increase vertical gap between profile info section and wishlist. */
-@media screen and (max-width: 710px) {
+/* @media screen and (max-width: 710px) {
     .first-profile-section {
         display: grid;
         grid-template-columns: 35% 65%;
@@ -46,4 +48,23 @@
     .second-profile-section {
         margin-top: 5vw;
     }
+} */
+
+.profile {
+    margin: 6vw 18vw;
+}
+
+.username {
+    font-size: 3vw;
+    background: -webkit-linear-gradient(#5d5d5d, #010101);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5px;
+}
+
+.email {
+    font-size: 1.5vw;
+    background: -webkit-linear-gradient(#7d7d7d, #3e3e3e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

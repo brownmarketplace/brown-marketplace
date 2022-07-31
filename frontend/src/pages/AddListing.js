@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import BoilerplateHeader from '../components/BoilerplateHeader'
+import Grid from '@mui/material/Grid';
+import Fab from '@mui/material/Fab';
+import Button from "@mui/material/Button";
 import Footer from '../components/Footer'
 import AddPhotos from '../components/add-listing-components/AddPhotos'
 import AddName from '../components/add-listing-components/AddName'
@@ -15,17 +18,11 @@ import database from "../backend/Database/DBInstance"
 import { ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 
 import './boilerplate-page.css'
-
 import { v4 as uuid } from 'uuid';
 
 function AddListing(props) {
-    const addListingStyle = {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: "30px",
-        marginBottom: "30px"
-    }
+
+    
 
     const newUserId = props.userID
     const newProductId = 'p' + uuid();
@@ -217,32 +214,58 @@ function AddListing(props) {
     return (
         <div className="boilerplate">
             <BoilerplateHeader title="Brown Marketplace" userPicture={defaultProfilePicture} showProfile={false}/>
-            <div style={addListingStyle}>
-                    <AddName 
-                        productName={formInputData.productName}
-                        handleInputChange={handleInputChange}
-                    />
-                    <AddDetails 
-                        productDesc={formInputData.productDesc}
-                        handleInputChange={handleInputChange}
-                    />
-                    <AddPrice 
-                        productPrice={formInputData.productPrice}
-                        handleInputChange={handleInputChange}
-                    />
-                    <ChooseCategory 
-                        productSubcategory={formInputData.productSubcategory}
-                        handleInputChange={handleInputChange}
-                    />
-                    <ChooseTags 
-                        productTags={formInputData.productTags}
-                        handleInputChange={handleTagChange}
-                    />
-                    <AddPhotos 
-                        productImgUrls={formInputData.productImgUrls}
-                        handleInputChange={handleImgUrlChange}
-                    />
-                    <div style={{ display: 'flex', justifyContent: "center" }}>
+                <div className="addListingStyle">                    
+                    <Grid container spacing={2} justifyContent="center">
+                        <Grid item container spacing={2} direction="row" alignItems="center">
+                            <Grid item xs={0.5}>
+                                <span className="genosFont">
+                                    x   
+                                </span>                         
+                            </Grid>
+                            <Grid item xs={9}>
+                                <span className="poppinsBigFont">
+                                    New Post
+                                </span>                         
+                            </Grid>
+                            <Grid item xs={2.5}>
+                                <PublishListing
+                                    // userId={props.userId} // should be this
+                                    userId={newUserId} // used to test
+                                    productId={newProductId}
+                                    handleFormSubmit={handleFormSubmit}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid item container spacing={2} direction="column" alignItems="center">
+                            <AddName 
+                                productName={formInputData.productName}
+                                handleInputChange={handleInputChange}
+                            />
+                            <AddPrice 
+                                productPrice={formInputData.productPrice}
+                                handleInputChange={handleInputChange}
+                            />
+                            <AddDetails 
+                                productDesc={formInputData.productDesc}
+                                handleInputChange={handleInputChange}
+                            />  
+                            <ChooseTags 
+                                productTags={formInputData.productTags}
+                                handleInputChange={handleTagChange}
+                            />                  
+                            <ChooseCategory 
+                                productSubcategory={formInputData.productSubcategory}
+                                handleInputChange={handleInputChange}
+                            />
+                            <AddPhotos 
+                                productImgUrls={formInputData.productImgUrls}
+                                handleInputChange={handleImgUrlChange}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    
+                    {/* <div style={{ display: 'flex', justifyContent: "center" }}>
                         <PublishListing
                             // userId={props.userId} // should be this
                             userId={newUserId} // used to test
@@ -251,9 +274,8 @@ function AddListing(props) {
                         />
                         <div style={{ width: "20px" }}></div>
                         <ClearButton handleSubmit={clearForm}/>
-                    </div>
-            </div>
-            {/* <Footer/> */}
+                    </div> */}
+                </div>
         </div>
     )
 }

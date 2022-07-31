@@ -8,6 +8,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 
+import './add-details.css'
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -45,18 +47,16 @@ function ChooseTags({handleInputChange, productTags}) {
 
   return (
     <div>
-        <Chip 
-            className="details-chip"
-            label="Item Tags" 
-            color="primary" 
-            sx={{ borderRadius: "4px !important", marginTop: "24px" }}
-        />
+        <div style={{ marginTop: '20px' }}>
+          Add Tags 🏷
+        </div>
         <div style={{ marginTop: "10px" }}>
         <FormControl sx={{ width: 400 }}>
             <InputLabel id="demo-multiple-chip-label">Tags</InputLabel>
             <Select
                 labelId="demo-multiple-chip-label"
                 id="demo-multiple-chip"
+                className="details-text"
                 multiple
                 name="productTags"
                 value={productTags}

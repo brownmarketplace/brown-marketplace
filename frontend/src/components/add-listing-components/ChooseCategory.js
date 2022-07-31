@@ -6,17 +6,14 @@ import ListSubheader from '@mui/material/ListSubheader';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import './add-details.css'
+
 function ChooseCategory({handleInputChange, productSubcategory}) {
 
   return (
     <div style={{ marginTop: "24px" }}>
         <div>
-            <Chip 
-            className="details-chip"
-            label="Item Category" 
-            color="primary" 
-            sx={{ borderRadius: "4px !important" }}
-            />
+            Choose a Category 🗃
         </div>
         <FormControl sx={{ minWidth: 120, marginTop: "12px", width: 400 }}>
             <InputLabel htmlFor="grouped-select">Category</InputLabel>
@@ -27,6 +24,7 @@ function ChooseCategory({handleInputChange, productSubcategory}) {
               onChange={handleInputChange}
               value={productSubcategory}
               name="productSubcategory"
+              className="details-text"
             >
               <MenuItem value="">
                   <em>None</em>
