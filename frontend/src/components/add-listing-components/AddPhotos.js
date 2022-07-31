@@ -11,17 +11,21 @@ function AddPhotos({handleInputChange, productImgUrls}) {
                 Add Photos 📸
             </div>
             <div style={{ marginTop: "10px", width: 400 }}>
-                    <TextField
-                        id="outlined-multiline-static"
-                        multiline
-                        rows={5}
-                        variant="outlined"
-                        placeholder="Enter comma-separated image urls. Note: please do not include urls with commas in them."
-                        className="details-text"
-                        onChange={handleInputChange}
-                        name="productImgUrls"
-                        value={productImgUrls}
-                    />
+                <Chip
+                 label="Add Photos"
+                 color="info"
+                />
+                {/* <TextField
+                    id="outlined-multiline-static"
+                    multiline
+                    rows={5}
+                    variant="outlined"
+                    placeholder="Enter comma-separated image urls. Note: please do not include urls with commas in them."
+                    className="details-text"
+                    onChange={handleInputChange}
+                    name="productImgUrls"
+                    value={productImgUrls}
+                /> */}
                 </div>
         </div>
     )

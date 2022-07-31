@@ -69,8 +69,8 @@ function ChooseTags({handleInputChange, productTags}) {
   }
 
   return (
-    <div>
-        <div style={{ marginTop: '20px' }}>
+    <div style={{ marginTop: '20px', marginLeft: '40px', marginRight: '20px', fontSize: "1.6vw" }}>
+        <div>
           Add Tags 🏷
         </div>
         <div style={{ marginTop: "10px" }}>

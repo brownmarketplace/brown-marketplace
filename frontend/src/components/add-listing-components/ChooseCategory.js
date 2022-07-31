@@ -77,7 +77,7 @@ function ChooseCategory({handleInputChange, productSubcategory}) {
   }
 
   return (
-    <div style={{ marginTop: "24px" }}>
+    <div style={{ marginTop: '20px', marginLeft: '40px', marginRight: '20px', fontSize: "1.6vw" }}>
         <div>
             Choose a Category 🗃
         </div>

@@ -20,7 +20,7 @@ function AddPrice({handleInputChange, productPrice}) {
 
     return (
         <div>
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: "20px", fontSize: "1.6vw" }}>
                 Price
             </div>
             <div style={{ marginTop: "10px" }}>
