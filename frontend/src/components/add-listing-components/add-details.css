@@ -13,6 +13,11 @@
     padding: 8px !important;
 } */
 
+.clickableTags {
+    margin-right: 4px !important;
+    margin-bottom: 4px !important;
+}
+
 @media screen and (max-width: 980px) {
     .details-text {
         width: 390px !important;

@@ -1,4 +1,4 @@
-import { React } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -45,13 +45,46 @@ function getStyles(tag, tagName, theme) {
 function ChooseTags({handleInputChange, productTags}) {
   const theme = useTheme();
 
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [selected, setSelected] = useState(false);
+
+  const isSelected = (specificTag) => {
+    if (selectedTags.includes(specificTag)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  const handleClick = (event, specificTag) => {
+    console.log(specificTag)
+    if (!selectedTags.includes(specificTag)) {
+      setSelectedTags([...selectedTags, specificTag])
+      console.log("added to selectedTags")
+    } else {
+      setSelectedTags(selectedTags.filter(tag => 
+        tag !== specificTag))
+      console.log("removed from selectedTags")
+    }
+  }
+
   return (
     <div>
         <div style={{ marginTop: '20px' }}>
           Add Tags 🏷
         </div>
         <div style={{ marginTop: "10px" }}>
-        <FormControl sx={{ width: 400 }}>
+          {
+            tags.map(tag =>
+              <Chip
+                label={tag}
+                onClick={event => handleClick(event, tag)}
+                color={isSelected(tag) ? "primary" : "default"}
+                className="clickableTags"
+              />)
+          }
+
+        {/* <FormControl sx={{ width: 400 }}>
             <InputLabel id="demo-multiple-chip-label">Tags</InputLabel>
             <Select
                 labelId="demo-multiple-chip-label"
@@ -81,7 +114,7 @@ function ChooseTags({handleInputChange, productTags}) {
                     </MenuItem>
                 ))}
             </Select>
-        </FormControl>
+        </FormControl> */}
         </div>
     </div>
   );
