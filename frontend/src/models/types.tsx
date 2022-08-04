@@ -1,17 +1,18 @@
 export type ProductInfo = {
-    id: number,
+    id: string,
     name: string,
     price: number,
     description: string,
-    pictures: string[],
+    images: string[],
     tags: string[],
     category: string,
     subcategory: string,
+    seller: string,
+    postDate: string,
 };
 
-export type SellerInfo = {
+export type UserInfo = {
     profilePicture: string,
     name: string,
     email: string,
-    postDate: string,
 };
