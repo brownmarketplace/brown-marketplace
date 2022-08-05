@@ -1,14 +1,28 @@
 .swiper-container {
     /* Center on page */
-    margin: 0 auto;
+    /* margin: 0 auto; */
     /* Center on screen */
     position: absolute;
 }
 
+.app>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardContainer {
+    width: 90vw;
+    max-width: 260px;
+    height: 300px;
+}
+
 .product-card {
-    /* position: relative; */
+    position: relative;
     width: 415px;
     background-color: #FFEFD7;
+    background-position: center;
     /* padding: 20px; */
     /* Styling proportionate to viewport */
     /* background-size: cover;
@@ -16,9 +30,12 @@
 }
 
 .card-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 5vh;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* margin-top: 5vh; */
+    width: 90vw;
+    max-width: 260px;
+    height: 300px;
 }
 
 .swipe {
