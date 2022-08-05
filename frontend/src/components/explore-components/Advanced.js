@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef } from 'react'
 // import TinderCard from '../react-tinder-card/index'
 import TinderCard from 'react-tinder-card'
 import { Card, CardContent, CardMedia, CardActionArea, Grid, Typography, Tooltip, Box, Stack, CardActions, styled } from '@mui/material';
-
+import Avatar from '@mui/material/Avatar'
 import { motion } from "framer-motion";
 
 
@@ -113,31 +113,65 @@ function Advanced () {
             onCardLeftScreen={() => outOfFrame(character.name, index)}
           >
             <Card 
-              sx={{ maxWidth: 415 }} 
-              elevation={2}> 
-              <CardMedia
+              variant="outlined"
+              sx={{ maxWidth: 380,
+                    borderRadius: "10px" }} 
+              elevation={2}
+              component={motion.div}
+              whileHover={{
+                boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+                scale: 1.05,
+                transition: { duration: 0.2 },
+              }}>
+                <StyledCardActionArea
+                  disableRipple
+                >
+                  <CardMedia
                   component="img"
-                  height="300"
+                  height="360"
                   image={character.url}
-                  alt="product picture"
-              />
-              <div className='price'>
-                <Typography variant="h5" color="white">
-                    {/* If the price's first digit is not dollar sign, add it */}
-                    {"$50"}
-                </Typography>
-              </div>
-              <CardContent className='product-card'>
-                  <Typography gutterBottom variant="h5" component="div">
-                      {/* If name exceeds limit, replace with ellipsis */}
-                      {character.name.length > 25 ? character.name.substring(0, 20) + "..." : character.name}
-                  </Typography>
-                  {/* Set character limit so all cards are uniform */}
-                  <Typography variant="body2" color="text.secondary">
-                      {/* If description exceeds on line, replace with ellipsis */}
-                      {character.name.length > 50 ? character.name.substring(0, 50) + " [...]" : character.name}    
-                  </Typography>
-              </CardContent> 
+                  alt="MAKE THIS THE PRODUCT NAME"
+                  />
+                  <div className='price'>
+                    <Typography variant="h5" color="white">
+                        {/* If the price's first digit is not dollar sign, add it */}
+                        ${parseInt(50).toFixed(0)}
+                    </Typography>
+                  </div>
+                  <CardContent
+                    className="product-card">
+                      <Avatar
+                        // src={}
+                        sx={{ width: 72, height: 72, marginLeft: 1, marginRight: 2}} 
+                      />
+                      <Stack spacing={0.5}>
+                        {/* Header */}
+                        <Stack direction={{ sm: "column", md: "row" }} justifyContent="space-between">
+                          <Typography variant="h5"
+                            sx={{
+                              lineHeight: "32px",
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              display: '-webkit-box',
+                              WebkitLineClamp: '1',
+                              WebkitBoxOrient: 'vertical',
+                            }}>{character.name}</Typography>
+                        </Stack>
+
+                          {/* Product description */}
+                          <Typography variant="body2" color="text.secondary" align="left"
+                            sx={{
+                              lineHeight: "16px",
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              display: '-webkit-box',
+                              WebkitLineClamp: '3',
+                              WebkitBoxOrient: 'vertical',
+                            }}>{character.name}</Typography>
+                      </Stack>
+                  </CardContent>
+                </StyledCardActionArea>
+
             </Card>
           </TinderCard>
         ))}

@@ -36,8 +36,8 @@ h2 {
 
 .cardContainer {
   width: 90vw;
-  max-width: 415px;
-  height: 400px;
+  max-width: 380px;
+  height: 475px;
 }
 
 .price {
@@ -46,7 +46,7 @@ h2 {
   top: 10px;
   color: white; */
   right: 0px;
-  top: 20px;
+  top: 30px;
   position: absolute;
   display: flex;
   padding-right: 10px;
