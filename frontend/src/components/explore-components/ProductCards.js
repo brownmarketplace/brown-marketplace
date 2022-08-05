@@ -187,7 +187,7 @@ function ProductCards(props) {
                         // only allow swiping left or right
                         preventSwipe={['up', 'down']}
                     >
-                        <Card sx={{ maxWidth: 600 }} elevation={2}>
+                         <Card sx={{ maxWidth: 600 }} elevation={2}> 
                             <CardMedia
                                 component="img"
                                 height="300"
@@ -212,8 +212,8 @@ function ProductCards(props) {
                                     </Typography>
                                 {/* </Paper> */}
                                 </div>
-                            </CardContent>
-                            </Card>
+                            </CardContent> 
+                        </Card>
                     </TinderCard>
                 ))}
             </div>

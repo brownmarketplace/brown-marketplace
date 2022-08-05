@@ -1,6 +1,21 @@
 import React, { useState, useMemo, useRef } from 'react'
 // import TinderCard from '../react-tinder-card/index'
 import TinderCard from 'react-tinder-card'
+import { Card, CardContent, CardMedia, CardActionArea, Grid, Typography, Tooltip, Box, Stack, CardActions, styled } from '@mui/material';
+
+import { motion } from "framer-motion";
+
+
+const StyledCardActionArea = styled(CardActionArea)(({ theme }) => `
+    .MuiCardActionArea-focusHighlight {
+        background: transparent;
+    }
+`);
+
+// Database Imports
+// import { ref, set, get, onValue, query, orderByChild, equalTo, child }
+//   from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+// import database from '../../backend/Database/DBInstance'
 
 const db = [
   {
@@ -97,12 +112,33 @@ function Advanced () {
             onSwipe={(dir) => swiped(dir, character.name, index)}
             onCardLeftScreen={() => outOfFrame(character.name, index)}
           >
-            <div
-              style={{ backgroundImage: 'url(' + character.url + ')' }}
-              className='card'
-            >
-              <h3>{character.name}</h3>
-            </div>
+            <Card 
+              sx={{ maxWidth: 415 }} 
+              elevation={2}> 
+              <CardMedia
+                  component="img"
+                  height="300"
+                  image={character.url}
+                  alt="product picture"
+              />
+              <div className='price'>
+                <Typography variant="h5" color="white">
+                    {/* If the price's first digit is not dollar sign, add it */}
+                    {"$50"}
+                </Typography>
+              </div>
+              <CardContent className='product-card'>
+                  <Typography gutterBottom variant="h5" component="div">
+                      {/* If name exceeds limit, replace with ellipsis */}
+                      {character.name.length > 25 ? character.name.substring(0, 20) + "..." : character.name}
+                  </Typography>
+                  {/* Set character limit so all cards are uniform */}
+                  <Typography variant="body2" color="text.secondary">
+                      {/* If description exceeds on line, replace with ellipsis */}
+                      {character.name.length > 50 ? character.name.substring(0, 50) + " [...]" : character.name}    
+                  </Typography>
+              </CardContent> 
+            </Card>
           </TinderCard>
         ))}
       </div>

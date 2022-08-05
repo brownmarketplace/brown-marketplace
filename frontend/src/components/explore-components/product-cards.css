@@ -14,8 +14,9 @@
 
 .cardContainer {
     width: 90vw;
-    max-width: 260px;
-    height: 300px;
+    max-width: 415px;
+    height: 400px;
+    margin: 0;
 }
 
 .product-card {
@@ -23,6 +24,8 @@
     width: 415px;
     background-color: #FFEFD7;
     background-position: center;
+    height: 100px;
+    margin: 0;
     /* padding: 20px; */
     /* Styling proportionate to viewport */
     /* background-size: cover;
@@ -43,7 +46,7 @@
     position: absolute;
 }
 
-.product-card > .price {
+.price {
     /* position: absolute;
     right: 10px;
     top: 10px;

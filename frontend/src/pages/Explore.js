@@ -23,43 +23,9 @@ import defaultProfilePicture from '../images/pfp.png'
 
 function Explore(props) {
   return (
-  <div className="cardDisplay">
     <div className="app">
       <Advanced />
-  </div>
-
-
-    {/* <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justify="center"
-      style={{ minHeight: '83vh',
-        // justifyContent: 'center',
-        // alignItems: 'center', 
-      }}
-    >
-  <Grid item xs={3}>
-    <ProductCards userID={props.userID} isLoggedIn={false} />s
-  </Grid>      
- </Grid> */}
-
-
-    {/* <div style={{ textAlign: 'center', marginTop: '30px' }}>
-        <Grid container direction="column" justifyContent="center" spacing={1} paddingLeft="10%" paddingRight="10%">
-          <p>Hi!</p>
-        </Grid>
-    </div> */}
-    {/* <ProductCards userID={props.userID} isLoggedIn={false} />s */}
-  </div>
-    // <div className="boilerplate">
-    //     {/* <ExploreHeader userID={props.userID} loginState={props.loginState} logoutState={props.logoutState} title={props.title} userPicture={props.pfp}/> */}
-    //     {/* Notify user that there are no more cards in the pile */}
-    //     {/* <div style={{ textAlign: 'center', marginTop: '30px' }}>
-    //        Empty
-    //     </div> */}
-    // </div>
+    </div>
   )
 }
 
