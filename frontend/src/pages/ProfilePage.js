@@ -112,6 +112,7 @@ function ProfilePage(props) {
                     </div>
                 </div> */}
                 {/* <Footer/> */}
+                <WishList userID={props.userID}/>
             </div>
         </div>
     )
