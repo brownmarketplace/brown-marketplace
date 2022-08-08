@@ -21,13 +21,16 @@
 
 .product-card {
     position: relative;
-    width: 415px;
+    width: 380px;
     background-position: center;
-    height: 115px;
+    height: 135px;
     margin: 0;
     /* position things left to right */
     display: flex;
     flex-direction: row;
+    /* create a thick border around the card */
+    /* border: 1px solid #e6e6e6; */
+    /* border-width: 5px; */
     /* padding: 20px; */
     /* Styling proportionate to viewport */
     /* background-size: cover;
@@ -96,6 +99,7 @@
 .left {
     padding: 1.25rem !important;
     color: #ec5e6f !important;
+    margin-left: 0px !important;
 }
 
 .repeat {
@@ -105,12 +109,13 @@
 
 .like {
     padding: 1.25rem !important;
-    color: #62b4f9 !important;
+    /* color: #62b4f9 !important; */
 }
 
 .right {
     padding: 1.25rem !important;
     color: #76e2b3 !important;
+    margin-right: 0px !important;
 }
 
 .listing-container {

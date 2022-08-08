@@ -37,7 +37,7 @@ h2 {
 .cardContainer {
   width: 90vw;
   max-width: 380px;
-  height: 475px;
+  height: 495px;
 }
 
 .price {
@@ -99,22 +99,27 @@ h2 {
 }
 
 .buttons {
-  margin: 20px;
+  /* margin 35px all around except 0pc on sides */
+  margin: 35px 0px;
   display: flex;
+  /* disapper on mobile view */
+  @media (max-width: 600px) {
+    display: none;
+  }
 }
 
 .buttons button {
   flex-shrink: 0;
   padding: 10px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   border: none;
   color: #fff;
   font-size: 18px;
   background-color: #9198e5;
   transition: 200ms;
-  margin: 0 10px;
+  margin: 0 14px;
   font-weight: bolder;
-  width: 160px;
+  /* width: 160px; */
   box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
 }
 
@@ -131,3 +136,21 @@ h2 {
   64%  { transform: scale(1,1) }
   100% { transform: scale(1,1) }
 }
+
+.buttons .MuiIconButton-root {
+  background-color: white;
+  box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.30) !important;
+}
+
+.left {
+  padding: 20px !important;
+  color: #ec5e6f !important;
+}
+
+.btnWindow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+

@@ -24,7 +24,7 @@ import defaultProfilePicture from '../images/pfp.png'
 function Explore(props) {
   return (
     <div className="app">
-      <Advanced />
+      <Advanced userID={props.userID} isLoggedIn={props.loginState} />
     </div>
   )
 }
