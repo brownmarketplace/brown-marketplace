@@ -220,11 +220,17 @@ function Advanced (props) {
 
   // set last direction and decrease current index
   const swiped = (direction, index) => {
+    if (canLike) {
+      setCanLike(true)
+    }
     setLastDirection(direction)
     updateCurrentIndex(index - 1)
   }
 
   const outOfFrame = (dir, idx, id) => {
+    if (!canLike) {
+      setCanLike(true)
+    }
     // handle the case in which go back is pressed before card goes outOfFrame
     currentIndexRef.current >= idx && childRefs[idx].current.restoreCard()
       
