@@ -83,8 +83,7 @@ const App = () => {
       <NavigationBar />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
-          <Route path="/explore" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
+          <Route path="/" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
           <Route path="/profile" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />}>
             <Route path=":userid" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />} />
           </Route>

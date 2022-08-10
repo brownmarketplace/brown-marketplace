@@ -5,7 +5,7 @@
   align-items: center;
 }
   
-.app>div {
+.cards>div {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,7 +56,9 @@ h2 {
   border-radius: 5px 0px 0px 5px;
   align-items: center;
   justify-content: center;
-  background: #7fadff;
+  background-image: linear-gradient(to bottom right, #B492FD, #9DCEFF);
+  /* make bold */
+  font-weight: bold;
 }
 
 .card {
@@ -102,9 +104,10 @@ h2 {
   /* margin 35px all around except 0pc on sides */
   margin: 35px 0px;
   display: flex;
-  /* disapper on mobile view */
-  @media (max-width: 600px) {
+  /* disapper on mobile view, make important*/
+  @media screen (max-width: 768px) { 
     display: none;
+    background-color: red;
   }
 }
 

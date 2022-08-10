@@ -266,15 +266,6 @@ function Advanced (props) {
 
   return (
     <div>
-      <link
-        href='https://fonts.googleapis.com/css?family=Damion&display=swap'
-        rel='stylesheet'
-      />
-      <link
-        href='https://fonts.googleapis.com/css?family=Alatsi&display=swap'
-        rel='stylesheet'
-      />
-      <h1>React Tinder Card</h1>
       <div className='cardContainer'>
         {products.map((product, index) => (
           <TinderCard
@@ -307,7 +298,7 @@ function Advanced (props) {
                   alt={product.name}
                   />
                   <div className='price'>
-                    <Typography variant="h5" color="white">
+                    <Typography variant="h5" color="black" style={{ fontWeight: 600 }}>
                         {/* If the price's first digit is not dollar sign, add it */}
                         ${parseInt(product.price).toFixed(0)}
                     </Typography>
@@ -352,6 +343,7 @@ function Advanced (props) {
           </TinderCard>
         ))}
       </div>
+      {/* Hide buttons on mobile */}
       <div className='buttons'>
         {/* Swipe Left */}
         <LightTooltip
@@ -411,15 +403,6 @@ function Advanced (props) {
           </IconButton>
         </LightTooltip>
       </div>
-      {lastDirection ? (
-        <h2 key={lastDirection} className='infoText'>
-          You swiped {lastDirection}
-        </h2>
-      ) : (
-        <h2 className='infoText'>
-          Swipe a card or press a button to get Restore Card button visible!
-        </h2>
-      )}
     </div>
   )
 }

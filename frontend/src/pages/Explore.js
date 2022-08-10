@@ -23,15 +23,10 @@ import defaultProfilePicture from '../images/pfp.png'
 
 function Explore(props) {
   return (
-    <div className="app">
+    <div className="cards">
       <Advanced userID={props.userID} isLoggedIn={props.loginState} />
     </div>
   )
-}
-
-Explore.defaultProps = {
-  title: "Brown Marketplace",
-  pfp: defaultProfilePicture
 }
 
 export default Explore
