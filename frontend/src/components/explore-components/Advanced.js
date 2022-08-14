@@ -21,6 +21,7 @@ import { tooltipClasses } from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar'
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { motion } from "framer-motion";
+import SellerAvatar from './SellerAvatar'
 
 
 const StyledCardActionArea = styled(CardActionArea)(({ theme }) => `
@@ -78,32 +79,32 @@ function Advanced (props) {
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex)
 
-  // DB functions
-  const getAllProducts = () => {
-    console.log("Calling getAllProds")
+// DB functions
+const getAllProducts = () => {
+  console.log("Calling getAllProds")
 
-    // clear current products
-    setProducts([])
-    
-    const unsubscribe = onValue(ref(database, 'products'), (snapshot) => {
-        // save all of the childSnapshots in an array
-        let i = 0;
-        snapshot.forEach(childSnapshot => {
-            setProducts(products => [...products, childSnapshot.val()])
-            // add pfp to pfps
-            // console.log("SNAP", childSnapshot.val().seller)
-            setPfps(pfps => [...pfps, getPfp(childSnapshot.val().seller)])
-            i++;
-        })
+  // clear current products
+  setProducts([])
+  
+  const unsubscribe = onValue(ref(database, 'products'), (snapshot) => {
+      // save all of the childSnapshots in an array
+      let i = 0;
+      snapshot.forEach(childSnapshot => {
+          setProducts(products => [...products, childSnapshot.val()])
+          // add pfp to pfps
+          // console.log("SNAP", childSnapshot.val().seller)
+          setPfps(pfps => [...pfps, getPfp(childSnapshot.val().seller)])
+          i++;
+      })
 
-        updateCurrentIndex(i-1)
-    });
+      updateCurrentIndex(i-1)
+  });
 
-    return () => {
-        // unsubscribe / cleanup from the database
-        unsubscribe();
-    }
+  return () => {
+      // unsubscribe / cleanup from the database
+      unsubscribe();
   }
+}
 
   const getRecommendations = () => {
     console.log("Calling getRecommendations")
@@ -130,16 +131,20 @@ function Advanced (props) {
         .catch(e => console.log("Erroring"))
   }
 
-  const getPfps = () => {
-    console.log("Retrieving pfps")
-    console.log("PRODUCTS", products)
+  const getPfps = (prods) => {
+    let pfps = []
+    console.log("PRODS", prods)
+    console.log("LENGTH", prods.length)
     // for each product, get the seller id and query DB to get the pfp
-    products.forEach(product => {
+    prods.forEach(product => {
         onValue(ref(database, 'users/' + product.seller), (snapshot) => {
             console.log("SNAP", snapshot.val())
-            setPfps(pfps => [...pfps, snapshot.val().profilePic])
+            // setPfps(pfps => [...pfps, snapshot.val().profilePic])
+            pfps.push(snapshot.val().profilePic)
         }
     )})
+
+    return pfps
   }
 
   const printPFPs = () => {
@@ -173,34 +178,35 @@ function Advanced (props) {
     set(likedListRef, "true")
   }
 
-  // const getEverything = async () => {
+  // /**
+  //  * Download data from the specified URL.
+  //  *
+  //  * @async
+  //  * @return {Promise<string>} The data from the URL.
+  // **/
+  // const getEverything = useCallback(async() => {
   //   console.log("Calling getEverything")
   //   // get all products
-  //   await getAllProducts()
+  //   const prods = await getAllProducts()
+  //   setProducts(prods)
   //   // get pfps
-  //   await getPfps()
-  // }
+  //   const profilepics = await getPfps(prods)
+  //   setPfps(profilepics)
+  //   console.log("Pfps", profilepics)
+  // }, [])
 
   useEffect(() => {
-    const getEverything = async () => {
-        // get all products
-        await getAllProducts()
-        // get pfps
-        // await getPfps()
+    // if not logged in, show all products, else show recommendations
+    if (!props.isLoggedIn) {
+        console.log("Not logged in")
+        getAllProducts()
+    } else {
+        console.log("Logged in")
+        getAllProducts()
+        // getRecommendations()
     }
-
-    getEverything().catch(e => console.log("Erroring"))
-
-    // // if not logged in, show all products, else show recommendations
-    // if (!props.isLoggedIn) {
-    //     console.log("Not logged in")
-    //     getAllProducts()
-    // } else {
-    //     console.log("Logged in")
-    //     getEverything()
-    //     // getRecommendations()
-    // }
   }, [props.isLoggedIn])
+ 
 
   let childRefs = useMemo(
     () => 
@@ -305,12 +311,7 @@ function Advanced (props) {
                   </div>
                   <CardContent
                     className="product-card">
-                      <Avatar
-                      // get the image from the product's seller pfp
-                      src={printPFPs()}
-                        // src={"https://lh3.googleusercontent.com/a/AATXAJyvgt7jlsYmgwJF9xaEIj4_ho9cfFLVZE8dc4A3=s96-c"}
-                        sx={{ width: 72, height: 72, marginLeft: 1, marginRight: 2}} 
-                      />
+                      <SellerAvatar userID={product.seller} />
                       <Stack spacing={0.5}>
                         {/* Header */}
                         <Stack direction={{ sm: "column", md: "row" }} justifyContent="space-between">
