@@ -21,8 +21,11 @@ var validateForm = () => {
     const sold = document.querySelector("#sold-description").value;
     const numLiked = document.querySelector("#liked-description").value;
 
+    // if (id.trim() == "" || name.trim() == "" || description == "" || price.trim() == ""
+    //     || seller.trim() == "" || pictures == "" || date.trim() == "" || sold == ""
+    //     || numLiked == "") {
     if (id.trim() == "" || name.trim() == "" || description == "" || price.trim() == ""
-        || seller.trim() == "" || pictures == "" || date.trim() == "" || sold == ""
+        || seller.trim() == "" || date.trim() == "" || sold == ""
         || numLiked == "") {
         alert("form not completely filled");
     } else {

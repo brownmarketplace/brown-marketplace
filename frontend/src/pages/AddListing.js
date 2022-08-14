@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import BoilerplateHeader from '../components/BoilerplateHeader'
 import Grid from '@mui/material/Grid';
-import Fab from '@mui/material/Fab';
-import Button from "@mui/material/Button";
-import Footer from '../components/Footer'
 import AddPhotos from '../components/add-listing-components/AddPhotos'
 import AddName from '../components/add-listing-components/AddName'
 import AddDetails from '../components/add-listing-components/AddDetails'
 import AddPrice from '../components/add-listing-components/AddPrice'
 import ChooseCategory from '../components/add-listing-components/ChooseCategory'
+import ChooseSub from '../components/add-listing-components/ChooseSub';
 import ChooseTags from '../components/add-listing-components/ChooseTags'
 import PublishListing from '../components/add-listing-components/PublishListing'
-import ClearButton from '../components/add-listing-components/ClearButton'
 import defaultProfilePicture from '../images/pfp.png'
+import tags from '../components/add-listing-components/tags'
 
 import database from "../backend/Database/DBInstance"
 import { ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
@@ -22,36 +20,53 @@ import { v4 as uuid } from 'uuid';
 
 function AddListing(props) {
 
-    
-
     const newUserId = props.userID
     const newProductId = 'p' + uuid();
 
     const [formInputData, setFormInputData] = useState({
-        productName:'',
+        productName: '',
         productDesc: '',
         productPrice: 0,
+        productCat: '',
         productSubcategory: '',
-        productTags: [],
+        productTags: new Set(),
         productImgUrls: ''
     })
 
     const handleInputChange = (event) => {
+        console.log(event.target.value);
         const inputFieldValue = event.target.value;
         const inputFieldName = event.target.name;
         const NewInputValue = {...formInputData, [inputFieldName]: inputFieldValue}
         setFormInputData(NewInputValue);
+        
     }
 
-    const handleTagChange = (event) => {
-        const inputFieldName = event.target.name;
-        const inputFieldValue = event.target.value;
-        if (typeof inputFieldValue === 'string') {
-            inputFieldValue = inputFieldValue.split(',')
-        }
-        
-        const NewInputValue = {...formInputData, [inputFieldName]: inputFieldValue}
-        setFormInputData(NewInputValue);  
+    function handleSelectionChanged(id, selectedProdTags) {
+        // treat state as immutable
+        // React only does a shallow comparison so we need a new Set
+        const inputFieldName = "productTags";
+        const newSet = new Set(selectedProdTags);
+        if (newSet.has(id)) newSet.delete(id);
+        else newSet.add(id);
+
+        const NewInputValue = {...formInputData, [inputFieldName]: newSet}
+        setFormInputData(NewInputValue);
+        console.log(newSet)
+    }
+
+    function handleCategoryChange(categ) {
+        const inputFieldName = "productCat";
+        const NewInputValue = {...formInputData, [inputFieldName]: categ}
+        setFormInputData(NewInputValue);
+        console.log(categ)
+    }
+
+    function handleSubChange(subcateg) {
+        const inputFieldName = "productSubcategory";
+        const NewInputValue = {...formInputData, [inputFieldName]: subcateg}
+        setFormInputData(NewInputValue);
+        console.log(subcateg)
     }
 
     const handleImgUrlChange = (event) => {
@@ -70,6 +85,7 @@ function AddListing(props) {
             productName:'',
             productDesc: '',
             productPrice: 0,
+            productCat: '',
             productSubcategory: '',
             productTags: [],
             productImgUrls: ''
@@ -93,8 +109,14 @@ function AddListing(props) {
         addCategoryAndSubCategoryToProduct(newProductId, productCategory, formInputData.productSubcategory);
 
         for (let i = 0; i < formInputData.productTags.length; i++) {
-            let tag = formInputData.productTags[i];
-            addTagToProduct(newProductId, tag);
+            let tagId = formInputData.productTags[i];
+            Object.keys(tags).map((id, tagName) => {
+                if (id === tagId) {
+                    const tagName = tags[id].name;
+                    console.log(tagName);
+                    addTagToProduct(newProductId, tagName);
+                }
+            })
         }
 
         addNewListing(newUserId, newProductId);
@@ -152,12 +174,15 @@ function AddListing(props) {
         const sold = false;
         const numLiked = 0;
     
+        // if (id.trim() == "" || name.trim() == "" || description == "" || tag == ""
+        //     || subcategory == "" || seller.trim() == "" || pictures == "") {
         if (id.trim() == "" || name.trim() == "" || description == "" || tag == ""
-            || subcategory == "" || seller.trim() == "" || pictures == "") {
+            || subcategory == "" || seller.trim() == "") {
             alert("form not completely filled");
             return false;
         } else {
-            pictures = pictures.map(e => e.trim());
+            // pictures = pictures.map(e => e.trim());
+            pictures = ""
             writeBasicInfoToDatabase(id, name, description, price, seller, pictures, date, sold,
                 numLiked);
             return true;
@@ -215,19 +240,14 @@ function AddListing(props) {
         <div className="boilerplate">
             <BoilerplateHeader title="Brown Marketplace" userPicture={defaultProfilePicture} showProfile={false}/>
                 <div className="addListingStyle">                    
-                    <Grid container spacing={2} justifyContent="center">
+                    <Grid container spacing={2}>
                         <Grid item container spacing={2} direction="row" alignItems="center">
-                            <Grid item xs={0.5}>
-                                <span className="genosFont">
-                                    x   
-                                </span>                         
-                            </Grid>
                             <Grid item xs={9}>
                                 <span className="poppinsBigFont">
                                     New Post
                                 </span>                         
                             </Grid>
-                            <Grid item xs={2.5}>
+                            <Grid item xs={3}>
                                 <PublishListing
                                     // userId={props.userId} // should be this
                                     userId={newUserId} // used to test
@@ -236,45 +256,39 @@ function AddListing(props) {
                                 />
                             </Grid>
                         </Grid>
-                        <Grid item container spacing={2} direction="column" alignItems="center">
-                            <AddName 
-                                productName={formInputData.productName}
-                                handleInputChange={handleInputChange}
-                            />
-                            <AddPrice 
-                                productPrice={formInputData.productPrice}
-                                handleInputChange={handleInputChange}
-                            />
-                            <AddDetails 
-                                productDesc={formInputData.productDesc}
-                                handleInputChange={handleInputChange}
-                            />  
-                            <ChooseTags 
-                                productTags={formInputData.productTags}
-                                handleInputChange={handleTagChange}
-                            />                  
-                            <ChooseCategory 
-                                productSubcategory={formInputData.productSubcategory}
-                                handleInputChange={handleInputChange}
-                            />
-                            <AddPhotos 
-                                productImgUrls={formInputData.productImgUrls}
-                                handleInputChange={handleImgUrlChange}
-                            />
-                        </Grid>
                     </Grid>
-
-                    
-                    {/* <div style={{ display: 'flex', justifyContent: "center" }}>
-                        <PublishListing
-                            // userId={props.userId} // should be this
-                            userId={newUserId} // used to test
-                            productId={newProductId}
-                            handleFormSubmit={handleFormSubmit}
+                    <div>
+                        <AddName 
+                            productName={formInputData.productName}
+                            handleInputChange={handleInputChange}
                         />
-                        <div style={{ width: "20px" }}></div>
-                        <ClearButton handleSubmit={clearForm}/>
-                    </div> */}
+                        <AddPrice 
+                            productPrice={formInputData.productPrice}
+                            handleInputChange={handleInputChange}
+                        />
+                        <AddDetails 
+                            productDesc={formInputData.productDesc}
+                            handleInputChange={handleInputChange}
+                        />  
+                        <ChooseTags
+                            productTags={formInputData.productTags}
+                            // handleInputChange={handleTagChange}
+                            handleInputChange={handleSelectionChanged}
+                        />                  
+                        <ChooseCategory 
+                            productCat={formInputData.productCat}
+                            handleInputChange={handleCategoryChange}
+                        />
+                        <ChooseSub
+                            productCat={formInputData.productCat}
+                            productSubcategory={formInputData.productSubcategory}
+                            handleInputChange={handleSubChange}
+                        />
+                        <AddPhotos 
+                            productImgUrls={formInputData.productImgUrls}
+                            handleInputChange={handleImgUrlChange}
+                        />
+                    </div>
                 </div>
         </div>
     )

@@ -1,10 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Chip from '@mui/material/Chip';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import ListSubheader from '@mui/material/ListSubheader';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 
 import './add-details.css'
 
@@ -13,71 +8,10 @@ const categories = [
   "Books", "Electronics and related", "Other"
 ]
 
-const roomDecorSub = [
-  "Plushies", "Plants", "Lights", "Posters", "Tapestries",
-  "Other room decor"
-]
-
-const furnitureSub = [
-  "Chairs", "Couches", "Mattresses", 
-  "Pillows", "Other furniture"
-
-]
-
-const clothingSub = [
-  "Tops", "Pants", "Dresses", "Shoes",
-  "Coats and jackets", "Other clothing"
-
-]
-
-const accessoriesSub = [
-  "Necklaces", "Bracelets", "Earrings",
-  "Hair clips", "Other accessories"
-
-]
-
-const booksSub = [
-  "Textbooks", "Fiction", "Nonfiction", 
-  "Poetry", "Other books"
-
-]
-
-const electronicsSub = [
-  "Speakers", "Phones", "Devices", 
-  "Other electronics and related"
-
-]
-
-const otherSub = [
-  "Miscellaneous"
-]
-
-function ChooseCategory({handleInputChange, productSubcategory}) {
-
-  const [selectedCats, setSelectedCats] = useState([]);
-  const [selected, setSelected] = useState(false);
-
-  const isSelected = (specificCat) => {
-    if (selectedCats.includes(specificCat)) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  const handleClick = (event, specificCat) => {
-    console.log(specificCat)
-    if (!selectedCats.includes(specificCat)) {
-      setSelectedCats([specificCat])
-      console.log("added to selectedCats")
-    } else {
-      setSelectedCats([])
-      console.log("removed from selectedCats")
-    }
-  }
+function ChooseCategory({handleInputChange, productCat}) {
 
   return (
-    <div style={{ marginTop: '20px', marginLeft: '40px', marginRight: '20px', fontSize: "1.6vw" }}>
+    <div style={{ marginTop: '20px', fontSize: "1.6vw" }}>
         <div>
             Choose a Category 🗃
         </div>
@@ -86,13 +20,17 @@ function ChooseCategory({handleInputChange, productSubcategory}) {
           categories.map(cat =>
             <Chip
               label={cat}
-              onClick={event => handleClick(event, cat)}
-              color={isSelected(cat) ? "primary" : "default"}
+              value={cat}
+              name="productCat"
+              onClick={() => handleInputChange(cat)}
+              variant={productCat === cat ? "filled" : "outlined"}
               className="clickableTags"
             />
           )
+          
         }
         </div>
+        
         {/* <FormControl sx={{ minWidth: 120, marginTop: "12px", width: 400 }}>
             <InputLabel htmlFor="grouped-select">Category</InputLabel>
             <Select 
