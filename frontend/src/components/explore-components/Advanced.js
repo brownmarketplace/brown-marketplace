@@ -236,7 +236,7 @@ function Advanced (props) {
       
     // if swipe was right, go to "/product/product-name"
     if (dir === 'right') {
-        navigate(`/product/${id}`)
+        navigate(`/productV2/${id}`)
     }
   }
 
