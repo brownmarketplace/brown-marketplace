@@ -29,4 +29,10 @@ function Explore(props) {
   )
 }
 
+// default props for userID and loginState
+Explore.defaultProps = {
+  userID: "",
+  loginState: false
+}
+
 export default Explore
