@@ -7,8 +7,8 @@ import Footer from '../components/Footer'
 import SearchBar from '../components/explore-components/SearchBar'
 import Title from '../components/boilerplate-components/Title'
 import TinderCard from 'react-tinder-card'
-import ProductCards from '../components/explore-components/ProductCards'
-import Advanced from '../components/explore-components/Advanced'
+import ProductCardsV2 from '../components/explore-components/ProductCardsV2'
+import Advanced from '../components/explore-components/ProductCardsV2'
 import ProductButtons from '../components/explore-components/ProductButtons'
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
@@ -24,7 +24,7 @@ import defaultProfilePicture from '../images/pfp.png'
 function Explore(props) {
   return (
     <div className="cards">
-      <Advanced userID={props.userID} isLoggedIn={props.loginState} />
+      <ProductCardsV2 userID={props.userID} isLoggedIn={props.loginState} />
     </div>
   )
 }
