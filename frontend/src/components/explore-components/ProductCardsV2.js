@@ -22,6 +22,8 @@ import Avatar from '@mui/material/Avatar'
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { motion } from "framer-motion";
 import SellerAvatar from './SellerAvatar'
+import ProductButtons from "./ProductButtons";
+import ProductButtonsV2 from "./ProductButtonsV2.js";
 
 // Styles for card action area
 const StyledCardActionArea = styled(CardActionArea)(({ theme }) => `
@@ -48,10 +50,10 @@ function Advanced (props) {
   const [canLike, setCanLike] = useState(true);
   const [pids, setPids] = useState([])  
   const [pfps, setPfps] = useState([])
+  const [lastDirection, setLastDirection] = useState()
   const navigate = useNavigate()
   // card animation state
   const [currentIndex, setCurrentIndex] = useState(products.length - 1)
-  const [lastDirection, setLastDirection] = useState()
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex)
 
@@ -315,73 +317,26 @@ const getAllProducts = () => {
                       </Stack>
                   </CardContent>
                 </StyledCardActionArea>
-
+                
             </Card>
           </TinderCard>
         ))}
-      </div>
-      {/* Hide buttons on mobile */}
-      <div className='buttons'>
-        {/* Swipe Left */}
-        <LightTooltip
-          TransitionComponent={Zoom} 
-          title="Swipe Left"
-        >
-          <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} disabled={!canSwipe} className="left" onClick={() => swipe('left')}>
-            {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '{#c3c4d3' }} className="left" onClick={() => swipe('left')}> */}
-            <CloseIcon fontSize="large" />
-          </IconButton>
-        </LightTooltip>
-
-        {/* Undo */}
-        <LightTooltip
-          TransitionComponent={Zoom} 
-          title="Undo Swipe"
-        >
-          <IconButton style={{ backgroundColor: !canGoBack && '#c3c4d3'}} disabled={!canGoBack} className="repeat" onClick={() => goBack()}>
-            {/* <IconButton style={{ backgroundColor: (!canGoBack || firstSwipe) && '#c3c4d3' }} className="repeat" onClick={() => goBack()}> */}
-            <ReplayIcon fontSize="large" />
-          </IconButton>
-        </LightTooltip>
-
-        {/* Like */}
-        <LightTooltip
-          TransitionComponent={Zoom}
-          title="Add to Like List"
-        >
-          <IconButton style={{ 
-            
-            backgroundColor: 
-            (!canLike && '#0088ff') || (!canSwipe && '#c3c4d3'),
-            
-            // if canLike is false, set color to white, otherwise set to color: #62b4f9 !important;
-            color: (!canLike && 'white') || '#62b4f9',
-          
-          }} disabled={!canSwipe || !canLike} className="like"
-          // When clicked, make the button turn red and disable it and go to the next card
-          onClick={() => {
-            addToLikedList()
-            setCanLike(false)
-          }
-          }>
-          {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}> */}
-              <FavoriteIcon fontSize="large" />
-          </IconButton>
-        </LightTooltip>
-
-        {/* Swipe Right */}
-        <LightTooltip
-          TransitionComponent={Zoom}
-          title="View Product"
-        >
-        <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} disabled={!canSwipe} className="right" onClick={() => swipe('right')}>
-          {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
-              <ShoppingBagIcon fontSize="large" />
-          </IconButton>
-        </LightTooltip>
-      </div>
+        </div>
+        <ProductButtonsV2
+          products={products}
+          currentIndex={currentIndex}
+          canSwipe={canSwipe}
+          canGoBack={canGoBack}
+          canLike={canLike}
+          setCanLike={setCanLike}
+          userID={props.userID}
+          goBack={goBack}
+          swipe={swipe}
+        />
     </div>
   )
 }
+
+// TODO: defualt props
 
 export default Advanced
