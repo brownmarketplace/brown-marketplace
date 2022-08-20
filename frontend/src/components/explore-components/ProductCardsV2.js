@@ -23,13 +23,14 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { motion } from "framer-motion";
 import SellerAvatar from './SellerAvatar'
 
-
+// Styles for card action area
 const StyledCardActionArea = styled(CardActionArea)(({ theme }) => `
     .MuiCardActionArea-focusHighlight {
         background: transparent;
     }
 `);
 
+// Styles for the light tooltip under the buttons
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -41,31 +42,6 @@ const LightTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-
-
-const db = [
-  {
-    name: 'Richard Hendricks',
-    url: 'https://i.picsum.photos/id/1015/6000/4000.jpg?hmac=aHjb0fRa1t14DTIEBcoC12c5rAXOSwnVlaA5ujxPQ0I'
-  },
-  {
-    name: 'Erlich Bachman',
-    url: 'https://i.picsum.photos/id/1015/6000/4000.jpg?hmac=aHjb0fRa1t14DTIEBcoC12c5rAXOSwnVlaA5ujxPQ0I'
-  },
-  {
-    name: 'Monica Hall',
-    url: 'https://i.picsum.photos/id/1015/6000/4000.jpg?hmac=aHjb0fRa1t14DTIEBcoC12c5rAXOSwnVlaA5ujxPQ0I'
-  },
-  {
-    name: 'Jared Dunn',
-    url: 'https://i.picsum.photos/id/1015/6000/4000.jpg?hmac=aHjb0fRa1t14DTIEBcoC12c5rAXOSwnVlaA5ujxPQ0I'
-  },
-  {
-    name: 'Dinesh Chugtai',
-    url: 'https://i.picsum.photos/id/1015/6000/4000.jpg?hmac=aHjb0fRa1t14DTIEBcoC12c5rAXOSwnVlaA5ujxPQ0I'
-  }
-]
-
 function Advanced (props) {
   // DB and navigation
   const [products, setProducts] = useState([]); 
@@ -74,7 +50,7 @@ function Advanced (props) {
   const [pfps, setPfps] = useState([])
   const navigate = useNavigate()
   // card animation state
-  const [currentIndex, setCurrentIndex] = useState(db.length - 1)
+  const [currentIndex, setCurrentIndex] = useState(products.length - 1)
   const [lastDirection, setLastDirection] = useState()
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex)
