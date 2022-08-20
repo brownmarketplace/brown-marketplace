@@ -1,28 +1,15 @@
 // Database Imports
-import { ref, set, get, onValue, query, orderByChild, equalTo, child }
+import { ref, onValue }
   from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 import database from '../../backend/Database/DBInstance'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-// MUI Icons
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import ReplayIcon from '@mui/icons-material/Replay';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import AddIcon from '@mui/icons-material/Add';
-
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
-// import TinderCard from '../react-tinder-card/index'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import TinderCard from 'react-tinder-card'
-import { Card, CardContent, CardMedia, CardActionArea, Grid, Typography, Tooltip, Zoom, Box, Stack, CardActions, styled } from '@mui/material';
-import { tooltipClasses } from '@mui/material/Tooltip';
-import Avatar from '@mui/material/Avatar'
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { Card, CardContent, CardMedia, CardActionArea, Typography, Stack, styled } from '@mui/material';
 import { motion } from "framer-motion";
 import SellerAvatar from './SellerAvatar'
-import ProductButtons from "./ProductButtons";
 import ProductButtonsV2 from "./ProductButtonsV2.js";
 
 // Styles for card action area
@@ -31,18 +18,6 @@ const StyledCardActionArea = styled(CardActionArea)(({ theme }) => `
         background: transparent;
     }
 `);
-
-// Styles for the light tooltip under the buttons
-const LightTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-  },
-}));
 
 /**
  * Card components that defines the Tinder-style card component.
