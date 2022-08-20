@@ -44,7 +44,12 @@ const LightTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-function Advanced (props) {
+/**
+ * Card components that defines the Tinder-style card component.
+ * Contains logic to swipe left, undo their swipe, like the current card, or swipe right,
+ * and shares state with the ProductButtonsV2 component.
+ */
+function ProductCardsV2 (props) {
   // DB and navigation
   const [products, setProducts] = useState([]); 
   const [canLike, setCanLike] = useState(true);
@@ -57,33 +62,45 @@ function Advanced (props) {
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex)
 
-// DB functions
-const getAllProducts = () => {
-  console.log("Calling getAllProds")
+  /**
+   * Function that gets all the products from the database and sets them to the state.
+   * This is called when the component is first rendered, and if the user
+   * is not currently logged in.
+   */
+  const getAllProducts = () => {
+    console.log("Calling getAllProds")
 
-  // clear current products
-  setProducts([])
-  
-  const unsubscribe = onValue(ref(database, 'products'), (snapshot) => {
-      // save all of the childSnapshots in an array
-      let i = 0;
-      snapshot.forEach(childSnapshot => {
-          setProducts(products => [...products, childSnapshot.val()])
-          // add pfp to pfps
-          // console.log("SNAP", childSnapshot.val().seller)
-          setPfps(pfps => [...pfps, getPfp(childSnapshot.val().seller)])
-          i++;
-      })
+    // clear current products
+    setProducts([])
+    
+    const unsubscribe = onValue(ref(database, 'products'), (snapshot) => {
+        // save all of the childSnapshots in an array
+        let i = 0;
+        snapshot.forEach(childSnapshot => {
+            setProducts(products => [...products, childSnapshot.val()])
+            // add pfp to pfps
+            // console.log("SNAP", childSnapshot.val().seller)
+            setPfps(pfps => [...pfps, getPfp(childSnapshot.val().seller)])
+            i++;
+        })
 
-      updateCurrentIndex(i-1)
-  });
+        updateCurrentIndex(i-1)
+    });
 
-  return () => {
-      // unsubscribe / cleanup from the database
-      unsubscribe();
+    return () => {
+        // unsubscribe / cleanup from the database
+        unsubscribe();
+    }
   }
-}
 
+  /**
+   * Function that gets products from the Recommendation System and sets them to the state.
+   * This is called when the component is first rendered, and if the user
+   * is currently logged in.
+   * 
+   * It makes a post request to the Recommendation System API endpoint to retieve Product ID's,
+   * which are then used to retrieve the products from the database.
+   */
   const getRecommendations = () => {
     console.log("Calling getRecommendations")
     
@@ -146,33 +163,11 @@ const getAllProducts = () => {
     })
   }
 
-  const addToLikedList = () => {
-    console.log("Added to liked list")
-
-    // get produt id of current product
-    const pid = products[currentIndex].id
-
-    const likedListRef = ref(database, 'users/' + props.userID + '/liked-items/' + pid);
-    set(likedListRef, "true")
-  }
-
-  // /**
-  //  * Download data from the specified URL.
-  //  *
-  //  * @async
-  //  * @return {Promise<string>} The data from the URL.
-  // **/
-  // const getEverything = useCallback(async() => {
-  //   console.log("Calling getEverything")
-  //   // get all products
-  //   const prods = await getAllProducts()
-  //   setProducts(prods)
-  //   // get pfps
-  //   const profilepics = await getPfps(prods)
-  //   setPfps(profilepics)
-  //   console.log("Pfps", profilepics)
-  // }, [])
-
+  /**
+   * Called when the page is rendering or if the user logs in/out, the
+   * useEffect determines whether the user is logged in or not, and calls the appropriate function
+   * for product retrieval.
+   */
   useEffect(() => {
     // if not logged in, show all products, else show recommendations
     if (!props.isLoggedIn) {
@@ -185,7 +180,10 @@ const getAllProducts = () => {
     }
   }, [props.isLoggedIn])
  
-
+  /**
+   * useMemo is used to memoize the products array, so that the component does not re-render
+   * unnecessarily.
+   */
   let childRefs = useMemo(
     () => 
     Array(products.length)
@@ -193,16 +191,32 @@ const getAllProducts = () => {
         .map((i) => React.createRef()), [products]
   )
 
+  /**
+   * Function that updates the current index of the card,
+   * updated when the user drags the card or uses the swipe buttons.
+   */
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val)
     currentIndexRef.current = val
   }
 
+  /**
+   * Variable used to determine if the user is able to undo their swipe.
+   */
   const canGoBack = currentIndex < products.length - 1
 
+  /**
+   * Variable used to determine if the user is able to swipe anymore.
+   * 
+   */
   const canSwipe = currentIndex >= 0
 
-  // set last direction and decrease current index
+  /**
+   * Function that is called once the card is swiped by dragging rather than by buttons.
+   * It sets the last direction of the swipe, and updates the current index.
+   * 
+   * It also sets canLike back to true, so that the user can like the next product.
+   */
   const swiped = (direction, index) => {
     if (canLike) {
       setCanLike(true)
@@ -211,6 +225,16 @@ const getAllProducts = () => {
     updateCurrentIndex(index - 1)
   }
 
+  /**
+   * Function called when the card has left the screen using the swipe buttons rather
+   * than by dragging.
+   * 
+   * It sets canLike to true, so that the user can like the next product,
+   * and handles edge cases where a user may swipe a card and then swipe it back 
+   * before it has left the screen.
+   * 
+   * If the swipe was right, the user is navigated to the product page.
+   */
   const outOfFrame = (dir, idx, id) => {
     if (!canLike) {
       setCanLike(true)
@@ -224,9 +248,15 @@ const getAllProducts = () => {
     }
   }
 
+  /**
+   * Function that is called when the user swipes the card,
+   * and checks if the user can swipe and if the currentIndex is valid.
+   * 
+   * It uses childRefs to get the current card, and then calls the swipe function on the card.
+   * 
+   * It also ensures that the user can only like a product once.
+   */
   const swipe = async (dir) => {
-    console.log(currentIndex)
-    // if canLike is false, set to true
     if (!canLike) {
         setCanLike(true)
     }
@@ -235,7 +265,10 @@ const getAllProducts = () => {
     }
   }
 
-  // increase current index and show card
+  /**
+   * Function that is called when the user presses the undo button.
+   * It re-enables the user to swipe again.
+   */
   const goBack = async () => {
     // if canLike is false, set to true
     if (!canLike) {
@@ -251,6 +284,7 @@ const getAllProducts = () => {
   return (
     <div>
       <div className='cardContainer'>
+        {/* Generate cards for all retrieved products */}
         {products.map((product, index) => (
           <TinderCard
             ref={childRefs[index]}
@@ -283,7 +317,6 @@ const getAllProducts = () => {
                   />
                   <div className='price'>
                     <Typography variant="h5" color="black" style={{ fontWeight: 600 }}>
-                        {/* If the price's first digit is not dollar sign, add it */}
                         ${parseInt(product.price).toFixed(0)}
                     </Typography>
                   </div>
@@ -291,7 +324,7 @@ const getAllProducts = () => {
                     className="product-card">
                       <SellerAvatar userID={product.seller} />
                       <Stack spacing={0.5}>
-                        {/* Header */}
+                        {/* Product Name */}
                         <Stack direction={{ sm: "column", md: "row" }} justifyContent="space-between">
                           <Typography variant="h5"
                             sx={{
@@ -322,6 +355,8 @@ const getAllProducts = () => {
           </TinderCard>
         ))}
         </div>
+
+        {/* Product Buttons */}
         <ProductButtonsV2
           products={products}
           currentIndex={currentIndex}
@@ -337,6 +372,10 @@ const getAllProducts = () => {
   )
 }
 
-// TODO: defualt props
+// Default props for the component
+ProductCardsV2.defaultProps = {
+  userID: '',
+  isLoggedIn: false
+}
 
-export default Advanced
+export default ProductCardsV2;
