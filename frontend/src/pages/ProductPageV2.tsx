@@ -1,5 +1,5 @@
+import * as React from 'react';
 import { Box, Stack, Typography, Grid, Button, Avatar, Paper } from '@mui/material';
-import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 // components
@@ -9,6 +9,14 @@ import SellerCardV2 from '../components/product-v2-components/SellerCardV2';
 import ProductSlideshow from '../components/product-v2-components/ProductSlideshow';
 import AddToFavoriteButton from '../components/product-v2-components/AddToFavoriteButton';
 import ShareButton from '../components/product-v2-components/ShareButton';
+
+// types
+import { ProductInfo, SellerInfo } from '../models/types';
+
+type ProductPageV2Props = {
+    productInfo: ProductInfo,
+    sellerInfo: SellerInfo,
+};
 
 function BuyNow() {
     return (
@@ -32,14 +40,14 @@ function Message() {
     );
 }
 
-export default function ProductPageV2(props) {
+export default function ProductPageV2(props: ProductPageV2Props) {
     // get url parameters
     const { productId } = useParams();
 
     const path = [{ title: "Home", href: "/home" },
     { title: props.productInfo.category, href: "/" + props.productInfo.category },
     { title: props.productInfo.subcategory, href: "/" + props.productInfo.category + "/" + props.productInfo.subcategory },
-    { title: props.productInfo.name, href: null }];
+    { title: props.productInfo.name, href: null }] as { title: string, href: string }[];
 
     return (
         <Box sx={{ paddingLeft: "5%", paddingRight: "5%", paddingTop: "20px", paddingBottom: "20px" }}>
@@ -72,7 +80,7 @@ export default function ProductPageV2(props) {
                             paddingBottom: { xs: "25px", md: 0 },
                         }}>
                         <Typography variant="h4">{props.productInfo.name}</Typography>
-                        <Typography variant="h5" color="primary">${parseFloat(props.productInfo.price).toFixed(2)}</Typography>
+                        <Typography variant="h5" color="primary">${props.productInfo.price.toFixed(2)}</Typography>
                         <Stack direction="row" justifyContent="space-between" spacing={1}>
                             <BuyNow /><Message />
                         </Stack>

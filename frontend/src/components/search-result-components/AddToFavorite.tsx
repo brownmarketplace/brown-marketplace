@@ -1,12 +1,12 @@
+import * as React from "react";
+import { IconButton, Tooltip } from "@mui/material";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import { Box, IconButton, Tooltip } from "@mui/material";
-import React, { useState } from "react";
 
 // const iconStyle = { fontSize: 50 };
 const iconStyle = {};
 
 export default function AddToFavorite() {
-    const [active, setActive] = useState(false);
+    const [active, setActive] = React.useState(false);
 
     const Toggle = (event) => {
         event.stopPropagation();

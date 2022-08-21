@@ -1,7 +1,11 @@
+import * as React from "react";
 import { Box } from "@mui/material";
-import React from "react";
 
-export default function ProductSlideshow(props) {
+type ProductSlideShowProps = {
+    images: string[],
+}
+
+export default function ProductSlideshow(props: ProductSlideShowProps) {
     return (
         <Box
             component="img"
@@ -12,11 +16,11 @@ export default function ProductSlideshow(props) {
                 borderRadius: "10px",
             }}
             alt="slideshow"
-            src={props.image}
+            src={props.images.length > 0 ? props.images[0] : "placeholder"}
         />
     );
 };
 
 ProductSlideshow.defaultProps = {
-    image: "https://d248k8q1c80cf8.cloudfront.net/WK_Foster_620_Table_0014_16_9_3c445c76f6.jpg",
+    images: ["https://d248k8q1c80cf8.cloudfront.net/WK_Foster_620_Table_0014_16_9_3c445c76f6.jpg"],
 };

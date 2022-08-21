@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import * as React from "react";
+import { useState, useEffect } from 'react'
 
 // mui
 import { Card, CardContent, CardMedia } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
 import Avatar from '@mui/material/Avatar'
 
 // database
-import { ref, onValue }
-  from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js"
+import { ref, onValue } from "firebase/database"
 import database from '../../backend/Database/DBInstance'
 
 function SellerCard(props) {
