@@ -7,8 +7,8 @@ export default function NavDropdown(props) {
     return (
         <Box>
             <Stack direction={{ xs: "column", sm: "row" }}>
-                {props.pages.map((page) => (
-                    <CategoryDropdown title={page} items={props.subcategories[page]} />
+                {props.pages.map((page, idx) => (
+                    <CategoryDropdown key={idx} title={page} items={props.subcategories[page]} />
                 ))}
             </Stack>
         </Box>

@@ -14,12 +14,12 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function NavigationBar() {
     return (
-        <AppBar position="static"
+        <AppBar color="transparent" elevation={0} position="static"
             sx={{
                 paddingLeft: "5%",
                 paddingRight: "5%",
-                paddingTop: "10px",
-                paddingBottom: "10px",
+                paddingTop: "20px",
+                paddingBottom: "0px",
             }}>
             {/* <Toolbar> */}
             <Stack

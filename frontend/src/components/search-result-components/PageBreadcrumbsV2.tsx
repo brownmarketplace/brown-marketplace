@@ -30,7 +30,7 @@ export default function PageBreadcrumbsV2(props: PageBreadcrumbsV2Props) {
 
 PageBreadcrumbsV2.defaultProps = {
     path: [{ title: "Home", href: "/home" },
-    { title: "Category", href: "/category/Animal" },
-    { title: "Subcategory", href: "/category/Animal" },
+    { title: "Category", href: "/result?q=category" },
+    { title: "Subcategory", href: "/result?q=subcategory" },
     { title: "Current Page", href: null }],
 }

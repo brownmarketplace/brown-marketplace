@@ -48,7 +48,7 @@ export default function DropdownMenu(props: DropdownMenuProps) {
                 onClose={handleClose}
             >
                 {props.options.map((option, idx) =>
-                    <MenuItem disableRipple onClick={() => { handleClose(); setSelectedOption(option); props.optionSetter(option); }}>
+                    <MenuItem key={idx} disableRipple onClick={() => { handleClose(); setSelectedOption(option); props.optionSetter(option); }}>
                         <Typography textAlign="center">{option}</Typography>
                     </MenuItem>)}
             </Menu>
