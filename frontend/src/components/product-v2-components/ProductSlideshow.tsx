@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Skeleton } from "@mui/material";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
@@ -22,7 +22,6 @@ type ProductSlideShowProps = {
 }
 
 export default function ProductSlideshow(props: ProductSlideShowProps) {
-    const placeHolderImage = "https://d248k8q1c80cf8.cloudfront.net/WK_Foster_620_Table_0014_16_9_3c445c76f6.jpg"
     const [[page, direction], setPage] = React.useState<[number, number]>([0, 0]); // scope direction
 
     const paginate = (newDirection: number) => {
@@ -34,33 +33,28 @@ export default function ProductSlideshow(props: ProductSlideShowProps) {
         <Box sx={{
             display: "flex",
             alignItems: "center",
-            position: "relative"
+            position: "relative",
         }}>
-            <Box
-                component="img"
-                src={props.images.length > 0 ? props.images[page] : placeHolderImage}
-                alt="slideshow"
-                // sx={{
-                //     width: "100%",
-                //     aspectRatio: { md: "4/3" },
-                //     objectFit: { md: "contain" },
-                //     borderRadius: "10px",
-                //     background: "rgba(0,0,0,0.5)",
-                // }}
-                sx={{
-                    width: "100%",
-                    aspectRatio: "4/3",
-                    objectFit: "cover",
-                    borderRadius: "10px",
-                    background: "rgba(0,0,0,0.5)",
-                }}
-            />
+            {props.images?.length > 0
+                ? <Box
+                    component="img"
+                    src={props.images[page]}
+                    alt="slideshow"
+                    sx={{
+                        width: "100%",
+                        aspectRatio: "4/3",
+                        objectFit: "cover",
+                        borderRadius: "10px",
+                        background: "rgba(0,0,0,0.5)",
+                    }} />
+                : <Box
+                    sx={{
+                        width: "100%",
+                        aspectRatio: "4/3",
+                    }}><Skeleton variant="rectangular" width="100%" height="100%" sx={{ borderRadius: "10px" }} />
+                </Box>}
             <ArrowButton direction="left" onClick={() => paginate(-1)} />
             <ArrowButton direction="right" onClick={() => paginate(1)} />
         </Box>
     );
-};
-
-ProductSlideshow.defaultProps = {
-    images: ["https://d248k8q1c80cf8.cloudfront.net/WK_Foster_620_Table_0014_16_9_3c445c76f6.jpg"],
 };

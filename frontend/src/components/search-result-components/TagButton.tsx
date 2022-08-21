@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 
 import { motion } from "framer-motion";
 
@@ -25,24 +25,22 @@ export default function TagButton(props: TagButtonProps) {
         <IconButton disableRipple
             color="inherit"
             sx={{
+                width: "auto",
                 padding: 0,
                 borderRadius: "1000px",
+                textAlign: "left",
             }}
-            component={motion.div}
+            component={motion.button}
             whileHover={{
                 scale: 1.2,
                 originX: 0,
                 transition: { duration: 0.2 },
             }}
             onClick={Toggle}>
-            <Typography
-                sx={{
-                    textTransform: 'capitalize',
-                    fontWeight: active ? 'bold' : 'normal',
-                }}>
+            <Typography fontWeight={active ? "fontWeightBold" : ""}>
                 {props.title}
             </Typography>
-        </IconButton>
+        </IconButton >
     );
 }
 

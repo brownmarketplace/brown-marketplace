@@ -79,7 +79,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavigationBar />
+      <NavigationBar userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
@@ -94,7 +94,11 @@ const App = () => {
               <Route path=":subcategory" element={<CategoryPage userID={cookies.get("userID")} />} />
             </Route>
           </Route>
-          <Route path="/result" element={<SearchResultPage userID={cookies.get("userID")} />} />
+          <Route path="/result" element={<SearchResultPage userID={cookies.get("userID")} />} >
+            <Route path=":category" element={<SearchResultPage userID={cookies.get("userID")} />} >
+              <Route path=":subcategory" element={<SearchResultPage userID={cookies.get("userID")} />} />
+            </Route>
+          </Route>
           <Route path="/productV2/:productId" element={<ProductPageV2 userID={cookies.get("userID")} />} />
         </Routes>
       </BrowserRouter>

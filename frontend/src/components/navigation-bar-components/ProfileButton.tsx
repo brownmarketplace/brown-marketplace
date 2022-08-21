@@ -1,7 +1,15 @@
-import { Avatar, Box, Button, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
-import React from "react";
+import * as React from "react";
+import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography, Link } from "@mui/material";
 
-export default function ProfileButton(props) {
+// Google Login
+import { GoogleLogout } from 'react-google-login';
+
+type ProfileButtonProps = {
+    userID: string,
+    handleLogout: any,  // TODO: type this
+}
+
+export default function ProfileButton(props: ProfileButtonProps) {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenUserMenu = (event) => {
@@ -19,6 +27,7 @@ export default function ProfileButton(props) {
                     <Avatar alt="Remy Sharp" src="https://i.natgeofe.com/n/46b07b5e-1264-42e1-ae4b-8a021226e2d0/domestic-cat_thumb_square.jpg" />
                 </IconButton>
             </Tooltip>
+
             <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
@@ -35,16 +44,25 @@ export default function ProfileButton(props) {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                {props.settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                        <Typography>{setting}</Typography>
+                <Link href={"/profile/" + props.userID} color="inherit" sx={{ textDecoration: 'none' }}>
+                    <MenuItem>
+                        <Typography>Profile</Typography>
                     </MenuItem>
-                ))}
+                </Link>
+                <GoogleLogout
+                    clientId="1059069811880-vd8dfe9l4qc3imjvrk7r6c5p46sm68nm.apps.googleusercontent.com"
+                    render={renderProps => (
+                        <MenuItem
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                        >
+                            <Typography>Log&nbsp;Out</Typography>
+                        </MenuItem>
+                    )}
+                    buttonText="Logout"
+                    onLogoutSuccess={props.handleLogout}
+                />
             </Menu>
         </Box>
     );
-}
-
-ProfileButton.defaultProps = {
-    settings: ['Profile', 'Account', 'Dashboard', 'Logout'],
 }
