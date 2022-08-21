@@ -30,8 +30,21 @@ function AddListing(props) {
         productCat: '',
         productSubcategory: '',
         productTags: new Set(),
-        productImgUrls: ''
+        productImgUrls: new Set(),
     })
+
+    const [ imageNames, setImageNames ] = useState([])
+
+    const [rerender, setRerender] = useState(false);
+    useEffect(()=>{
+        setRerender(!rerender);
+    }, []);
+
+
+    // useEffect(() => {
+    //     // Update the document title using the browser API
+    //     document.title = formInputData.productImgUrls;
+    // }, new Set());
 
     const handleInputChange = (event) => {
         console.log(event.target.value);
@@ -70,14 +83,23 @@ function AddListing(props) {
     }
 
     const handleImgUrlChange = (event) => {
-        const inputFieldName = event.target.name;
-        let inputFieldValue = event.target.value;
-        if (typeof inputFieldValue === 'string') {
-            inputFieldValue = inputFieldValue.split(',')
-        }
-        
-        const NewInputValue = {...formInputData, [inputFieldName]: inputFieldValue}
+        const inputFieldName = "productImgUrls";
+        const newSet = new Set();
+        [...event.target.files].forEach(f => newSet.add(f))
+
+        console.log("event.target.files:")
+        console.log(event.target.files);
+
+        const NewInputValue = {...formInputData, [inputFieldName]: newSet}
         setFormInputData(NewInputValue);
+        
+        console.log("new images uploaded:")
+        console.log(newSet);
+
+
+        const nameArr = [];
+        [...event.target.files].forEach(f => nameArr.push(f.name));
+        setImageNames(nameArr);
     }
 
     const clearForm = (e) => {
@@ -288,6 +310,9 @@ function AddListing(props) {
                             productImgUrls={formInputData.productImgUrls}
                             handleInputChange={handleImgUrlChange}
                         />
+                        <div style={{ marginTop: "10px" }}>
+                            {imageNames.join(", ")}
+                        </div>
                     </div>
                 </div>
         </div>
