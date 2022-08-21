@@ -8,7 +8,7 @@ const footerText = "Copyright © 2022 Brown Marketplace. All rights reserved."
 
 export default function FooterV2() {
     return (
-        <AppBar position="static"
+        <AppBar color="transparent" elevation={0} position="static"
             sx={{
                 paddingLeft: "5%",
                 paddingRight: "5%",

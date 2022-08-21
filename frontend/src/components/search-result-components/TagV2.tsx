@@ -26,10 +26,11 @@ export default function TagV2(props: TagV2Props) {
                 backgroundColor: props.selected ? "action.selected" : "inherit",
             }}
             component={motion.div}
-            whileHover={{
-                scale: 1.1,
-                transition: { duration: 0.2 },
-            }} />
+            // whileHover={{
+            //     scale: 1.1,
+            //     transition: { duration: 0.2 },
+            // }}
+        />
         // <Button variant="outlined" disableRipple
         //     onClick={event => {
         //         event.stopPropagation();

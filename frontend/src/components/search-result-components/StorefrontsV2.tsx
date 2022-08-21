@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Stack, Typography, Grid, Pagination } from '@mui/material';
+import { Box, Stack, Paper, Card, Typography, Grid, Pagination } from '@mui/material';
 
 // components
 import ProductPreviewV2 from './ProductPreviewV2';
@@ -9,21 +9,34 @@ import SortingDropdown from './SortingDropdown';
 // types
 import { ProductInfo } from "../../models/types";
 
+//#region utils
+function numActiveTags(product: ProductInfo, selectedTags: Set<string>): number {
+	return product.tags.reduce((counter, tag) => counter + (selectedTags.has(tag) ? 1 : 0), 0);
+}
+
+// TODO: Adjust the number of products to fit the display
+const NUMBER_PRODUCTS_PER_PAGE: number = 8;
+function properNumPages(numProducts: number): number {
+	return Math.ceil(numProducts / NUMBER_PRODUCTS_PER_PAGE);
+}
+//#endregion
+
 type StoreFrontV2Props = {
 	products: ProductInfo[],
 	tags: string[],
 };
 
-const NUMBER_PRODUCTS_PER_PAGE: number = 8;
-
 export default function StorefrontV2(props: StoreFrontV2Props) {
-	const {
-		products,
-		tags,
-	}: StoreFrontV2Props = props;
-
 	// filter by tags
+	const [allCategories, setAllCategories] = React.useState<string[]>([]);
+	const [allSubcategories, setAllSubcategories] = React.useState<string[]>([]);
+	const [allTags, setAllTags] = React.useState<string[]>([]);
 	const [selectedTags, setSelectedTags] = React.useState<Set<string>>(new Set());
+	// product sorting
+	const [sortedProducts, setSortedProducts] = React.useState<ProductInfo[]>([...props.products]);
+	// pagination
+	const [numPages, setNumPages] = React.useState<number>(properNumPages(props.products.length));
+	const [page, setPage] = React.useState<number>(1);
 
 	function toggleTag(tagName: string): void {
 		if (selectedTags.has(tagName)) {
@@ -35,41 +48,80 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 		}
 	}
 
-	// product sorting
-	const [sortedProducts, setSortedProducts] = React.useState<ProductInfo[]>([...products]);
+	function sortProducts(products: ProductInfo[]): void {
+		const sorted = [...products].sort((a, b) => - numActiveTags(a, selectedTags) + numActiveTags(b, selectedTags));
+		setSortedProducts(sorted);
+	}
 
-	function numActiveTags(product: ProductInfo): number {
-		return product.tags.reduce((counter, tag) => counter + (selectedTags.has(tag) ? 1 : 0), 0);
+	function sortUniqueCategories(products: ProductInfo[]): void {
+		const unique: Set<string> = new Set();
+		products.forEach(product => unique.add(product.category));
+		const sorted = Array.from(unique.values()).sort(); // [...unique]
+		setAllCategories(sorted);
+	}
+
+	function sortUniqueSubcategories(products: ProductInfo[]): void {
+		const unique: Set<string> = new Set();
+		products.forEach(product => unique.add(product.subcategory));
+		const sorted = Array.from(unique.values()).sort(); // [...unique]
+		setAllSubcategories(sorted);
+	}
+
+	function sortUniqueTags(products: ProductInfo[]): void {
+		const unique: Set<string> = new Set();
+		products.forEach(product => product.tags.forEach(tag => unique.add(tag)));
+		const sorted = Array.from(unique.values()).sort(); // [[...unique]
+		setAllTags(sorted);
 	}
 
 	React.useEffect(() => {
-		let sorted = [...products].sort((a, b) => - numActiveTags(a) + numActiveTags(b));
-		setSortedProducts(sorted);
-	}, [products, selectedTags])
+		sortProducts(props.products);
+	}, [selectedTags])
 
-	// TODO: Adjust the number of products to fit the display
-	// pagination
-	const [page, setPage] = React.useState<number>(1);
-
-	const numPages = Math.ceil(products.length / NUMBER_PRODUCTS_PER_PAGE);
+	React.useEffect(() => {
+		sortUniqueCategories(props.products);
+		sortUniqueSubcategories(props.products);
+		sortUniqueTags(props.products);
+		sortProducts(props.products);
+		setNumPages(properNumPages(props.products.length));
+	}, [props.products])
 
 	return (
-		<Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
+		<Stack direction={{ xs: "column", sm: "row" }} spacing={3}>
 			{/* Left */}
 			<Box>
-				<SortingDropdown />
-				<Box sx={{ width: "200px" }}>
-					<Typography variant="h5">Filter by tags</Typography>
-					<Stack>
-						{tags.map((tag, idx) =>
-							<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
-						)}
-					</Stack>
-				</Box>
-			</Box>
+				<Paper
+					variant="outlined"
+					sx={{
+						borderRadius: "10px",
+						padding: "10px"
+					}}>
+					{/* <SortingDropdown /> */}
+					<Box sx={{ width: "200px" }}>
+						{/* <Typography variant="h5">Filter by categories</Typography>
+						<Stack alignItems="flex-start">
+							{allCategories.map((tag, idx) =>
+								<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
+							)}
+						</Stack>
+						<Typography variant="h5">Filter by subcategories</Typography>
+						<Stack alignItems="flex-start">
+							{allSubcategories.map((tag, idx) =>
+								<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
+							)}
+						</Stack> */}
+						<Typography variant="h5">Filter by tags</Typography>
+						<Stack alignItems="flex-start">
+							{allTags.map((tag, idx) =>
+								<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
+							)}
+						</Stack>
+					</Box>
+				</Paper>
+			</Box >
 
 			{/* Right */}
-			<Box>
+			< Box >
 				<Stack alignItems="center" spacing={3}>
 					<Grid container spacing={3}>
 						{sortedProducts.slice((page - 1) * NUMBER_PRODUCTS_PER_PAGE, page * NUMBER_PRODUCTS_PER_PAGE).map((productInfo, idx) =>
@@ -79,8 +131,8 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 					</Grid>
 					<Pagination count={numPages} page={page} onChange={(event, value) => { setPage(value); }} />
 				</Stack>
-			</Box>
-		</Stack>
+			</Box >
+		</Stack >
 	)
 };
 
