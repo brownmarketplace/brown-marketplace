@@ -40,12 +40,6 @@ function AddListing(props) {
         setRerender(!rerender);
     }, []);
 
-
-    // useEffect(() => {
-    //     // Update the document title using the browser API
-    //     document.title = formInputData.productImgUrls;
-    // }, new Set());
-
     const handleInputChange = (event) => {
         console.log(event.target.value);
         const inputFieldValue = event.target.value;
