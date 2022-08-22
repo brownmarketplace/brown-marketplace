@@ -1,27 +1,34 @@
 import * as React from "react";
-
-// mui
 import { Box, Stack, Typography, Avatar } from '@mui/material';
 
-
 // types
-import { SellerInfo } from "../../models/types";
+import { UserInfo } from "../../models/types";
+
+// database
+import { readUserInfo } from "../../backend/Database/ProductDB/readDatabaseV2";
 
 type SellerCardV2Props = {
-  sellerInfo: SellerInfo,
+  userID: string,
   postDate: string,
+  sellerInfo: UserInfo, // TODO: remove mock data
 }
 
 export default function SellerCardV2(props: SellerCardV2Props) {
+  const [sellerInfo, setSellerInfo] = React.useState<UserInfo>(props.sellerInfo); // TODO: remove mock data
+
+  React.useEffect(() => {
+    readUserInfo(props.userID, setSellerInfo); // TODO: handle undefined
+  }, [props.userID]);
+
   return (
     <Box>
       <Stack direction="row" justifyContent="space-between" spacing={1}>
         <Avatar
-          src={props.sellerInfo.profilePicture}
+          src={sellerInfo.profilePicture}
           sx={{ width: "60px", height: "60px" }}
           alt="Remy Sharp" />
         <Stack>
-          <Typography variant="h6">{props.sellerInfo.name}</Typography>
+          <Typography variant="h6">{sellerInfo.name}</Typography>
           <Typography variant="body1">Posted on {props.postDate}</Typography>
         </Stack>
       </Stack>

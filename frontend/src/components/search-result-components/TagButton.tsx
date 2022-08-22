@@ -22,29 +22,27 @@ export default function TagButton(props: TagButtonProps) {
     }, [props.active])
 
     return (
-        <Box sx={{ marginLeft: "10px" }}>
-            <IconButton disableRipple
-                color="inherit"
+        <IconButton disableRipple
+            color="inherit"
+            sx={{
+                padding: 0,
+                borderRadius: "1000px",
+            }}
+            component={motion.div}
+            whileHover={{
+                scale: 1.2,
+                originX: 0,
+                transition: { duration: 0.2 },
+            }}
+            onClick={Toggle}>
+            <Typography
                 sx={{
-                    padding: 0,
-                    borderRadius: "1000px",
-                }}
-                component={motion.div}
-                whileHover={{
-                    scale: 1.2,
-                    originX: 0,
-                    transition: { duration: 0.2 },
-                }}
-                onClick={Toggle}>
-                <Typography
-                    sx={{
-                        textTransform: 'capitalize',
-                        fontWeight: active ? 'bold' : 'normal',
-                    }}>
-                    {props.title}
-                </Typography>
-            </IconButton>
-        </Box>
+                    textTransform: 'capitalize',
+                    fontWeight: active ? 'bold' : 'normal',
+                }}>
+                {props.title}
+            </Typography>
+        </IconButton>
     );
 }
 
