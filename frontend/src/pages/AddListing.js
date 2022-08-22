@@ -13,7 +13,8 @@ import defaultProfilePicture from '../images/pfp.png'
 import tags from '../components/add-listing-components/tags'
 
 import database from "../backend/Database/DBInstance"
-import { ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import { ref, set, push } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import {ref as sRef, getStorage, uploadBytesResumable, listAll, getDownloadURL, deleteObject} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-storage.js";
 
 import './boilerplate-page.css'
 import { v4 as uuid } from 'uuid';
@@ -34,6 +35,7 @@ function AddListing(props) {
     })
 
     const [ imageNames, setImageNames ] = useState([])
+    const [ currentFileList, setCurrentFileList ] = useState([])
 
     const [rerender, setRerender] = useState(false);
     useEffect(()=>{
@@ -90,6 +92,8 @@ function AddListing(props) {
         console.log("new images uploaded:")
         console.log(newSet);
 
+        setCurrentFileList(event.target.files);
+
 
         const nameArr = [];
         [...event.target.files].forEach(f => nameArr.push(f.name));
@@ -110,6 +114,8 @@ function AddListing(props) {
     }
 
     const handleFormSubmit = (event) => {
+        console.log("handleFormSubmit");
+        console.log(newProductId);
         const checkEmptyInput = !Object.values(formInputData).every(res => res === "")
         if (checkEmptyInput) {
             console.log("empty input field")
@@ -135,15 +141,64 @@ function AddListing(props) {
             })
         }
 
+        [...currentFileList].forEach(f => uploadImageToStorage(newProductId, f))
+        
         addNewListing(newUserId, newProductId);
 
         alert("Published listing!");
     }
 
+    /*
+        This method uploads an image for a product to Firebase storage.
+    */
+    var uploadImageToStorage = (productID, file) => {
+        console.log("productID: " + productID);
+        // get the storage reference for the image to upload
+        // sample path: product-images/p1/hamburger.png
+        const storage = getStorage();
+        const storageRef = sRef(storage, 'product-images/' + productID + '/' + file.name);
+
+        // upload the file and metadata and monitor upload progress
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on('state_changed', (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case 'paused':
+                    console.log('Upload is paused');
+                    break;
+                case 'running':
+                    console.log('Upload is running');
+                    break;
+            }
+        },
+        (error) => {
+            console.log(error)
+        },
+        () => {
+            // handle successful upload on complete; get download url
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log("Uploaded a blob or file!");
+                console.log('File available at', downloadURL);
+                // add download url to corresponding product
+                console.log("Adding download url to corresponding product");
+                const productRef = ref(database, 'products/' + productID + '/pictures');
+                var newProductRef = push(productRef)
+                set(newProductRef, downloadURL);
+            });
+        }
+    )
+        // uploadBytesResumable(storageRef).then((snapshot) => {
+        //     const percent = Math.round((snapshot.bytesTransferred/ snapshot.totalBytes) * 100);
+        //     console.log(percent)
+        //     console.log("Uploaded a blob or file!");
+        // })
+    }
+
     var getCategoryFromSubcategory = (sub) => {
         const roomDecor = ["Plushies", "Plants", "Lights", "Posters", "Tapestries", "Other room decor"];
         const furniture = ["Chairs", "Couches", "Mattresses", "Pillows", "Other furniture"];
-        const clothing = ["Tops", "Pants", "Dresses", "Shoes", "Coats and Jackets", "Other Clothing"];
+        const clothing = ["Tops", "Pants", "Dresses", "Shoes", "Coats and jackets", "Other clothing"];
         const accessories = ["Necklace", "Bracelet", "Earrings", "Hair clips", "Other accessories"];
         const books = ["Textbooks", "Fiction", "Nonfiction", "Poetry", "Other books"];
         const electronics = ["Speakers", "Phones", "Devices", "Other electronics and related"];
@@ -301,8 +356,10 @@ function AddListing(props) {
                             handleInputChange={handleSubChange}
                         />
                         <AddPhotos 
+                            productId={newProductId}
                             productImgUrls={formInputData.productImgUrls}
                             handleInputChange={handleImgUrlChange}
+                            uploadImageToStorage={uploadImageToStorage}
                         />
                         <div style={{ marginTop: "10px" }}>
                             {imageNames.join(", ")}
