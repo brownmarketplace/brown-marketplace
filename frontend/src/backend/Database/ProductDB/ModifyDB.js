@@ -97,7 +97,7 @@ var addTagToList = (tagName) => {
 var addTagToProduct = (productID, tagName) => {
     // Add the tag to the list of tags of the product
     const tagRef = ref(database, 'products/' + productID + '/tags/' + tagName)
-    set(tagRef, "true")
+        set(tagRef, "true")
 
     // Add the product id to the list of product ids of the tag
     const tagRef2 = ref(database, 'tags/' + tagName + '/' + productID);
