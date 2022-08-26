@@ -1,10 +1,17 @@
-import React from "react";
+import * as React from "react";
 import { Box, Stack, Typography } from "@mui/material";
+
+// components
 import DropdownMenu from "./DropdownMenu";
 
-export default function SortingDropdown(props) {
-    const [sortingKey, setSortingKey] = React.useState(props.sortingKeys[0]);
-    const [orderBy, setOrderBy] = React.useState(props.orderByOptions[0]);
+type SortingDropdownProps = {
+    sortingKeys: string[],
+    orderByOptions: string[],
+}
+
+export default function SortingDropdown(props: SortingDropdownProps) {
+    const [sortingKey, setSortingKey] = React.useState<string>(props.sortingKeys[0]);
+    const [orderBy, setOrderBy] = React.useState<string>(props.orderByOptions[0]);
 
     return (
         <Box>

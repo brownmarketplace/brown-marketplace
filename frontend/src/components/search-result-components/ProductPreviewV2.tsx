@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardMedia, CardActionArea, Grid, Typography, Tooltip, Box, Stack, CardActions, styled } from '@mui/material';
+import * as React from "react";
+import { Card, CardContent, CardMedia, CardActionArea, Typography, Box, Stack, CardActions, styled, Link } from "@mui/material";
+
+import { motion } from "framer-motion";
 
 // components
 import TagV2 from './TagV2';
 import AddToFavorite from './AddToFavorite';
 
-import { motion } from "framer-motion";
+// types
+import { ProductInfo } from "../../models/types";
 
 const StyledCardActionArea = styled(CardActionArea)(({ theme }) => `
     .MuiCardActionArea-focusHighlight {
@@ -13,16 +16,24 @@ const StyledCardActionArea = styled(CardActionArea)(({ theme }) => `
     }
 `);
 
-export default function ProductPreviewV2(props) {
-  const [activeTags, setActiveTags] = useState([]);
-  const [passiveTags, setPassiveTags] = useState(props.tags);
+type ProductPreviewV2Props = {
+  productInfo: ProductInfo,
+  selectedTags: Set<string>,
+  tagOnClick: (tagName: string) => void,
+}
 
-  useEffect(() => {
-    let active = [...props.selectedTags].filter((tag) => props.productInfo.tags.includes(tag));
+const MAX_NUM_LINE: number = 3;
+
+export default function ProductPreviewV2(props: ProductPreviewV2Props) {
+  const [activeTags, setActiveTags] = React.useState<string[]>([]);
+  const [passiveTags, setPassiveTags] = React.useState<string[]>(props.productInfo.tags);
+
+  React.useEffect(() => {
+    let active = Array.from(props.selectedTags).filter((tag) => props.productInfo.tags.includes(tag));
     let passive = props.productInfo.tags.filter((tag) => !props.selectedTags.has(tag));
     setActiveTags(active);
     setPassiveTags(passive);
-  }, [props.selectedTags])
+  }, [props.productInfo.tags, props.selectedTags])
 
   return (
     <Card
@@ -34,12 +45,14 @@ export default function ProductPreviewV2(props) {
         scale: 1.05,
         transition: { duration: 0.2 },
       }}>
-      <StyledCardActionArea
+      <Link href={"/productV2/" + props.productInfo.id} sx={{ textDecoration: 'none' }} color="text.primary">
+        {/* <StyledCardActionArea
         disableRipple
-        href={"/productV2/" + props.productInfo.id}>
+        // href={"/productV2/" + props.productInfo.id}
+        > */}
         <CardMedia
           component="img"
-          image={props.productInfo.pictures[0]}
+          image={props.productInfo.images[0]}
           alt={props.productInfo.name}
           sx={{ aspectRatio: "4 / 3" }} />
         <CardContent
@@ -49,7 +62,7 @@ export default function ProductPreviewV2(props) {
           }}>
           <Stack spacing={0.5}>
             {/* Header */}
-            <Stack direction={{ sm: "column", md: "row" }} justifyContent="space-between">
+            <Stack direction={{ sm: "column", md: "row" }} spacing={0.5} justifyContent="space-between">
               <Typography variant="h6"
                 sx={{
                   lineHeight: "24px",
@@ -62,8 +75,13 @@ export default function ProductPreviewV2(props) {
               <Typography variant="h6"
                 sx={{
                   lineHeight: "24px"
-                }}>${parseFloat(props.productInfo.price).toFixed(2)}</Typography>
+                }}>${props.productInfo.price.toFixed(2)}</Typography>
             </Stack>
+
+            {/* Product tags */}
+            {/* <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
+              {props.productInfo.tags?.map((tag, idx) => <TagV2 key={idx} title={tag} onClick={() => props.tagOnClick(tag)} selected={props.selectedTags.has(tag)} />)}
+            </Box> */}
 
             {/* Product description */}
             <Typography variant="caption" color="text.secondary" align="left"
@@ -72,21 +90,24 @@ export default function ProductPreviewV2(props) {
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 display: '-webkit-box',
-                WebkitLineClamp: '3',
+                WebkitLineClamp: MAX_NUM_LINE,
                 WebkitBoxOrient: 'vertical',
               }}>{props.productInfo.description}</Typography>
 
           </Stack>
         </CardContent>
-      </StyledCardActionArea>
-
+        {/* </StyledCardActionArea> */}
+      </Link>
       <CardActions sx={{ padding: 1, aspectRatio: "4 / 1" }}>
         {/* <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
           {activeTags?.map((tag, idx) => <TagV2 key={idx} title={tag} onClick={() => props.tagOnClick(tag)} selected />)}
           {passiveTags?.map((tag, idx) => <TagV2 key={idx} title={tag} onClick={() => props.tagOnClick(tag)} />)}
         </Box> */}
         <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
-          {props.productInfo.tags?.map((tag, idx) => <TagV2 key={idx} title={tag} onClick={() => props.tagOnClick(tag)} selected={props.selectedTags.has(tag)} />)}
+          {[
+            // ...[props.productInfo.category, props.productInfo.subcategory],
+            ...props.productInfo.tags
+          ]?.map((tag, idx) => <TagV2 key={idx} title={tag} onClick={() => props.tagOnClick(tag)} selected={props.selectedTags.has(tag)} />)}
         </Box>
         {/* <AddToFavorite /> */}
       </CardActions>
@@ -104,6 +125,5 @@ ProductPreviewV2.defaultProps = {
     tags: ["Furniture", "Vintage", "Decoration", "Sofa"],
   },
   selectedTags: [],
-  tagOnClick: (tag) => { },
-  numLine: 3,
+  tagOnClick: (tagName) => { },
 }
