@@ -172,8 +172,8 @@ function ProductCards(props) {
     }
 
     return (
-        <div className='swiper-container'>
-            <div className="cards-container">
+        <div>
+            <div className="cardContainer">
                 {products.map((product, index) => (
                     <TinderCard
                         ref={childRefs[index]}
@@ -187,7 +187,7 @@ function ProductCards(props) {
                         // only allow swiping left or right
                         preventSwipe={['up', 'down']}
                     >
-                        <Card sx={{ maxWidth: 600 }} elevation={2}>
+                         <Card sx={{ maxWidth: 600 }} elevation={2}> 
                             <CardMedia
                                 component="img"
                                 height="300"
@@ -212,73 +212,11 @@ function ProductCards(props) {
                                     </Typography>
                                 {/* </Paper> */}
                                 </div>
-                            </CardContent>
-                            </Card>
+                            </CardContent> 
+                        </Card>
                     </TinderCard>
                 ))}
             </div>
-            <div className='product-buttons'>
-                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="left" onClick={() => swipe('left')}>
-                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="left" onClick={() => swipe('left')}> */}
-                    <CloseIcon fontSize="large" />
-                </IconButton>
-                <IconButton style={{ backgroundColor: !canGoBack && '#c3c4d3' }} className="repeat" onClick={() => goBack()}>
-                {/* <IconButton style={{ backgroundColor: (!canGoBack || firstSwipe) && '#c3c4d3' }} className="repeat" onClick={() => goBack()}> */}
-                    <ReplayIcon fontSize="large" />
-                </IconButton>
-
-                <ClickAwayListener onClickAway={handleTooltipClose}>
-                    <div>
-                    <Tooltip
-                        PopperProps={{
-                        disablePortal: true,
-                        }}
-                        onClose={handleTooltipClose}
-                        open={open}
-                        disableFocusListener
-                        disableHoverListener
-                        disableTouchListener
-                        title="Liked!"
-                    >
-                        <IconButton style={{ backgroundColor: !canSwipe  && '#c3c4d3' }} className="like" onClick={() => 
-                            // add product
-                            handleTooltipOpen()}>
-                        {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="bookmark" onClick={() => addToLikedList("u3", "p3")}> */}
-                            <FavoriteIcon fontSize="large" />
-                        </IconButton>
-                        {/* <Button onClick={handleTooltipOpen}>Click</Button> */}
-                    </Tooltip>
-                    </div>
-                </ClickAwayListener>
-
-                <IconButton style={{ backgroundColor: !canSwipe && '#c3c4d3' }} className="right" onClick={() => swipe('right')}>
-                {/* <IconButton style={{ backgroundColor: (!canSwipe || firstSwipe) && '#c3c4d3' }} className="right" onClick={() => swipe('right')}> */}
-                    <ShoppingBagIcon fontSize="large" />
-                </IconButton>
-            </div>
-
-            {/* If user is logged in, display the listing button, else blank */}
-            {props.isLoggedIn ?
-            <div className="listing-container">
-            <Tooltip title="Add new listing">
-                <Button
-                    className='new-listing'
-                    variant={'outlined'}
-                    // add more border radius
-                    sx={{
-                        borderRadius: '25%',
-                        border: '1px solid #c3c4d3',
-                        // on hover, change border color
-                        '&:hover': {
-                            borderColor: '#c3c4d3',
-                        },
-                    }}
-                    onClick={() => navigate('/sell')}
-                >
-                    <AddIcon fontSize="large" />
-                </Button>   
-            </Tooltip>
-        </div> : null}
         </div>
     );
 }

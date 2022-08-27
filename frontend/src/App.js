@@ -6,25 +6,24 @@ import ProductPage from './pages/ProductPage';
 import CategoryPage from './pages/CategoryPage';
 import SearchResultPage from './pages/SearchResultPage';
 import ProductPageV2 from './pages/ProductPageV2';
+import React from 'react'
 
 // components
 import NavigationBar from './components/NavigationBar';
 import FooterV2 from './components/FooterV2';
 
-import Chat from './pages/ChatCentral';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
 // Database Imports
-import { ref, set, get, onValue, query, orderByChild, equalTo, child }
+import { ref, set, get, query }
   from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 import database from './backend/Database/DBInstance'
-import ChatCentral from './pages/ChatCentral';
 
 // Theming
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from "@mui/material/CssBaseline";
 import defaultTheme from './themes/DefaultTheme';
 
@@ -82,8 +81,8 @@ const App = () => {
       <NavigationBar />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<BoilerplatePage userID={cookies.get("userID")} />} />
-          <Route path="/explore" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
+          <Route path="/" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
+          <Route path="/home" element={<Explore userID={cookies.get("userID")} loginState={loginState} logoutState={logoutState} />} />
           <Route path="/profile" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />}>
             <Route path=":userid" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />} />
           </Route>

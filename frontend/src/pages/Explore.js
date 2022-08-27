@@ -1,36 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 // Component Imports
-import BoilerplateHeader from '../components/BoilerplateHeader'
 import ExploreHeader from '../components/explore-components/ExploreHeader'
-import Footer from '../components/Footer'
-import SearchBar from '../components/explore-components/SearchBar'
-import Title from '../components/boilerplate-components/Title'
-import TinderCard from 'react-tinder-card'
-import ProductCards from '../components/explore-components/ProductCards'
-import ProductButtons from '../components/explore-components/ProductButtons'
+import ProductCardsV2 from '../components/explore-components/ProductCardsV2'
+
 
 // CSS Imports
-import './boilerplate-page.css'
 import './explore.css'
+// import '../components/explore-components/advanced.css'
 
 // Image Icon Imports
 import defaultProfilePicture from '../images/pfp.png'
 
 function Explore(props) {
   return (
-    <div className="boilerplate">
-        <ExploreHeader userID={props.userID} loginState={props.loginState} logoutState={props.logoutState} title={props.title} userPicture={props.pfp}/>
-        <div style={{ textAlign: 'center', marginTop: '30px' }}>
-           Empty
-        </div>
+    <div>
+      <ProductCardsV2 userID={props.userID} isLoggedIn={props.loginState} />
     </div>
   )
 }
 
+// default props for userID and loginState
 Explore.defaultProps = {
-  title: "Brown Marketplace",
-  pfp: defaultProfilePicture
+  userID: "",
+  loginState: false
 }
 
 export default Explore
