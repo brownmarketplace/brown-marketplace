@@ -1,28 +1,18 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Java CI with Maven
-
+name: Inclusive Organization
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
 jobs:
-  build:
-
+  invite:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      env: # lookup key as an environment variable
-        FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
-      run: mvn -B package --file backend/pom.xml
+      - name: Invite contributor to the organization
+        uses: lekterable/inclusive-organization-action@v1.1.0
+        with:
+          organization: your-organization-name
+          team: your-team-name
+          comment: Single or multiline comment
+        env:
+          FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
