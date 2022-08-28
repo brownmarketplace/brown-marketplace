@@ -307,7 +307,7 @@ function AddListing(props) {
 
     return (
         <div className="boilerplate">
-            <BoilerplateHeader title="Brown Marketplace" userPicture={defaultProfilePicture} showProfile={false}/>
+            {/* <BoilerplateHeader title="Brown Marketplace" userPicture={defaultProfilePicture} showProfile={false}/> */}
                 <div className="addListingStyle">                    
                     <Grid container spacing={2}>
                         <Grid item container spacing={2} direction="row" alignItems="center">
