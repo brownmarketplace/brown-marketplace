@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Invite contributor to the organization
-        uses: lekterable/inclusive-organization-action@v1.1.0
+        uses: actions/checkout@v3
         with:
           organization: your-organization-name
           team: your-team-name
