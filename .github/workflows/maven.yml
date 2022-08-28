@@ -16,3 +16,4 @@ jobs:
           comment: Single or multiline comment
         env:
           FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
+        run: echo "$FIREBASE_KEY"
