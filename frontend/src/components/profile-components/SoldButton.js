@@ -37,19 +37,18 @@ function SoldButton(props) {
   }
 
   return (
-    <div style={{ marginLeft: "10px" }}>
+    <div>
         <Button 
-          variant="outlined" 
-          color="success" 
+          variant="outlined"
+          color={isDisabled ? "error" : "success" }
           size="small"
-          disabled={isDisabled}
           onClick={updateSoldFlag}
         >
           {
             isDisabled ? (
-              "Sold"
+              "SOLD"
             ) : (
-              "Sell"
+              "OPEN"
             )
           }
         </Button>

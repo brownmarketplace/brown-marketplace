@@ -10,9 +10,9 @@ function BoilerplateHeader(props) {
   return (
     <div className="boilerplate-header">
       {/* On click, returns to the previous page. */}
-      <Link to={-1}>
+      {/* <Link to={-1}>
         <img src={xButton} alt="back" className="xButton" style={{ width: 50, height: 50 }} />
-      </Link>
+      </Link> */}
       <Link to="/explore" className="title-link">
         <Title title="Brown Marketplace" height={50} style={{ height: 50 }} />
       </Link>

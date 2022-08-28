@@ -1,71 +1,103 @@
 import React, { useState, useEffect } from 'react'
 import BoilerplateHeader from '../components/BoilerplateHeader'
-import Footer from '../components/Footer'
+import Grid from '@mui/material/Grid';
 import AddPhotos from '../components/add-listing-components/AddPhotos'
 import AddName from '../components/add-listing-components/AddName'
 import AddDetails from '../components/add-listing-components/AddDetails'
 import AddPrice from '../components/add-listing-components/AddPrice'
 import ChooseCategory from '../components/add-listing-components/ChooseCategory'
+import ChooseSub from '../components/add-listing-components/ChooseSub';
 import ChooseTags from '../components/add-listing-components/ChooseTags'
 import PublishListing from '../components/add-listing-components/PublishListing'
-import ClearButton from '../components/add-listing-components/ClearButton'
 import defaultProfilePicture from '../images/pfp.png'
+import tags from '../components/add-listing-components/tags'
 
 import database from "../backend/Database/DBInstance"
-import { ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import { ref, set, push } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import {ref as sRef, getStorage, uploadBytesResumable, listAll, getDownloadURL, deleteObject} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-storage.js";
 
 import './boilerplate-page.css'
-
 import { v4 as uuid } from 'uuid';
 
 function AddListing(props) {
-    const addListingStyle = {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: "30px",
-        marginBottom: "30px"
-    }
 
     const newUserId = props.userID
     const newProductId = 'p' + uuid();
 
     const [formInputData, setFormInputData] = useState({
-        productName:'',
+        productName: '',
         productDesc: '',
         productPrice: 0,
+        productCat: '',
         productSubcategory: '',
-        productTags: [],
-        productImgUrls: ''
+        productTags: new Set(),
+        productImgUrls: new Set(),
     })
 
+    const [ imageNames, setImageNames ] = useState([])
+    const [ currentFileList, setCurrentFileList ] = useState([])
+
+    const [rerender, setRerender] = useState(false);
+    useEffect(()=>{
+        setRerender(!rerender);
+    }, []);
+
     const handleInputChange = (event) => {
+        console.log(event.target.value);
         const inputFieldValue = event.target.value;
         const inputFieldName = event.target.name;
         const NewInputValue = {...formInputData, [inputFieldName]: inputFieldValue}
         setFormInputData(NewInputValue);
+        
     }
 
-    const handleTagChange = (event) => {
-        const inputFieldName = event.target.name;
-        const inputFieldValue = event.target.value;
-        if (typeof inputFieldValue === 'string') {
-            inputFieldValue = inputFieldValue.split(',')
-        }
-        
-        const NewInputValue = {...formInputData, [inputFieldName]: inputFieldValue}
-        setFormInputData(NewInputValue);  
+    function handleSelectionChanged(id, selectedProdTags) {
+        // treat state as immutable
+        // React only does a shallow comparison so we need a new Set
+        const inputFieldName = "productTags";
+        const newSet = new Set(selectedProdTags);
+        if (newSet.has(id)) newSet.delete(id);
+        else newSet.add(id);
+
+        const NewInputValue = {...formInputData, [inputFieldName]: newSet}
+        setFormInputData(NewInputValue);
+        console.log(newSet)
+    }
+
+    function handleCategoryChange(categ) {
+        const inputFieldName = "productCat";
+        const NewInputValue = {...formInputData, [inputFieldName]: categ}
+        setFormInputData(NewInputValue);
+        console.log(categ)
+    }
+
+    function handleSubChange(subcateg) {
+        const inputFieldName = "productSubcategory";
+        const NewInputValue = {...formInputData, [inputFieldName]: subcateg}
+        setFormInputData(NewInputValue);
+        console.log(subcateg)
     }
 
     const handleImgUrlChange = (event) => {
-        const inputFieldName = event.target.name;
-        let inputFieldValue = event.target.value;
-        if (typeof inputFieldValue === 'string') {
-            inputFieldValue = inputFieldValue.split(',')
-        }
-        
-        const NewInputValue = {...formInputData, [inputFieldName]: inputFieldValue}
+        const inputFieldName = "productImgUrls";
+        const newSet = new Set();
+        [...event.target.files].forEach(f => newSet.add(f))
+
+        console.log("event.target.files:")
+        console.log(event.target.files);
+
+        const NewInputValue = {...formInputData, [inputFieldName]: newSet}
         setFormInputData(NewInputValue);
+        
+        console.log("new images uploaded:")
+        console.log(newSet);
+
+        setCurrentFileList(event.target.files);
+
+
+        const nameArr = [];
+        [...event.target.files].forEach(f => nameArr.push(f.name));
+        setImageNames(nameArr);
     }
 
     const clearForm = (e) => {
@@ -73,6 +105,7 @@ function AddListing(props) {
             productName:'',
             productDesc: '',
             productPrice: 0,
+            productCat: '',
             productSubcategory: '',
             productTags: [],
             productImgUrls: ''
@@ -81,6 +114,8 @@ function AddListing(props) {
     }
 
     const handleFormSubmit = (event) => {
+        console.log("handleFormSubmit");
+        console.log(newProductId);
         const checkEmptyInput = !Object.values(formInputData).every(res => res === "")
         if (checkEmptyInput) {
             console.log("empty input field")
@@ -96,19 +131,74 @@ function AddListing(props) {
         addCategoryAndSubCategoryToProduct(newProductId, productCategory, formInputData.productSubcategory);
 
         for (let i = 0; i < formInputData.productTags.length; i++) {
-            let tag = formInputData.productTags[i];
-            addTagToProduct(newProductId, tag);
+            let tagId = formInputData.productTags[i];
+            Object.keys(tags).map((id, tagName) => {
+                if (id === tagId) {
+                    const tagName = tags[id].name;
+                    console.log(tagName);
+                    addTagToProduct(newProductId, tagName);
+                }
+            })
         }
 
+        [...currentFileList].forEach(f => uploadImageToStorage(newProductId, f))
+        
         addNewListing(newUserId, newProductId);
 
         alert("Published listing!");
     }
 
+    /*
+        This method uploads an image for a product to Firebase storage.
+    */
+    var uploadImageToStorage = (productID, file) => {
+        console.log("productID: " + productID);
+        // get the storage reference for the image to upload
+        // sample path: product-images/p1/hamburger.png
+        const storage = getStorage();
+        const storageRef = sRef(storage, 'product-images/' + productID + '/' + file.name);
+
+        // upload the file and metadata and monitor upload progress
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on('state_changed', (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case 'paused':
+                    console.log('Upload is paused');
+                    break;
+                case 'running':
+                    console.log('Upload is running');
+                    break;
+            }
+        },
+        (error) => {
+            console.log(error)
+        },
+        () => {
+            // handle successful upload on complete; get download url
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log("Uploaded a blob or file!");
+                console.log('File available at', downloadURL);
+                // add download url to corresponding product
+                console.log("Adding download url to corresponding product");
+                const productRef = ref(database, 'products/' + productID + '/pictures');
+                var newProductRef = push(productRef)
+                set(newProductRef, downloadURL);
+            });
+        }
+    )
+        // uploadBytesResumable(storageRef).then((snapshot) => {
+        //     const percent = Math.round((snapshot.bytesTransferred/ snapshot.totalBytes) * 100);
+        //     console.log(percent)
+        //     console.log("Uploaded a blob or file!");
+        // })
+    }
+
     var getCategoryFromSubcategory = (sub) => {
         const roomDecor = ["Plushies", "Plants", "Lights", "Posters", "Tapestries", "Other room decor"];
         const furniture = ["Chairs", "Couches", "Mattresses", "Pillows", "Other furniture"];
-        const clothing = ["Tops", "Pants", "Dresses", "Shoes", "Coats and Jackets", "Other Clothing"];
+        const clothing = ["Tops", "Pants", "Dresses", "Shoes", "Coats and jackets", "Other clothing"];
         const accessories = ["Necklace", "Bracelet", "Earrings", "Hair clips", "Other accessories"];
         const books = ["Textbooks", "Fiction", "Nonfiction", "Poetry", "Other books"];
         const electronics = ["Speakers", "Phones", "Devices", "Other electronics and related"];
@@ -154,13 +244,30 @@ function AddListing(props) {
     
         const sold = false;
         const numLiked = 0;
+
+        // console.log("----------")
+        // console.log("id: " + id)
+        // console.log("name: " + name)
+        // console.log("description: " + description)
+        // console.log("tag: " + tag)
+        // console.log("subcategory: " + subcategory)
+        // console.log("seller: " + seller)
+        // console.log("pictures: " + pictures)
+        // console.log("-----------")
+
+        const idNotGood = () => { return id.trim() == "" }
+        const nameNotGood = () => { return name.trim() == "" }
+        const descriptionNotGood = () => { return description == "" }
+        const tagNotGood = () => { return tag.size < 1 }
+        const subNotGood = () => { return subcategory == "" }
+        const sellerNotGood = () => { return seller.trim() == "" }
+        const picsNotGood = () => { return pictures.size < 1 }
     
-        if (id.trim() == "" || name.trim() == "" || description == "" || tag == ""
-            || subcategory == "" || seller.trim() == "" || pictures == "") {
+        if (idNotGood || nameNotGood || descriptionNotGood || tagNotGood
+            || subNotGood || sellerNotGood || picsNotGood) {
             alert("form not completely filled");
             return false;
         } else {
-            pictures = pictures.map(e => e.trim());
             writeBasicInfoToDatabase(id, name, description, price, seller, pictures, date, sold,
                 numLiked);
             return true;
@@ -217,43 +324,62 @@ function AddListing(props) {
     return (
         <div className="boilerplate">
             <BoilerplateHeader title="Brown Marketplace" userPicture={defaultProfilePicture} showProfile={false}/>
-            <div style={addListingStyle}>
-                    <AddName 
-                        productName={formInputData.productName}
-                        handleInputChange={handleInputChange}
-                    />
-                    <AddDetails 
-                        productDesc={formInputData.productDesc}
-                        handleInputChange={handleInputChange}
-                    />
-                    <AddPrice 
-                        productPrice={formInputData.productPrice}
-                        handleInputChange={handleInputChange}
-                    />
-                    <ChooseCategory 
-                        productSubcategory={formInputData.productSubcategory}
-                        handleInputChange={handleInputChange}
-                    />
-                    <ChooseTags 
-                        productTags={formInputData.productTags}
-                        handleInputChange={handleTagChange}
-                    />
-                    <AddPhotos 
-                        productImgUrls={formInputData.productImgUrls}
-                        handleInputChange={handleImgUrlChange}
-                    />
-                    <div style={{ display: 'flex', justifyContent: "center" }}>
-                        <PublishListing
-                            // userId={props.userId} // should be this
-                            userId={newUserId} // used to test
-                            productId={newProductId}
-                            handleFormSubmit={handleFormSubmit}
+                <div className="addListingStyle">                    
+                    <Grid container spacing={2}>
+                        <Grid item container spacing={2} direction="row" alignItems="center">
+                            <Grid item xs={9}>
+                                <span className="poppinsBigFont">
+                                    New Post
+                                </span>                         
+                            </Grid>
+                            <Grid item xs={3}>
+                                <PublishListing
+                                    // userId={props.userId} // should be this
+                                    userId={newUserId} // used to test
+                                    productId={newProductId}
+                                    handleFormSubmit={handleFormSubmit}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <div>
+                        <AddName 
+                            productName={formInputData.productName}
+                            handleInputChange={handleInputChange}
                         />
-                        <div style={{ width: "20px" }}></div>
-                        <ClearButton handleSubmit={clearForm}/>
+                        <AddPrice 
+                            productPrice={formInputData.productPrice}
+                            handleInputChange={handleInputChange}
+                        />
+                        <AddDetails 
+                            productDesc={formInputData.productDesc}
+                            handleInputChange={handleInputChange}
+                        />  
+                        <ChooseTags
+                            productTags={formInputData.productTags}
+                            // handleInputChange={handleTagChange}
+                            handleInputChange={handleSelectionChanged}
+                        />                  
+                        <ChooseCategory 
+                            productCat={formInputData.productCat}
+                            handleInputChange={handleCategoryChange}
+                        />
+                        <ChooseSub
+                            productCat={formInputData.productCat}
+                            productSubcategory={formInputData.productSubcategory}
+                            handleInputChange={handleSubChange}
+                        />
+                        <AddPhotos 
+                            productId={newProductId}
+                            productImgUrls={formInputData.productImgUrls}
+                            handleInputChange={handleImgUrlChange}
+                            uploadImageToStorage={uploadImageToStorage}
+                        />
+                        <div style={{ marginTop: "10px" }}>
+                            {imageNames.join(", ")}
+                        </div>
                     </div>
-            </div>
-            {/* <Footer/> */}
+                </div>
         </div>
     )
 }

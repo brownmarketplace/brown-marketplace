@@ -1,24 +1,37 @@
-import * as React from 'react';
+import React from 'react';
 import Chip from '@mui/material/Chip';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import ListSubheader from '@mui/material/ListSubheader';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 
-function ChooseCategory({handleInputChange, productSubcategory}) {
+import './add-details.css'
+
+const categories = [
+  "Room Decor", "Furniture", "Clothing", "Accessories",
+  "Books", "Electronics and related", "Other"
+]
+
+function ChooseCategory({handleInputChange, productCat}) {
 
   return (
-    <div style={{ marginTop: "24px" }}>
+    <div style={{ marginTop: '20px', fontSize: "1.6vw" }}>
         <div>
-            <Chip 
-            className="details-chip"
-            label="Item Category" 
-            color="primary" 
-            sx={{ borderRadius: "4px !important" }}
-            />
+            Choose a Category 🗃
         </div>
-        <FormControl sx={{ minWidth: 120, marginTop: "12px", width: 400 }}>
+        <div style={{ marginTop: "10px" }}>
+        {
+          categories.map(cat =>
+            <Chip
+              label={cat}
+              value={cat}
+              name="productCat"
+              onClick={() => handleInputChange(cat)}
+              variant={productCat === cat ? "filled" : "outlined"}
+              className="clickableTags"
+            />
+          )
+          
+        }
+        </div>
+        
+        {/* <FormControl sx={{ minWidth: 120, marginTop: "12px", width: 400 }}>
             <InputLabel htmlFor="grouped-select">Category</InputLabel>
             <Select 
               defaultValue="" 
@@ -27,12 +40,12 @@ function ChooseCategory({handleInputChange, productSubcategory}) {
               onChange={handleInputChange}
               value={productSubcategory}
               name="productSubcategory"
+              className="details-text"
             >
               <MenuItem value="">
                   <em>None</em>
               </MenuItem>
               
-            {/* Hardcoded for now */}
               <ListSubheader>Room Decor</ListSubheader>
                 <MenuItem value="Plushies">Plushies</MenuItem>
                 <MenuItem value="Plants">Plants</MenuItem>
@@ -73,7 +86,7 @@ function ChooseCategory({handleInputChange, productSubcategory}) {
               <ListSubheader>Other</ListSubheader>
                 <MenuItem value="Miscellaneous">Miscellaneous</MenuItem>
             </Select>
-        </FormControl>
+        </FormControl> */}
     </div>
   );
 }
