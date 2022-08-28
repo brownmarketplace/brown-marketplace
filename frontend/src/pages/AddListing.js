@@ -244,16 +244,30 @@ function AddListing(props) {
     
         const sold = false;
         const numLiked = 0;
+
+        // console.log("----------")
+        // console.log("id: " + id)
+        // console.log("name: " + name)
+        // console.log("description: " + description)
+        // console.log("tag: " + tag)
+        // console.log("subcategory: " + subcategory)
+        // console.log("seller: " + seller)
+        // console.log("pictures: " + pictures)
+        // console.log("-----------")
+
+        const idNotGood = () => { return id.trim() == "" }
+        const nameNotGood = () => { return name.trim() == "" }
+        const descriptionNotGood = () => { return description == "" }
+        const tagNotGood = () => { return tag.size < 1 }
+        const subNotGood = () => { return subcategory == "" }
+        const sellerNotGood = () => { return seller.trim() == "" }
+        const picsNotGood = () => { return pictures.size < 1 }
     
-        // if (id.trim() == "" || name.trim() == "" || description == "" || tag == ""
-        //     || subcategory == "" || seller.trim() == "" || pictures == "") {
-        if (id.trim() == "" || name.trim() == "" || description == "" || tag == ""
-            || subcategory == "" || seller.trim() == "") {
+        if (idNotGood || nameNotGood || descriptionNotGood || tagNotGood
+            || subNotGood || sellerNotGood || picsNotGood) {
             alert("form not completely filled");
             return false;
         } else {
-            // pictures = pictures.map(e => e.trim());
-            pictures = ""
             writeBasicInfoToDatabase(id, name, description, price, seller, pictures, date, sold,
                 numLiked);
             return true;
