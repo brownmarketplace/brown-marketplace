@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import database from "../../backend/Database/DBInstance"
 import { ref, update, get, query, orderByChild, equalTo }

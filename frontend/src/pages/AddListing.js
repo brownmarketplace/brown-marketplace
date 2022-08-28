@@ -116,11 +116,11 @@ function AddListing(props) {
     const handleFormSubmit = (event) => {
         console.log("handleFormSubmit");
         console.log(newProductId);
-        const checkEmptyInput = !Object.values(formInputData).every(res => res === "")
-        if (checkEmptyInput) {
-            console.log("empty input field")
-            console.log(formInputData);
-        }
+        // const checkEmptyInput = !Object.values(formInputData).every(res => res === "")
+        // if (checkEmptyInput) {
+        //     console.log("empty input field")
+        //     console.log(formInputData);
+        // }
 
         const ret = validateForm();
         if (!ret) {
@@ -238,33 +238,17 @@ function AddListing(props) {
         const price = formInputData.productPrice;
         const tag = formInputData.productTags;
         const subcategory = formInputData.productSubcategory;
-        const seller = newUserId;
+        let seller = newUserId;
         let pictures = formInputData.productImgUrls;
         const date = new Date().toLocaleString() + "";
     
         const sold = false;
         const numLiked = 0;
 
-        // console.log("----------")
-        // console.log("id: " + id)
-        // console.log("name: " + name)
-        // console.log("description: " + description)
-        // console.log("tag: " + tag)
-        // console.log("subcategory: " + subcategory)
-        // console.log("seller: " + seller)
-        // console.log("pictures: " + pictures)
-        // console.log("-----------")
+        // seller = "u104224939597442384590" // test
 
-        const idNotGood = () => { return id.trim() == "" }
-        const nameNotGood = () => { return name.trim() == "" }
-        const descriptionNotGood = () => { return description == "" }
-        const tagNotGood = () => { return tag.size < 1 }
-        const subNotGood = () => { return subcategory == "" }
-        const sellerNotGood = () => { return seller.trim() == "" }
-        const picsNotGood = () => { return pictures.size < 1 }
-    
-        if (idNotGood || nameNotGood || descriptionNotGood || tagNotGood
-            || subNotGood || sellerNotGood || picsNotGood) {
+        if (id == "" || name == "" || description == "" || tag.size < 1 || 
+            subcategory == "" || seller == "" || pictures.size < 1) {
             alert("form not completely filled");
             return false;
         } else {
