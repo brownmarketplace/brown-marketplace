@@ -1,18 +1,25 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Stack from '@mui/material/Stack';
 
 // components
 import HomepageButton from './navigation-bar-components/HomepageButton';
-import ProfileButton from './navigation-bar-components/ProfileButton';
 import NavDropdown from './navigation-bar-components/NavDropdown';
 import NavSearchBar from './navigation-bar-components/NavSearchBar';
-import { Typography } from '@mui/material';
+import LoginButton from './navigation-bar-components/LoginButton';
+import ProfileButton from './navigation-bar-components/ProfileButton';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+type NavigationBarProps = {
+    userID: string,
+    loginState: any, // TODO: type this
+    logoutState: any,  // TODO: type this
+}
 
-export default function NavigationBar() {
+export default function NavigationBar(props: NavigationBarProps) {
+    // authentication
+    const [isLoggedIn, setIsLoggedIn] = React.useState(typeof props.userID !== 'undefined'); // TODO: better handle 'uu'
+    console.log(props.userID);
+
     return (
         <AppBar color="transparent" elevation={0} position="static"
             sx={{
@@ -21,7 +28,6 @@ export default function NavigationBar() {
                 paddingTop: "20px",
                 paddingBottom: "0px",
             }}>
-            {/* <Toolbar> */}
             <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={1}
@@ -29,10 +35,10 @@ export default function NavigationBar() {
                 alignItems="center">
                 <HomepageButton />
                 <NavDropdown />
-                <NavSearchBar />
-                <ProfileButton />
+                {/* <NavSearchBar /> */}
+                {!isLoggedIn && <LoginButton handleLogin={(response) => { props.loginState(response); setIsLoggedIn(true) }} />}
+                {isLoggedIn && <ProfileButton userID={props.userID} handleLogout={(response) => { props.logoutState(response); setIsLoggedIn(false) }} />}
             </Stack>
-            {/* </Toolbar> */}
         </AppBar >
     );
 }

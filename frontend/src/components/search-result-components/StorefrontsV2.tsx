@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSearchParams } from 'react-router-dom';
 import { Box, Stack, Paper, Card, Typography, Grid, Pagination } from '@mui/material';
 
 // components
@@ -23,17 +24,15 @@ function properNumPages(numProducts: number): number {
 
 type StoreFrontV2Props = {
 	products: ProductInfo[],
-	tags: string[],
+	selectedTags: string[],
 };
 
 export default function StorefrontV2(props: StoreFrontV2Props) {
 	// filter by tags
-	const [allCategories, setAllCategories] = React.useState<string[]>([]);
-	const [allSubcategories, setAllSubcategories] = React.useState<string[]>([]);
 	const [allTags, setAllTags] = React.useState<string[]>([]);
-	const [selectedTags, setSelectedTags] = React.useState<Set<string>>(new Set());
+	const [selectedTags, setSelectedTags] = React.useState<Set<string>>(new Set(props.selectedTags));
 	// product sorting
-	const [sortedProducts, setSortedProducts] = React.useState<ProductInfo[]>([...props.products]);
+	const [sortedProducts, setSortedProducts] = React.useState<ProductInfo[]>(props.products);
 	// pagination
 	const [numPages, setNumPages] = React.useState<number>(properNumPages(props.products.length));
 	const [page, setPage] = React.useState<number>(1);
@@ -53,20 +52,6 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 		setSortedProducts(sorted);
 	}
 
-	function sortUniqueCategories(products: ProductInfo[]): void {
-		const unique: Set<string> = new Set();
-		products.forEach(product => unique.add(product.category));
-		const sorted = Array.from(unique.values()).sort(); // [...unique]
-		setAllCategories(sorted);
-	}
-
-	function sortUniqueSubcategories(products: ProductInfo[]): void {
-		const unique: Set<string> = new Set();
-		products.forEach(product => unique.add(product.subcategory));
-		const sorted = Array.from(unique.values()).sort(); // [...unique]
-		setAllSubcategories(sorted);
-	}
-
 	function sortUniqueTags(products: ProductInfo[]): void {
 		const unique: Set<string> = new Set();
 		products.forEach(product => product.tags.forEach(tag => unique.add(tag)));
@@ -79,8 +64,6 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 	}, [selectedTags])
 
 	React.useEffect(() => {
-		sortUniqueCategories(props.products);
-		sortUniqueSubcategories(props.products);
 		sortUniqueTags(props.products);
 		sortProducts(props.products);
 		setNumPages(properNumPages(props.products.length));
@@ -89,15 +72,16 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 	return (
 		<Stack direction={{ xs: "column", sm: "row" }} spacing={3}>
 			{/* Left */}
-			<Box>
+			<Box sx={{ width: "250px" }}>
 				<Paper
 					variant="outlined"
 					sx={{
+						minHeight: "90%",
 						borderRadius: "10px",
 						padding: "10px"
 					}}>
 					{/* <SortingDropdown /> */}
-					<Box sx={{ width: "200px" }}>
+					<Box>
 						{/* <Typography variant="h5">Filter by categories</Typography>
 						<Stack alignItems="flex-start">
 							{allCategories.map((tag, idx) =>
@@ -110,7 +94,7 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 								<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
 							)}
 						</Stack> */}
-						<Typography variant="h5">Filter by tags</Typography>
+						<Typography variant="h5">Filters</Typography>
 						<Stack alignItems="flex-start">
 							{allTags.map((tag, idx) =>
 								<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
@@ -118,10 +102,10 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 						</Stack>
 					</Box>
 				</Paper>
-			</Box >
+			</Box>
 
 			{/* Right */}
-			< Box >
+			<Box sx={{ width: "100%" }}>
 				<Stack alignItems="center" spacing={3}>
 					<Grid container spacing={3}>
 						{sortedProducts.slice((page - 1) * NUMBER_PRODUCTS_PER_PAGE, page * NUMBER_PRODUCTS_PER_PAGE).map((productInfo, idx) =>
@@ -131,8 +115,8 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 					</Grid>
 					<Pagination count={numPages} page={page} onChange={(event, value) => { setPage(value); }} />
 				</Stack>
-			</Box >
-		</Stack >
+			</Box>
+		</Stack>
 	)
 };
 
@@ -179,5 +163,4 @@ StorefrontV2.defaultProps = {
 			tags: ["Furniture"],
 		},
 	]).flat(),
-	tags: ["Furniture", "Vintage", "Decoration", "Rocking Chair", "Sofa", "Nature", "Free"],
 };

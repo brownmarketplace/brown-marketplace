@@ -16,3 +16,13 @@ export type UserInfo = {
     name: string,
     email: string,
 };
+
+export type Category = {
+    title: string,
+    subcategories: string[],
+};
+
+export type Path = {
+    title: string,
+    href: string | null,
+}[];
