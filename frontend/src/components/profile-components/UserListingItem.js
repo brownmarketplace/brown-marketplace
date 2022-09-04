@@ -15,6 +15,7 @@ function UserListingItem(props) {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [picture, setPicture] = useState([]);
+    const [isNull, setIsNull] = useState(false);
 
     useEffect(() => {
         const readOneProductInfo = async (productID) => {
@@ -38,6 +39,8 @@ function UserListingItem(props) {
                     if (product.pictures != null) {
                         setPicture(product.pictures[0]);
                     }
+                } else {
+                    setIsNull(true);
                 }
             })
         }
@@ -45,49 +48,53 @@ function UserListingItem(props) {
         readOneProductInfo(props.prodId).catch(console.error)
     }, [])
 
-    return (
-        <div className="user-listing-item">
-            <Grid container spacing={2} sx={{ paddingLeft: "0px !important", paddingTop: "0px !important" }}>
-                <Grid item xs={1.5}>
-                    <img src={picture} className="product-img-source"/>
-                </Grid>
-                <Grid item xs={7.5}>
-                    <div>
-                        <Tooltip title={props.prodId}>
-                            <Link to={`/product/${props.prodId}`} className="add-listing-link">
-                                {
-                                    name ? (
-                                        name
-                                    ):(
-                                        "Loading..."
-                                    )
-                                }
-                            </Link>
-                        </Tooltip>
-                        <div className="price"> 
-                            ${price}
+    if (isNull) {
+        return
+    } else {
+        return (
+            <div className="user-listing-item">
+                <Grid container spacing={2} sx={{ paddingLeft: "0px !important", paddingTop: "0px !important" }}>
+                    <Grid item xs={1.5}>
+                        <img src={picture} className="product-img-source"/>
+                    </Grid>
+                    <Grid item xs={7.5}>
+                        <div>
+                            <Tooltip title={props.prodId}>
+                                <Link to={`/product/${props.prodId}`} className="add-listing-link">
+                                    {
+                                        name ? (
+                                            name
+                                        ):(
+                                            "Loading..."
+                                        )
+                                    }
+                                </Link>
+                            </Tooltip>
+                            <div className="price"> 
+                                ${price}
+                            </div>
                         </div>
-                    </div>
-                </Grid>
-
-                <Grid container item xs={1.5} alignItems="center">
-                    <Grid item display="flex" justify="center">
-                        <SoldButton productId={props.prodId} isSold={sold} />
                     </Grid>
-                </Grid>
-
-                <Grid container item xs={1.5} alignItems="center">
-                    <Grid item display="flex" justify="center">
-                        <IconButton aria-label="delete" size="large">
-                            <DeleteIcon fontSize="inherit" />
-                        </IconButton>
+    
+                    <Grid container item xs={1.5} alignItems="center">
+                        <Grid item display="flex" justify="center">
+                            <SoldButton productId={props.prodId} isSold={sold} />
+                        </Grid>
                     </Grid>
-                </Grid>
+    
+                    <Grid container item xs={1.5} alignItems="center">
+                        <Grid item display="flex" justify="center">
+                            <IconButton aria-label="delete" size="large">
+                                <DeleteIcon fontSize="inherit" />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
+                    
+                </Grid>            
                 
-            </Grid>            
-            
-        </div>
-  )
+            </div>
+      )
+    }    
 }
 
 export default UserListingItem

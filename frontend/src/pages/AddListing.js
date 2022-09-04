@@ -245,8 +245,6 @@ function AddListing(props) {
         const sold = false;
         const numLiked = 0;
 
-        // seller = "u104224939597442384590" // test
-
         if (id == "" || name == "" || description == "" || tag.size < 1 || 
             subcategory == "" || seller == "" || pictures.size < 1) {
             alert("form not completely filled");
@@ -307,7 +305,6 @@ function AddListing(props) {
 
     return (
         <div className="boilerplate">
-            {/* <BoilerplateHeader title="Brown Marketplace" userPicture={defaultProfilePicture} showProfile={false}/> */}
                 <div className="addListingStyle">                    
                     <Grid container spacing={2}>
                         <Grid item container spacing={2} direction="row" alignItems="center">
@@ -318,8 +315,7 @@ function AddListing(props) {
                             </Grid>
                             <Grid item xs={3}>
                                 <PublishListing
-                                    // userId={props.userId} // should be this
-                                    userId={newUserId} // used to test
+                                    userId={newUserId}
                                     productId={newProductId}
                                     handleFormSubmit={handleFormSubmit}
                                 />
