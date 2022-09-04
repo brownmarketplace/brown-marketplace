@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import BoilerplateHeader from '../components/BoilerplateHeader'
+import {Link, Routes, Route, useNavigate} from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import AddPhotos from '../components/add-listing-components/AddPhotos'
 import AddName from '../components/add-listing-components/AddName'
@@ -9,7 +9,6 @@ import ChooseCategory from '../components/add-listing-components/ChooseCategory'
 import ChooseSub from '../components/add-listing-components/ChooseSub';
 import ChooseTags from '../components/add-listing-components/ChooseTags'
 import PublishListing from '../components/add-listing-components/PublishListing'
-import defaultProfilePicture from '../images/pfp.png'
 import tags from '../components/add-listing-components/tags'
 
 import database from "../backend/Database/DBInstance"
@@ -20,6 +19,8 @@ import './boilerplate-page.css'
 import { v4 as uuid } from 'uuid';
 
 function AddListing(props) {
+
+    const navigate = useNavigate();
 
     const newUserId = props.userID
     const newProductId = 'p' + uuid();
@@ -144,6 +145,8 @@ function AddListing(props) {
         [...currentFileList].forEach(f => uploadImageToStorage(newProductId, f))
         
         addNewListing(newUserId, newProductId);
+
+        navigate('/profile');
 
         alert("Published listing!");
     }
