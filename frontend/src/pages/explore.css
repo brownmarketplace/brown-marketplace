@@ -1,91 +1,141 @@
-/* .search-bar-container {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-}
-
-.swipe-container {
-    width: 70%;
-    height: 90vh;
+#root>div {
     display: flex;
-    flex-direction: column ;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-} */
-
-.product-cards {
-    /* center */
+  }
+    
+  .cards>div {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-
-}
-
-.card-container {
-    width: 400px;
-    height: 650px ;
-}
-
-.swipe {
-    position: absolute;
-}
+    align-items: center;
+  }
   
-.card-container {
+  .row {
+    flex-direction: row !important;
+  }
+  
+  .row>* {
+    margin: 5px;
+  }
+  
+  h1 {
+    font-family: 'Damion', cursive;
+    color: #fff;
+    text-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
+  }
+  
+  h2 {
+    color: #fff;
+  }
+  
+  .swipe {
+    position: absolute;
+  }
+  
+  .cardContainer {
     width: 90vw;
-    max-width: 260px;
-    height: 300px;
-}
-
-.card {
-    margin-left: 150px;
-    /* position: relative; */
-    background-color: #fff;
-    /* width: 80vw;
-    max-width: 260px;
-    height: 300px; */
-    /* Same dimensions as the container */ 
-    width: 400px;
-    height: 550px ;
-    /* box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30); */
-    border-radius: 30px;
-    background-size: cover;
-    background-position: center;
-}
-
-.card h3 {
+    max-width: 380px;
+    height: 495px;
+  }
+  
+  .price {
+    /* position: absolute;
+    right: 10px;
+    top: 10px;
+    color: white; */
+    right: 0px;
+    top: 30px;
+    position: absolute;
+    display: flex;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px 0px 0px 5px;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to bottom right, #B492FD, #9DCEFF);
+    /* make bold */
+    font-weight: bold;
+  }
+  
+  .cardContent {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .card h3 {
     position: absolute;
     bottom: 0;
     margin: 10px;
     color: #fff;
-} 
-
-.search-container {
-    position:fixed;
-    left: 37%;
-    width:100%;
-}
-
-#submitsearch{
-    border: 1px solid rgb(138, 134, 134);
-    margin-left: -82px;
-    padding: 5px;
-    border-radius: 19px;
-    cursor: pointer;
-    padding-left: 10px;
-    padding-right: 8px; 
-    padding-top: 4px;
-    display: none;
-    box-shadow: 0 0 1px black;     
-    margin-right:110px;
   }
   
-#searchInput {  
-    width: 18%;
-    border: 1px solid #000;
-    border-radius: 30px;
-    font-size: 16px;
+  .infoText {
+    width: 100%;
+    height: 28px;
+    justify-content: center;
+    display: flex;
+    color: #fff;
+    animation-name: popup;
+    animation-duration: 800ms;
+  }
+  
+  .buttons {
+    /* margin 35px all around except 0pc on sides */
+    margin: 35px 0px;
+    display: flex;
+    /* disapper on mobile view, make important*/
+    @media screen (max-width: 768px) { 
+      display: none;
+      background-color: red;
+    }
+  }
+  
+  .buttons button {
+    flex-shrink: 0;
+    padding: 10px;
+    /* border-radius: 5px; */
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    background-color: #9198e5;
+    transition: 200ms;
+    margin: 0 14px;
+    font-weight: bolder;
+    /* width: 160px; */
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+  }
+  
+  .buttons button:hover {
+    transform: scale(1.05);
+  }
+  
+  @keyframes popup {
+    0%   { transform: scale(1,1) }
+    10%  { transform: scale(1.1,1.1) }
+    30%  { transform: scale(.9,.9) }
+    50%  { transform: scale(1,1) }
+    57%  { transform: scale(1,1) }
+    64%  { transform: scale(1,1) }
+    100% { transform: scale(1,1) }
+  }
+  
+  .buttons .MuiIconButton-root {
     background-color: white;
-    background-image:url('https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/search-24.png');
-    background-position: 10px 7px;
-    background-repeat: no-repeat;
-    padding: 8px 20px 8px 40px;
+    box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.30) !important;
+  }
+  
+  .left {
+    padding: 20px !important;
+    color: #ec5e6f !important;
+  }
+  
+  .btnWindow {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+  }  

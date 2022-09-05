@@ -1,13 +1,37 @@
 .add-details {
     margin-top: 24px;
+    font-size: 1.6vw;
 }
 
-.details-text {
+/* .details-text {
     width: 400px !important;
-}
+} */
 
-.details-chip {
+/* .details-chip {
     border-radius: 6px !important; 
     font-size: 14px !important;
     padding: 8px !important;
+} */
+
+.clickableTags {
+    margin-right: 4px !important;
+    margin-bottom: 4px !important;
+}
+
+@media screen and (max-width: 980px) {
+    .details-text {
+        width: 390px !important;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .details-text {
+        width: 300px !important;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .details-text {
+        width: 300px !important;
+    }
 }

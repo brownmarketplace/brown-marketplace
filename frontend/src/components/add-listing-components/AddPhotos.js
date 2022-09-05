@@ -1,6 +1,5 @@
 import React from 'react'
-import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
 import './add-details.css'
 
 function AddPhotos({handleInputChange, productImgUrls}) {
@@ -8,25 +7,18 @@ function AddPhotos({handleInputChange, productImgUrls}) {
     return (
         <div className="add-details">
             <div>
-                <Chip 
-                label="Item Photos" 
-                className="details-chip" 
-                color="primary" 
-                />
+                Add Photos 📸
             </div>
             <div style={{ marginTop: "10px" }}>
-                    <TextField
-                        id="outlined-multiline-static"
-                        multiline
-                        rows={5}
-                        variant="outlined"
-                        placeholder="Enter comma-separated image urls. Note: please do not include urls with commas in them."
-                        className="details-text"
-                        onChange={handleInputChange}
-                        name="productImgUrls"
-                        value={productImgUrls}
-                    />
-                </div>
+                <Button
+                    variant="contained"
+                    component="label"
+                    sx={{ borderRadius: '28px' }}
+                >
+                    Upload
+                    <input type="file" accept="image/*" multiple onChange={handleInputChange} hidden />
+                </Button>
+            </div>
         </div>
     )
 }

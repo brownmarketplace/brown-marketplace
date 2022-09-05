@@ -1,24 +1,38 @@
-.swiper-container {
-    /* Center on page */
-    margin: 0 auto;
-    /* Center on screen */
-    position: absolute;
+#root>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.app>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardContainer {
+    width: 90vw;
+    max-width: 380px;
+    height: 495px;
+    margin: 0;
 }
 
 .product-card {
-    /* position: relative; */
-    width: 415px;
-    background-color: #FFEFD7;
-    /* padding: 20px; */
-    /* Styling proportionate to viewport */
-    /* background-size: cover;
-    background-position: center; */
+    position: relative;
+    width: 380px;
+    background-position: center;
+    height: 135px;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
 }
 
 .card-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 5vh;
+    width: 90vw;
+    max-width: 260px;
+    height: 300px;
 }
 
 .swipe {
@@ -26,13 +40,13 @@
     position: absolute;
 }
 
-.product-card > .price {
+.price {
     /* position: absolute;
     right: 10px;
     top: 10px;
     color: white; */
     right: 0px;
-    top: 20px;
+    top: 30px;
     position: absolute;
     display: flex;
     padding-right: 10px;
@@ -42,7 +56,7 @@
     border-radius: 5px 0px 0px 5px;
     align-items: center;
     justify-content: center;
-    background: #7fadff;
+    background-image: linear-gradient(to bottom right, "92A3FD", "9DCEFF");
 }
 
 .product-buttons {
@@ -74,6 +88,7 @@
 .left {
     padding: 1.25rem !important;
     color: #ec5e6f !important;
+    margin-left: 0px !important;
 }
 
 .repeat {
@@ -83,12 +98,13 @@
 
 .like {
     padding: 1.25rem !important;
-    color: #62b4f9 !important;
+    /* color: #62b4f9 !important; */
 }
 
 .right {
     padding: 1.25rem !important;
     color: #76e2b3 !important;
+    margin-right: 0px !important;
 }
 
 .listing-container {

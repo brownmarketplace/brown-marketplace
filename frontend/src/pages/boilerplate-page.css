@@ -1,3 +1,64 @@
+/* @import url("https://use.typekit.net/onc2npj.css"); */
+@import url('https://fonts.googleapis.com/css2?family=Genos:wght@600&family=Inter&family=Poppins:wght@700&display=swap');
+
 .boilerplate {
     margin: 40px 40px 0px 40px;
+}
+
+.poppinsBigFont {
+    font-family: poppins, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: #8193F3; 
+    font-weight: bold; 
+    font-size: 2.2vw;
+}
+
+.poppinsMediumFont {
+    font-family: poppins, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: white; 
+    font-weight: bold; 
+    font-size: 1.2vw;
+    text-decoration: none;
+}
+
+.genosFont {
+    font-family: 'Genos', sans-serif;
+    font-size: 1.75vw;
+    color: #8193F3;
+}
+
+.addListingStyle {
+    margin: 3em auto 4em auto;
+    padding: 2em;
+    min-height: 10em;
+    width: 40%;
+    background-color: #F3F7FF;
+    border-radius: 15px;
+}
+
+@media screen and (max-width: 800px) {
+    .addListingStyle {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .addListingStyle {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .addListingStyle {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .addListingStyle {
+        width: 100%;
+    }
 }

@@ -31,7 +31,7 @@ function WishList(props) {
     }
     
     return (
-        <div className="wish-list-container">
+        <div>
             <div className="wish-list-header">
                 Liked Items
             </div>

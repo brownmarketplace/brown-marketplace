@@ -1,34 +1,29 @@
 .wish-list-header {
-    margin-top: 10px;
-    font-size: 26px;
-    color: #cd8c8c;
+    margin-top: 2em;
+    font-size: 2.5vw;
 }
 
 .wishlist-items {
-    background: rgba(255, 227, 227, 0.5);
     height: 22vw;
     width: 22vw;
     margin-top: 1vw;
-    margin-right: 4vw;
     border-radius: 10px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    color: #cd8c8c;
 }
 
 .wish-list-item-spacing {
     margin-top: 10px;
 }
 
-.liked-id-link {
+/* .liked-id-link {
     text-decoration: none;
     color: #cd8c8c;
 }
 
 .liked-id-link:hover {
     color: rgb(255, 190, 190);
-}
+} */
 
 /* When screen width is narrower, adjust vertical spacing between
     the words Liked List and liked item product box grid. */

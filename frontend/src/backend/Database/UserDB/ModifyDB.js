@@ -2,7 +2,7 @@
     This class handles all the modifications of the users in the database, including adding, updating and deleting a
     user; adding to a user's listings, liked items and purchased items.
  */
-import { getDatabase, ref, set, update, remove } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import { getDatabase, ref, set, push, update, remove } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 import {ref as sRef, getStorage, uploadBytesResumable, listAll, getDownloadURL, deleteObject} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-storage.js";
 const database = getDatabase();
 
@@ -89,28 +89,60 @@ var deleteData = (id) => {
 /*
     This method uploads an image for a product to Firebase storage.
  */
-var uploadImageToStorage = (productID, path) => {
+var uploadImageToStorage = (productID, file, imageID) => {
     // get the storage reference for the image to upload
+    // sample path: product-images/p1/hamburger.png
     const storage = getStorage();
-    const storageRef = sRef(storage, 'product-images/' + productID + '/' + path);
+    const storageRef = sRef(storage, 'product-images/' + productID + '/' + file.name);
 
-    // upload the file and metadata
-    uploadBytesResumable(storageRef).then((snapshot) => {
-        console.log("Uploaded a blob or file!");
-    })
-    // const uploadTask = uploadBytesResumable(storageRef, file);
-    // use uploadTask to pause, resume or cancel the upload
+    // upload the file and metadata and monitor upload progress
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on('state_changed', (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+            case 'paused':
+                console.log('Upload is paused');
+                break;
+            case 'running':
+                console.log('Upload is running');
+                break;
+        }
+    },
+    (error) => {
+        console.log(error)
+    },
+    () => {
+        // handle successful upload on complete; get download url
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("Uploaded a blob or file!");
+            console.log('File available at', downloadURL);
+
+            // add download url to corresponding product
+            console.log("Adding download url to corresponding product");
+            const productRef = ref(database, 'products/' + productID + '/pictures/' + imageID);
+            // var newProductRef = push(productRef)
+            set(productRef, downloadURL);
+        });
+    }
+    )
 }
 
 /*
     This method deletes an image for a product.
  */
-var deleteImage = (productID, path) => {
+var deleteImage = (productID, file, imageID) => {
     const storage = getStorage();
-    const storageRef = sRef(storage, 'product-images/' + productID + '/' + path);
+    const storageRef = sRef(storage, 'product-images/' + productID + '/' + file.name);
+
+    // delete image in storage
     deleteObject(storageRef).then(() => {
-        console.log("image deleted successfully for product!");
+        console.log("image deleted successfully for product in firebase storage");
     });
+
+    // delete image in product
+    remove(ref(database, 'products/' + productID + '/pictures/' + imageID))
+    console.log("image delete successfully for product in realtime database")
 }
 
 /*
@@ -150,10 +182,10 @@ document.querySelector('#purchased').addEventListener("click", () => {
     addToPurchasedList("u115151849263296139973", "p9");
 })
 document.querySelector('#upload').addEventListener("click", () => {
-    uploadImageToStorage("p2","logo.png");
+    uploadImageToStorage("p2","back-button.png");
 })
 document.querySelector('#getSingleProductImages').addEventListener("click", () => {
-    getSingleProductImages("p1");
+    getSingleProductImages("p2");
 })
 document.querySelector('#deleteImage').addEventListener("click", () => {
     deleteImage("p2", "logo.png");

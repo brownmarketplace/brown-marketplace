@@ -1,6 +1,7 @@
 import React from 'react'
 import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import WhiteTextField from './WhiteTextField';
 import './add-details.css'
 
 function AddDetails({handleInputChange, productDesc}) {
@@ -8,14 +9,11 @@ function AddDetails({handleInputChange, productDesc}) {
   return (
     <div className="add-details">
         <div>
-            <Chip 
-            label="Item Details" 
-            className="details-chip" 
-            color="primary" 
-            />
+            Description
         </div>
         <div style={{ marginTop: "10px" }}>
-            <TextField
+          <FormControl sx={{ marginTop: "4px", width: 400 }}>
+            <WhiteTextField
               id="outlined-multiline-static"
               multiline
               rows={3}
@@ -26,6 +24,7 @@ function AddDetails({handleInputChange, productDesc}) {
               value={productDesc}
               name="productDesc"
             />
+          </FormControl>
         </div>
     </div>
   )

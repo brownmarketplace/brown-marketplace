@@ -21,8 +21,11 @@ var validateForm = () => {
     const sold = document.querySelector("#sold-description").value;
     const numLiked = document.querySelector("#liked-description").value;
 
+    // if (id.trim() == "" || name.trim() == "" || description == "" || price.trim() == ""
+    //     || seller.trim() == "" || pictures == "" || date.trim() == "" || sold == ""
+    //     || numLiked == "") {
     if (id.trim() == "" || name.trim() == "" || description == "" || price.trim() == ""
-        || seller.trim() == "" || pictures == "" || date.trim() == "" || sold == ""
+        || seller.trim() == "" || date.trim() == "" || sold == ""
         || numLiked == "") {
         alert("form not completely filled");
     } else {
@@ -97,7 +100,7 @@ var addTagToList = (tagName) => {
 var addTagToProduct = (productID, tagName) => {
     // Add the tag to the list of tags of the product
     const tagRef = ref(database, 'products/' + productID + '/tags/' + tagName)
-    set(tagRef, "true")
+        set(tagRef, "true")
 
     // Add the product id to the list of product ids of the tag
     const tagRef2 = ref(database, 'tags/' + tagName + '/' + productID);
