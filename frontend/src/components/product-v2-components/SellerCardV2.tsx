@@ -25,8 +25,8 @@ export default function SellerCardV2(props: SellerCardV2Props) {
   }, [props.userID]);
 
   return (
-    <Box>
-      <Stack direction="row" justifyContent="space-between" spacing={1}>
+    <Box sx={{ flexGrow: 1 }}>
+      <Stack direction="row" spacing={1}>
         <Avatar
           src={sellerInfo?.profilePicture}
           sx={{ width: "60px", height: "60px" }}

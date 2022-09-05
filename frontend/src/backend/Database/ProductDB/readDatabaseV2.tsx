@@ -110,6 +110,13 @@ export async function readCategories(setter: React.Dispatch<React.SetStateAction
     return unsubscriber;
 }
 
+/*
+    This method read a cover image based on given key.
+ */
+export async function readCoverImage(key: string): Promise<string> {
+    const snapshot = await get(ref(database, `cover-images/${key}`))
+    return snapshot.val()
+}
 
 // /*
 //     This method filters the products by a specific category.

@@ -8,7 +8,7 @@ import CoverImage from '../components/search-result-components/CoverImage';
 import StorefrontV2 from '../components/search-result-components/StorefrontsV2';
 
 // database
-import { readAllProductsInfo, readProductsInfoByCategory, readProductsInfoBySubcategory } from '../backend/Database/ProductDB/readDatabaseV2';
+import { readCoverImage, readAllProductsInfo, readProductsInfoByCategory, readProductsInfoBySubcategory } from '../backend/Database/ProductDB/readDatabaseV2';
 
 // types
 import { ProductInfo, Path } from '../models/types';
@@ -34,19 +34,25 @@ export default function SearchResultPage(props: SearchResultPageProps) {
         : [{ title: "All Products", href: null }];
     const title: string = path[path.length - 1].title;
 
+    const [coverImage, setCoverImage] = React.useState<string>("loading");
     const [products, setProducts] = React.useState<ProductInfo[]>([]);
 
     React.useEffect(() => {
         async function fetchProducts() {
-            let response: ProductInfo[] = [];
+            let productsFromDB: ProductInfo[] = [];
+            let coverImageFromDB: string = "";
             if (typeof subcategory !== 'undefined') {
-                response = await readProductsInfoBySubcategory(subcategory);
+                coverImageFromDB = await readCoverImage(subcategory);
+                productsFromDB = await readProductsInfoBySubcategory(subcategory);
             } else if (typeof category !== 'undefined') {
-                response = await readProductsInfoByCategory(category);
+                coverImageFromDB = await readCoverImage(category);
+                productsFromDB = await readProductsInfoByCategory(category);
             } else {
-                response = await readAllProductsInfo();
+                coverImageFromDB = await readCoverImage("All Products");
+                productsFromDB = await readAllProductsInfo();
             }
-            setProducts(response);
+            setCoverImage(coverImageFromDB);
+            setProducts(productsFromDB);
         }
 
         fetchProducts();
@@ -56,7 +62,7 @@ export default function SearchResultPage(props: SearchResultPageProps) {
         <Box sx={{ paddingLeft: "5%", paddingRight: "5%", paddingTop: "20px", paddingBottom: "20px" }}>
             <Stack spacing={1}>
                 <PageBreadcrumbsV2 path={path} />
-                <CoverImage />
+                <CoverImage image={coverImage}/>
                 <Typography variant="h2" textTransform="capitalize">{title}</Typography>
                 <StorefrontV2 selectedTags={selectedTags} products={products} />
             </Stack>

@@ -30,7 +30,6 @@ export default function CategoryDropdown(props: CategoryDropdownProps) {
       <Button
         aria-haspopup="true"
         onClick={handleClick}
-        // onMouseOver={handleClick}
         disableRipple
         color="inherit"
         sx={{
@@ -44,8 +43,20 @@ export default function CategoryDropdown(props: CategoryDropdownProps) {
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
-        // MenuListProps={{ onMouseLeave: handleClose }}
+        MenuListProps={{ onMouseLeave: handleClose }}
         onClose={handleClose}>
+        <Link href={`/result/${props.category.title}`}
+          underline="hover"
+          color="inherit">
+          <MenuItem disableRipple>
+            <Typography
+              textAlign="center"
+              textTransform="capitalize"
+              fontWeight="fontWeightBold">
+              {props.category.title}
+            </Typography>
+          </MenuItem>
+        </Link>
         {props.category.subcategories.map((subcategory, idx) =>
           <Link href={`/result/${props.category.title}/${subcategory}`}
             key={idx}
