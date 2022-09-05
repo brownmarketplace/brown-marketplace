@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Link, Routes, Route, useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import AddPhotos from '../components/add-listing-components/AddPhotos'
 import AddName from '../components/add-listing-components/AddName'
@@ -131,16 +131,12 @@ function AddListing(props) {
         const productCategory = getCategoryFromSubcategory(formInputData.productSubcategory);
         addCategoryAndSubCategoryToProduct(newProductId, productCategory, formInputData.productSubcategory);
 
-        for (let i = 0; i < formInputData.productTags.length; i++) {
-            let tagId = formInputData.productTags[i];
-            Object.keys(tags).map((id, tagName) => {
-                if (id === tagId) {
-                    const tagName = tags[id].name;
-                    console.log(tagName);
-                    addTagToProduct(newProductId, tagName);
-                }
-            })
-        }
+        Object.keys(tags).map((id, tagName) => {
+            if (formInputData.productTags.has(id)) {
+                const tagName = tags[id].name;
+                addTagToProduct(newProductId, tagName);
+            }
+        });
 
         [...currentFileList].forEach(f => uploadImageToStorage(newProductId, f))
         
