@@ -8,4 +8,4 @@ target/
 .settings/org.eclipse.core.resources.prefs
 .project
 .settings/org.eclipse.jdt.ui.prefs
-backend/config/secret/firebase-key.json
+/backend/config/secret/firebase-key.json
