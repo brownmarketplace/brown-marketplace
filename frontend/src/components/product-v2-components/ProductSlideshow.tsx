@@ -26,7 +26,6 @@ export default function ProductSlideshow(props: ProductSlideShowProps) {
 
     const paginate = (newDirection: number) => {
         setPage([(page + newDirection + props.images.length) % props.images.length, newDirection]);
-        console.log((page + newDirection + props.images.length) % props.images.length);
     };
 
     return (

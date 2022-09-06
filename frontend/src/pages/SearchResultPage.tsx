@@ -40,19 +40,17 @@ export default function SearchResultPage(props: SearchResultPageProps) {
     React.useEffect(() => {
         async function fetchProducts() {
             let productsFromDB: ProductInfo[] = [];
-            let coverImageFromDB: string = "";
             if (typeof subcategory !== 'undefined') {
-                coverImageFromDB = await readCoverImage(subcategory);
                 productsFromDB = await readProductsInfoBySubcategory(subcategory);
             } else if (typeof category !== 'undefined') {
-                coverImageFromDB = await readCoverImage(category);
                 productsFromDB = await readProductsInfoByCategory(category);
             } else {
-                coverImageFromDB = await readCoverImage("All Products");
                 productsFromDB = await readAllProductsInfo();
             }
-            setCoverImage(coverImageFromDB);
             setProducts(productsFromDB);
+
+            let coverImageFromDB = await readCoverImage(category ?? "All Products");
+            setCoverImage(coverImageFromDB);
         }
 
         fetchProducts();
@@ -63,7 +61,7 @@ export default function SearchResultPage(props: SearchResultPageProps) {
             <Stack spacing={1}>
                 <PageBreadcrumbsV2 path={path} />
                 <CoverImage image={coverImage}/>
-                <Typography variant="h2" textTransform="capitalize">{title}</Typography>
+                <Typography variant="h2" textTransform="capitalize" color="text.primary">{title}</Typography>
                 <StorefrontV2 selectedTags={selectedTags} products={products} />
             </Stack>
         </Box>

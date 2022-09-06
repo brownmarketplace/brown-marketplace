@@ -15,7 +15,6 @@ import { ProductInfo, Path } from '../models/types';
 
 // database
 import { readOneProductInfo } from '../backend/Database/ProductDB/readDatabaseV2';
-import { LegendToggle } from '@mui/icons-material';
 
 type ProductPageV2Props = {
     mockProductInfo: ProductInfo,
@@ -27,15 +26,14 @@ function BuyNow(props) {
         <Button sx={{
             background: "-webkit-linear-gradient(45deg, #9DCEFF, #92A3FD)",
             borderRadius: "1000px",
+            border: 0,
             textTransform: "none",
             color: "inherit",
-            borderColor: "inherit",
-            paddingLeft: 10,
-            paddingRight: 10,
+            paddingLeft: 5,
+            paddingRight: 5,
             // flexGrow: 1,
         }}><Typography sx={{
-            color: "#000000",
-            fontWeight: 600,
+            fontWeight: "fontWeightBold",
         }}>Buy now</Typography></Button>
     );
 }
@@ -64,13 +62,13 @@ export default function ProductPageV2(props: ProductPageV2Props) {
 
     return (
         <Box sx={{ display: productInfo === null ? "none" : "", paddingLeft: "5%", paddingRight: "5%", paddingTop: "20px", paddingBottom: "20px" }}>
-            <Stack spacing={1} >
+            <Stack spacing={1} sx={{ width: "100%" }}>
                 <PageBreadcrumbsV2 path={path} />
                 <Stack
                     direction={{ xs: "column", sm: "column", md: "row" }}
                     divider={<Divider orientation="vertical" flexItem />}
                     justifyContent="space-between"
-                    spacing={1}>
+                    spacing={2}>
                     {/* Left */}
                     <Box sx={{ width: "100%" }}>
                         <Stack spacing={2}>
@@ -81,6 +79,7 @@ export default function ProductPageV2(props: ProductPageV2Props) {
                                 justifyContent="space-between"
                                 alignItems="center">
                                 <SellerCardV2 userID={productInfo?.seller} postDate={productInfo?.postDate} />
+                                <BuyNow seller={productInfo?.seller} />
                                 <AddToLikedListButton productId={productInfo?.id} userID={props.userID} />
                                 <ShareButton />
                             </Stack>
@@ -88,18 +87,20 @@ export default function ProductPageV2(props: ProductPageV2Props) {
                     </Box>
                     {/* Right */}
                     <Box sx={{ width: "100%" }}>
-                        <Stack spacing={1}>
-                            <Typography variant="h4" fontWeight="fontWeightBold">{productInfo?.name}</Typography>
-                            <Typography variant="h4">${productInfo?.price?.toFixed(2)}</Typography>
-                            <Stack direction="row" justifyContent="space-between" spacing={1}>
-                                {/* <BuyNow seller={productInfo?.seller} /> */}
-                                {/* <Message /> */}
-                            </Stack>
-                            <Typography variant="h6" fontWeight="fontWeightBold">Description</Typography>
-                            <Typography variant="body2">{productInfo?.description}</Typography>
-                            <Typography variant="h6" fontWeight="fontWeightBold">Tags</Typography>
-                            <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
-                                {productInfo?.tags?.map((tag, idx) => <TagV2 key={idx} title={tag} onClick={() => { navigate(`/result?tag=${tag}`, { replace: false }); }} />)}
+                        <Stack spacing={3} display="flex">
+                            <Box>
+                                <Typography variant="h4" fontWeight="fontWeightBold">{productInfo?.name}</Typography>
+                                <Typography variant="h5" >{productInfo?.price && `$${productInfo.price.toFixed(2)}`}</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6" fontWeight="fontWeightBold">Description</Typography>
+                                <Typography variant="body1" >{productInfo?.description}</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6" fontWeight="fontWeightBold">Tags</Typography>
+                                <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
+                                    {productInfo?.tags?.map((tag, idx) => <TagV2 key={idx} title={tag} onClick={() => { navigate(`/result?tag=${tag}`, { replace: false }); }} />)}
+                                </Box>
                             </Box>
                         </Stack>
                     </Box>

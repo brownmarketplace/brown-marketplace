@@ -45,6 +45,7 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 			selectedTags.add(tagName);
 			setSelectedTags(new Set(selectedTags));
 		}
+		setPage(1); // reset the page number back to one
 	}
 
 	function sortProducts(products: ProductInfo[]): void {

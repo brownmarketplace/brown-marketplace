@@ -14,7 +14,7 @@ export default function ShareButton() {
                 color="inherit"
                 disableRipple
                 onClick={copyToClipboard}>
-                <ContentCopy fontSize="large"/>
+                <ContentCopy fontSize="medium"/>
             </IconButton>
         </Tooltip>
     );

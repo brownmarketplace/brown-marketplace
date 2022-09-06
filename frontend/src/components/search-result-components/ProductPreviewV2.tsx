@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card, CardContent, CardMedia, Typography, Box, Stack, CardActions, Link } from "@mui/material";
+import { Card, CardContent, CardMedia, Typography, Box, Stack, CardActions, Link, Skeleton } from "@mui/material";
 
 import { motion } from "framer-motion";
 
@@ -21,19 +21,32 @@ export default function ProductPreviewV2(props: ProductPreviewV2Props) {
   return (
     <Card
       variant="outlined"
-      sx={{ borderRadius: "10px" }}
+      sx={{ borderRadius: "10px", width: "100%" }}
       component={motion.div}
       whileHover={{
         boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
         scale: 1.05,
         transition: { duration: 0.2 },
       }}>
-      <Link href={"/productV2/" + props.productInfo.id} sx={{ textDecoration: 'none' }} color="text.primary">
-        <CardMedia
+      <Link href={"/product/" + props.productInfo.id} sx={{ textDecoration: 'none' }} color="text.primary">
+        {/* <CardMedia
           component="img"
-          image={props.productInfo.images[0]}
+          image={props.productInfo.images?.[0]}
           alt={props.productInfo.name}
-          sx={{ aspectRatio: "4 / 3" }} />
+          sx={{ aspectRatio: "4 / 3" }} /> */}
+        {props.productInfo.images?.length > 0
+          ? <CardMedia
+            component="img"
+            image={props.productInfo.images?.[0]}
+            alt={props.productInfo.name}
+            sx={{ aspectRatio: "4 / 3" }} />
+          : <CardMedia
+            sx={{
+              width: "100%",
+              aspectRatio: "4/3",
+            }}>
+            <Skeleton variant="rectangular" animation={false} width="100%" height="100%" />
+          </CardMedia>}
         <CardContent
           sx={{
             padding: 1,
@@ -74,11 +87,16 @@ export default function ProductPreviewV2(props: ProductPreviewV2Props) {
       <CardActions sx={{ padding: 1, aspectRatio: "4 / 1" }}>
         {/* Product tags */}
         <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline" }}>
-          {props.productInfo.tags?.map((tag, idx) => <TagV2 key={idx} title={tag} onClick={() => props.tagOnClick(tag)} selected={props.selectedTags.has(tag)} />)}
+          {props.productInfo.tags?.map((tag, idx) => <TagV2 key={idx} title={tag} preview={true} onClick={() => props.tagOnClick(tag)} selected={props.selectedTags.has(tag)} />)}
         </Box>
       </CardActions>
-    </Card>
+    </Card >
   )
+}
+
+ProductPreviewV2.defaultProps = {
+  selectedTags: new Set(),
+  tagOnClick: () => { },
 }
 
 // ProductPreviewV2.defaultProps = {

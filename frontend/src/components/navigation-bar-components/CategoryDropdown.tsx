@@ -32,9 +32,7 @@ export default function CategoryDropdown(props: CategoryDropdownProps) {
         onClick={handleClick}
         disableRipple
         color="inherit"
-        sx={{
-          borderRadius: "1000px",
-        }}>
+        sx={{ borderRadius: "1000px" }}>
         <Typography textTransform="capitalize">
           {props.category.title}
         </Typography>
@@ -45,32 +43,26 @@ export default function CategoryDropdown(props: CategoryDropdownProps) {
         open={Boolean(anchorEl)}
         MenuListProps={{ onMouseLeave: handleClose }}
         onClose={handleClose}>
-        <Link href={`/result/${props.category.title}`}
-          underline="hover"
-          color="inherit">
-          <MenuItem disableRipple>
-            <Typography
-              textAlign="center"
-              textTransform="capitalize"
-              fontWeight="fontWeightBold">
-              {props.category.title}
-            </Typography>
-          </MenuItem>
-        </Link>
+        <MenuItemButton title={props.category.title} href={`/result/${props.category.title}`} />
         {props.category.subcategories.map((subcategory, idx) =>
-          <Link href={`/result/${props.category.title}/${subcategory}`}
-            key={idx}
-            underline="hover"
-            color="inherit">
-            <MenuItem disableRipple>
-              <Typography
-                textAlign="center"
-                textTransform="capitalize">
-                {subcategory}
-              </Typography>
-            </MenuItem>
-          </Link>)}
+          <MenuItemButton key={idx} title={subcategory} href={`/result/${props.category.title}/${subcategory}`} />)}
       </Menu>
     </Box>
+  );
+}
+
+function MenuItemButton(props: { title: string, href: string }) {
+  return (
+    <Link href={props.href}
+      underline="hover"
+      color="inherit">
+      <MenuItem disableRipple>
+        <Typography
+          textAlign="center"
+          textTransform="capitalize">
+          {props.title}
+        </Typography>
+      </MenuItem>
+    </Link>
   );
 }

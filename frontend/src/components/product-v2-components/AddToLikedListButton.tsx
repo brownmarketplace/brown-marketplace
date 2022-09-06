@@ -41,7 +41,7 @@ export default function AddToLikedListButton(props: AddToLikedListButtonProps) {
                 color="inherit"
                 disableRipple
                 onClick={toggleLikedList}>
-                {inLikedList ? <Favorite fontSize="large"/> : <FavoriteBorder fontSize="large"/>}
+                {inLikedList ? <Favorite fontSize="medium"/> : <FavoriteBorder fontSize="medium"/>}
             </IconButton>
         </Tooltip >
     );

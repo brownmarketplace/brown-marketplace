@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Stack, Typography, Avatar, Skeleton } from '@mui/material';
+import { Box, Stack, Typography, Avatar, IconButton } from '@mui/material';
 
 // types
 import { UserInfo } from "../../models/types";
