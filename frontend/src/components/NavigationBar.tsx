@@ -40,5 +40,6 @@ export default function NavigationBar(props: NavigationBarProps) {
                 {isLoggedIn && <ProfileButton userID={props.userID} handleLogout={(response) => { props.logoutState(response); setIsLoggedIn(false) }} />}
             </Stack>
         </AppBar >
+        
     );
 }
