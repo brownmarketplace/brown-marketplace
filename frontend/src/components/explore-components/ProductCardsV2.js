@@ -287,7 +287,8 @@ function ProductCardsV2 (props) {
                   <CardMedia
                   component="img"
                   height="360"
-                  image={product.pictures[0]}
+                  // if the product has a picture, use that, else use a placeholder
+                  image={product.pictures ? product.pictures[0] : 'https://i.picsum.photos/id/1015/6000/4000.jpg?hmac=aHjb0fRa1t14DTIEBcoC12c5rAXOSwnVlaA5ujxPQ0I'}
                   alt={product.name}
                   />
                   <div className='price'>
