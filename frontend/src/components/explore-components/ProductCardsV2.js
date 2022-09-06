@@ -144,6 +144,14 @@ function ProductCardsV2 (props) {
    * for product retrieval.
    */
   useEffect(() => {
+    console.log("USERID", props.userID)
+    // if userID is null, get all products
+    if (props.userID === null) {
+      console.log("logged out")
+    } else {
+      console.log("logged in")
+    }
+    console.log("IS LOGGED IN", props.isLoggedIn)
     // if not logged in, show all products, else show recommendations
     if (!props.isLoggedIn) {
         console.log("Not logged in")
@@ -343,6 +351,7 @@ function ProductCardsV2 (props) {
           userID={props.userID}
           goBack={goBack}
           swipe={swipe}
+          isLoggedIn={props.isLoggedIn}
         />
     </div>
   )

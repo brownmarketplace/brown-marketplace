@@ -36,10 +36,10 @@ export default function NavigationBar(props: NavigationBarProps) {
                 <HomepageButton />
                 <NavDropdown />
                 {/* <NavSearchBar /> */}
-                {!isLoggedIn && <LoginButton handleLogin={(response) => { props.loginState(response); setIsLoggedIn(true) }} />}
-                {isLoggedIn && <ProfileButton userID={props.userID} handleLogout={(response) => { props.logoutState(response); setIsLoggedIn(false) }} />}
+                {!isLoggedIn && <LoginButton handleLogin={(response) => { props.loginState(response); setIsLoggedIn(true); window.location.reload() }} />}
+                {isLoggedIn && <ProfileButton userID={props.userID} handleLogout={(response) => { props.logoutState(response); setIsLoggedIn(false); window.location.reload() }} />}
             </Stack>
         </AppBar >
-        
+
     );
 }
