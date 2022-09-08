@@ -1,7 +1,6 @@
 import * as React from "react";
-import Stack from "@mui/material/Stack";
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+// import { Link } from 'react-router-dom';
+import { Box, Grid, Typography } from '@mui/material';
 
 // components
 import CategoryDropdown from "./CategoryDropdown";
@@ -9,6 +8,7 @@ import CategoryDropdown from "./CategoryDropdown";
 // database
 import { readCategories } from "../../backend/Database/ProductDB/readDatabaseV2";
 import { Category } from "../../models/types";
+import { Button } from "@mui/material";
 
 export default function NavDropdown(props) {
     const [categories, setCategories] = React.useState<Category[]>([]);
@@ -21,6 +21,17 @@ export default function NavDropdown(props) {
         <Box>
             <Grid container direction={{ xs: "column", sm: "row", md: "row" }} alignItems="center">
                 {categories.map((category, idx) => <Grid item key={idx} ><CategoryDropdown category={category} /></Grid>)}
+                <Grid item>
+                    <Box sx={{ flexGrow: 1 }}>
+                        <Button
+                            href={`/result`}
+                            disableRipple
+                            color="inherit"
+                            sx={{ borderRadius: "1000px" }}>
+                            <Typography textTransform="capitalize">{"All Products"}</Typography>
+                        </Button>
+                    </Box>
+                </Grid>
             </Grid>
         </Box>
     );

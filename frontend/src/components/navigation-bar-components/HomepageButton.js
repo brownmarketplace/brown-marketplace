@@ -8,7 +8,7 @@ import { ReactComponent as LogoDark } from "./logo-dark.svg";
 export default function HomepageButton() {
     return (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Link href="/explore" sx={{ width: "181px", height: "48px" }}>
+            <Link href="/home" sx={{ width: "181px", height: "48px" }}>
                 <LogoLight />
                 {/* <LogoDark /> */}
             </Link>

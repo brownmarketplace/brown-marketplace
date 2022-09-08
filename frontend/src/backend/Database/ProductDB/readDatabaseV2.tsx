@@ -16,11 +16,12 @@ function toProductInfo(dbProduct: dbProductInfo): ProductInfo {
         name: dbProduct.name,
         price: parseFloat(dbProduct.price),
         description: dbProduct.description,
-        images: dbProduct.pictures,
+        images: dbProduct.pictures != null ? (Object.prototype.toString.call(dbProduct.pictures) === '[object Array]' ? dbProduct.pictures : Object.values(dbProduct.pictures)) : [],
         tags: dbProduct.tags != null ? Object.keys(dbProduct.tags) : [],
         category: dbProduct.category,
         subcategory: dbProduct["sub-category"],
         seller: dbProduct.seller,
+        postDate: "22 June 2021",
     } as ProductInfo;
 }
 
@@ -39,6 +40,8 @@ function toUserInfo(dbUser: dbUserInfo): UserInfo {
 export async function readOneProductInfo(productID: string): Promise<ProductInfo> {
     const snapshot = await get(ref(database, 'products/' + productID));
     const dbProduct: dbProductInfo = { ...{ id: snapshot.key ?? "no key" }, ...snapshot.val() }; // TODO: handle no key
+    // console.log(dbProduct);
+    // console.log(toProductInfo(dbProduct));
     return toProductInfo(dbProduct);
 }
 
@@ -110,48 +113,10 @@ export async function readCategories(setter: React.Dispatch<React.SetStateAction
     return unsubscriber;
 }
 
-
-// /*
-//     This method filters the products by a specific category.
-//  */
-// var filterProductsByCategory = (categoryName) => {
-//     const q = query(ref(database, 'products'), orderByChild('category'), equalTo(categoryName));
-//     get(q).then(snapshot => {
-//         let products = []
-//         snapshot.forEach(function (childSnapshot) {
-//             products.push(childSnapshot.val().id)
-//         })
-//         console.log(products)
-//     })
-// }
-
-// /*
-//     This method filters the products by a specific sub-category.
-//  */
-// var filterProductsBySubcategory = (subCategoryName) => {
-//     const q = query(ref(database, 'products'), orderByChild('sub-category'), equalTo(subCategoryName));
-//     get(q).then(snapshot => {
-//         let products = []
-//         snapshot.forEach(function (childSnapshot) {
-//             products.push(childSnapshot.val().id)
-//         })
-//         console.log(products)
-//     })
-// }
-
-// /*
-//     This method filters the products by a specific tag.
-//  */
-// var filterProductsByTags = (tagName) => {
-//     const q = query(ref(database, 'tags'), orderByKey(), equalTo(tagName));
-//     get(q).then(snapshot => {
-//         let products = []
-//         snapshot.forEach(function (childSnapshot) {
-//             var key = Object.keys(childSnapshot.val());
-//             for (let i = 0; i < key.length; i++) {
-//                 products.push(key[i])
-//             }
-//         })
-//         console.log(products)
-//     })
-// }
+/*
+    This method read a cover image based on given key.
+ */
+export async function readCoverImage(key: string): Promise<string> {
+    const snapshot = await get(ref(database, `coverImages/${key}`))
+    return snapshot.val()
+}

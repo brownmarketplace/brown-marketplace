@@ -18,7 +18,6 @@ type NavigationBarProps = {
 export default function NavigationBar(props: NavigationBarProps) {
     // authentication
     const [isLoggedIn, setIsLoggedIn] = React.useState(typeof props.userID !== 'undefined'); // TODO: better handle 'uu'
-    console.log(props.userID);
 
     return (
         <AppBar color="transparent" elevation={0} position="static"

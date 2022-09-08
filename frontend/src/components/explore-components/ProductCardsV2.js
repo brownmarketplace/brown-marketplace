@@ -219,7 +219,7 @@ function ProductCardsV2 (props) {
       
     // if swipe was right, go to "/product/product-name"
     if (dir === 'right') {
-        navigate(`/productV2/${id}`)
+        navigate(`/product/${id}`)
     }
   }
 
