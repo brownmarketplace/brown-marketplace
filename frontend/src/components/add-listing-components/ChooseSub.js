@@ -19,7 +19,7 @@ const clothingSub = [
 ]
 
 const accessoriesSub = [
-    "Necklaces", "Bracelets", "Earrings",
+    "Necklace", "Bracelet", "Earrings",
     "Hair clips", "Other accessories"
 ]
 

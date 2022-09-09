@@ -36,8 +36,13 @@ function UserListingItem(props) {
                         setPrice(product.price);
                     }
 
-                    if (product.pictures != null) {
-                        setPicture(product.pictures[0]);
+                    let pics = product.pictures
+                    if (pics != null) {
+                        pics = (Object.prototype.toString.call(pics) === '[object Array]' ? pics : Object.values(pics))
+                        setPicture(pics[0]);
+                    } else {
+                        console.log("should not reach this point: no pictures to display")
+                        pics = [] // should not reach this place since will alert "form not filled"
                     }
                 } else {
                     setIsNull(true);
@@ -70,7 +75,7 @@ function UserListingItem(props) {
                                     }
                                 </Link>
                             </Tooltip>
-                            <div className="price"> 
+                            <div>
                                 ${price}
                             </div>
                         </div>

@@ -20,34 +20,6 @@ function ProductPreviewWrapper(props) {
     })
 
     useEffect(() => {
-        // const readOneProductInfo = async (productID) => {
-        //     onValue(ref(database, 'products/' + productID), (snapshot) => {
-        //         const product = snapshot.val()
-        //         if (product != null) {
-        //             let NewInputValue = {}
-
-        //             if (product.name) {
-        //                 NewInputValue = { ...productInfo, ["name"]: product.name }
-        //             }
-
-        //             if (product.price) {
-        //                 NewInputValue = { ...NewInputValue, ["price"]: parseFloat(product.price) }
-        //             }
-
-        //             if (product.description) {
-        //                 NewInputValue = { ...NewInputValue, ["description"]: product.description }
-        //             }
-
-        //             if (product.pictures) {
-        //                 NewInputValue = { ...NewInputValue, ["pictures"]: product.pictures }
-        //             }
-
-        //             setProductInfo(NewInputValue);
-        //         }
-        //     })
-        // }
-
-        // readOneProductInfo(productId).catch(console.error)
 
         async function fetchProductInfo() {
             const response = await readOneProductInfo(productId ?? "");
