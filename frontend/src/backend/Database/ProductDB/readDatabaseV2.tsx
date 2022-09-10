@@ -21,7 +21,7 @@ function toProductInfo(dbProduct: dbProductInfo): ProductInfo {
         category: dbProduct.category,
         subcategory: dbProduct["sub-category"],
         seller: dbProduct.seller,
-        postDate: "22 June 2021",
+        postDate: dbProduct.date,
     } as ProductInfo;
 }
 
@@ -30,7 +30,6 @@ function toUserInfo(dbUser: dbUserInfo): UserInfo {
         profilePicture: dbUser.profilePic,
         name: dbUser.name,
         email: dbUser.email,
-        postDate: "no post date stored in DB",
     } as UserInfo;
 }
 
