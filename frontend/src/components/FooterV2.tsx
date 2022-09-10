@@ -10,7 +10,7 @@ function FooterText() {
                 {"Copyright © 2022"}&nbsp;
             </Typography>
             <Typography style={{ display: 'inline-block' }} sx={{
-                fontWeight: 600,
+                fontWeight: "fontWeightBold",
             }}>
                 {"Brown"}&nbsp;
             </Typography>
@@ -18,7 +18,7 @@ function FooterText() {
                 background: "-webkit-linear-gradient(45deg, #92A3FD, #9DCEFF)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                fontWeight: 600,
+                fontWeight: "fontWeightBold",
             }}>
                 {"Marketplace"}
             </Typography >

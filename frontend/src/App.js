@@ -87,18 +87,12 @@ const App = () => {
             <Route path=":userid" element={<ProfilePage pfp={cookies.get("pfp")} name={cookies.get("name")} email={cookies.get("email")} userID={cookies.get("userID")} />} />
           </Route>
           <Route path="/sell" element={<AddListing userID={cookies.get("userID")} />} />
-          <Route path="/product/:productId" element={<ProductPage userID={cookies.get("userID")} />} />
-          <Route path="/category" element={<CategoryPage userID={cookies.get("userID")} />} >
-            <Route path=":category" element={<CategoryPage userID={cookies.get("userID")} />} >
-              <Route path=":subcategory" element={<CategoryPage userID={cookies.get("userID")} />} />
-            </Route>
-          </Route>
           <Route path="/result" element={<SearchResultPage userID={cookies.get("userID")} />} >
             <Route path=":category" element={<SearchResultPage userID={cookies.get("userID")} />} >
               <Route path=":subcategory" element={<SearchResultPage userID={cookies.get("userID")} />} />
             </Route>
           </Route>
-          <Route path="/productV2/:productId" element={<ProductPageV2 userID={cookies.get("userID")} />} />
+          <Route path="/product/:productId" element={<ProductPageV2 userID={cookies.get("userID")} />} />
         </Routes>
       </BrowserRouter>
       <FooterV2 />

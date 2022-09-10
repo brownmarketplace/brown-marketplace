@@ -4,6 +4,12 @@ import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography, Link } fr
 // Google Login
 import { GoogleLogout } from 'react-google-login';
 
+// types
+import { UserInfo } from "../../models/types";
+
+// database
+import { readUserInfo } from "../../backend/Database/ProductDB/readDatabaseV2";
+
 type ProfileButtonProps = {
     userID: string,
     handleLogout: any,  // TODO: type this
@@ -20,11 +26,22 @@ export default function ProfileButton(props: ProfileButtonProps) {
         setAnchorElUser(null);
     };
 
+    const [userInfo, setUserInfo] = React.useState<UserInfo>({} as UserInfo);
+
+    React.useEffect(() => {
+        async function fetchSellerInfo() {
+            const response = await readUserInfo(props.userID);
+            setUserInfo(response);
+        }
+
+        fetchSellerInfo();
+    }, [props.userID]);
+
     return (
         <Box>
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="https://i.natgeofe.com/n/46b07b5e-1264-42e1-ae4b-8a021226e2d0/domestic-cat_thumb_square.jpg" />
+                    <Avatar alt={userInfo.name} src={userInfo.profilePicture} />
                 </IconButton>
             </Tooltip>
 
@@ -42,9 +59,8 @@ export default function ProfileButton(props: ProfileButtonProps) {
                     horizontal: 'right',
                 }}
                 open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-            >
-                <Link href={"/profile/" + props.userID} color="inherit" sx={{ textDecoration: 'none' }}>
+                onClose={handleCloseUserMenu}>
+                <Link href={"/profile"} color="inherit" sx={{ textDecoration: 'none' }}>
                     <MenuItem>
                         <Typography>Profile</Typography>
                     </MenuItem>
@@ -54,14 +70,12 @@ export default function ProfileButton(props: ProfileButtonProps) {
                     render={renderProps => (
                         <MenuItem
                             onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                        >
+                            disabled={renderProps.disabled}>
                             <Typography>Log&nbsp;Out</Typography>
                         </MenuItem>
                     )}
                     buttonText="Logout"
-                    onLogoutSuccess={props.handleLogout}
-                />
+                    onLogoutSuccess={props.handleLogout} />
             </Menu>
         </Box>
     );
