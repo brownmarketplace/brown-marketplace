@@ -257,7 +257,7 @@ function ProductCardsV2 (props) {
   }
 
   return (
-    <div>
+    <div className="cardsWrapper">
       <div className='cardContainer'>
         {/* Generate cards for all retrieved products */}
         {products.map((product, index) => (
