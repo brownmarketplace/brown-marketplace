@@ -1,12 +1,15 @@
 # Brown Marketplace 🧸
 
-### Steps to Run
+## Steps to Run
 Clone the repo. Then, cd in the `backend` folder. In the `backend` folder, run the command: `mvn package` and then `./run --gui`. Next, in the `frontend` folder, run `npm start`. Go to `localhost:3000/explore` to get started!
 
-### Overview
+## Overview
 
-### Problem & User
+## Problem & User
 
-### Technology & Implementation
+## Technology & Implementation
+### Frontend
 
-### Use cases
+### Backend
+
+## Use cases
