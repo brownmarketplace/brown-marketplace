@@ -11,30 +11,30 @@ import AddToLikedListButton from '../components/product-v2-components/AddToLiked
 import ShareButton from '../components/product-v2-components/ShareButton';
 
 // types
-import { ProductInfo, Path } from '../models/types';
+import { ProductInfo, UserInfo, Path } from '../models/types';
 
 // database
-import { readOneProductInfo } from '../backend/Database/ProductDB/readDatabaseV2';
+import { readOneProductInfo, readUserInfo } from '../backend/Database/ProductDB/readDatabaseV2';
 
 type ProductPageV2Props = {
     mockProductInfo: ProductInfo,
     userID: string,
 };
 
-function BuyNow(props) {
+function ContactSeller(props: { email: string }) {
     return (
-        <Button sx={{
-            background: "-webkit-linear-gradient(45deg, #9DCEFF, #92A3FD)",
-            borderRadius: "1000px",
-            border: 0,
-            textTransform: "none",
-            color: "inherit",
-            paddingLeft: 5,
-            paddingRight: 5,
-            // flexGrow: 1,
-        }}><Typography sx={{
-            fontWeight: "fontWeightBold",
-        }}>Buy now</Typography></Button>
+        <Button onClick={() => window.location.href = `mailto:${props.email}`}
+            sx={{
+                background: "-webkit-linear-gradient(45deg, #9DCEFF, #92A3FD)",
+                borderRadius: "1000px",
+                border: 0,
+                textTransform: "none",
+                color: "inherit",
+                paddingLeft: 5,
+                paddingRight: 5,
+            }}>
+            <Typography fontWeight="fontWeightBold" color="#FFFFFF">Contact Seller</Typography>
+        </Button >
     );
 }
 
@@ -44,6 +44,7 @@ export default function ProductPageV2(props: ProductPageV2Props) {
     const navigate = useNavigate();
 
     const [productInfo, setProductInfo] = React.useState<ProductInfo>({} as ProductInfo);
+    const [sellerInfo, setSellerInfo] = React.useState<UserInfo>({} as UserInfo);
     const [path, setPath] = React.useState<Path>([{ title: "All Products", href: "/result" }]);
 
     React.useEffect(() => {
@@ -57,7 +58,13 @@ export default function ProductPageV2(props: ProductPageV2Props) {
             { title: product.name, href: null }]);
         }
 
+        async function fetchSellerInfo() {
+            const response = await readUserInfo(props.userID);
+            setSellerInfo(response);
+        }
+
         fetchProductInfo();
+        fetchSellerInfo();
     }, []);
 
     return (
@@ -78,8 +85,8 @@ export default function ProductPageV2(props: ProductPageV2Props) {
                                 spacing={1}
                                 justifyContent="space-between"
                                 alignItems="center">
-                                <SellerCardV2 userID={productInfo?.seller} postDate={productInfo?.postDate} />
-                                <BuyNow seller={productInfo?.seller} />
+                                <SellerCardV2 sellerInfo={sellerInfo} postDate={productInfo?.postDate} />
+                                <ContactSeller email={sellerInfo.email} />
                                 <AddToLikedListButton productId={productInfo?.id} userID={props.userID} />
                                 <ShareButton />
                             </Stack>
