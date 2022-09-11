@@ -292,8 +292,8 @@ function ProductCardsV2 (props) {
                   alt={product.name}
                   />
                   <div className='price'>
-                    <Typography variant="h3" color="white" style={{ fontWeight: 600 }}>
-                        ${parseInt(product.price).toFixed(0)}
+                    <Typography variant="h5" color="white" style={{ fontWeight: 400 }}>
+                        ${parseFloat(product.price).toFixed(2)}
                     </Typography>
                   </div>
                   <CardContent
