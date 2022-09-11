@@ -16,6 +16,8 @@
     /* extend margin top and bottom to fill viewport */
     margin-top: 12vh;
     margin-bottom: 12vh;
+    /* make items in wrapper responsive */
+    
 }
 
 .cardContainer {
