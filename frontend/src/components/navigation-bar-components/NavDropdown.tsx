@@ -19,9 +19,9 @@ export default function NavDropdown(props) {
 
     return (
         <Box>
-            <Grid container direction={{ xs: "column", sm: "row", md: "row" }} alignItems="center">
-                {categories.map((category, idx) => <Grid item key={idx} ><CategoryDropdown category={category} /></Grid>)}
-                <Grid item>
+            <Grid container direction="row" alignItems="center">
+                {categories.map((category, idx) => <Grid item xs={4} sm="auto" md="auto" key={idx} ><CategoryDropdown category={category} /></Grid>)}
+                <Grid item xs={4} sm="auto" md="auto">
                     <Box sx={{ flexGrow: 1 }}>
                         <Button
                             href={`/result`}
@@ -33,7 +33,7 @@ export default function NavDropdown(props) {
                     </Box>
                 </Grid>
             </Grid>
-        </Box>
+        </Box >
     );
 }
 

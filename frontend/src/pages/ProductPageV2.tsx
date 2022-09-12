@@ -40,7 +40,7 @@ function ContactSeller(props: { email: string }) {
 
 export default function ProductPageV2(props: ProductPageV2Props) {
     // get url parameters
-    const { productId } = useParams();
+    const { productID } = useParams();
     const navigate = useNavigate();
 
     const [productInfo, setProductInfo] = React.useState<ProductInfo>({} as ProductInfo);
@@ -48,23 +48,24 @@ export default function ProductPageV2(props: ProductPageV2Props) {
     const [path, setPath] = React.useState<Path>([{ title: "All Products", href: "/result" }]);
 
     React.useEffect(() => {
-        async function fetchProductInfo() {
-            const response = await readOneProductInfo(productId ?? "");
+        async function fetchSellerInfo(userID) {
+            const response = await readUserInfo(userID);
+            setSellerInfo(response);
+        }
+
+        async function fetchProductInfo(productID) {
+            const response = await readOneProductInfo(productID ?? "");
             const product = typeof response.name !== 'undefined' ? response : props.mockProductInfo;
             setProductInfo(product);
             setPath([{ title: "All Products", href: "/result" },
             { title: product.category, href: `/result/${product.category}` },
             { title: product.subcategory, href: `/result/${product.category}/${product.subcategory}` },
             { title: product.name, href: null }]);
+
+            fetchSellerInfo(product.seller);
         }
 
-        async function fetchSellerInfo() {
-            const response = await readUserInfo(props.userID);
-            setSellerInfo(response);
-        }
-
-        fetchProductInfo();
-        fetchSellerInfo();
+        fetchProductInfo(productID);
     }, []);
 
     return (
@@ -96,6 +97,7 @@ export default function ProductPageV2(props: ProductPageV2Props) {
                     <Box sx={{ width: "100%" }}>
                         <Stack spacing={3} display="flex">
                             <Box>
+                                <Typography variant="caption">Posted on {productInfo?.postDate}</Typography>
                                 <Typography variant="h4" fontWeight="fontWeightBold">{productInfo?.name}</Typography>
                                 <Typography variant="h5" >{productInfo?.price && `$${productInfo.price.toFixed(2)}`}</Typography>
                             </Box>

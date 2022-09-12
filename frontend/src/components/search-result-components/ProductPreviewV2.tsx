@@ -98,16 +98,3 @@ ProductPreviewV2.defaultProps = {
   selectedTags: new Set(),
   tagOnClick: () => { },
 }
-
-// ProductPreviewV2.defaultProps = {
-//   productInfo: {
-//     id: 1,
-//     name: "Leather Sofa",
-//     price: 69.99,
-//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non porttitor dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis ex interdum, convallis erat ac, aliquam tellus. Fusce at ornare libero. Pellentesque ornare, lectus ac luctus vestibulum, massa eros sagittis nibh, ac dignissim quam dui vel massa. Aliquam ultrices ac nisl sit amet facilisis. Sed finibus lectus at eros hendrerit, quis fringilla neque posuere. Aliquam vel molestie est. Sed non commodo lorem, at porta diam. Morbi ac tortor eget arcu blandit interdum ut dictum sem. Fusce imperdiet rhoncus hendrerit.",
-//     pictures: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxr5qIE2fBN0dfocC7TQ3VV49Y0-fE0lzexGpAf_1BqdkWrEOzVc9ki8_h1ids-xrglT4&usqp=CAU"],
-//     tags: ["Furniture", "Vintage", "Decoration", "Sofa"],
-//   },
-//   selectedTags: [],
-//   tagOnClick: (tagName) => { },
-// }

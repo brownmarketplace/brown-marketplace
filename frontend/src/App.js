@@ -92,7 +92,7 @@ const App = () => {
               <Route path=":subcategory" element={<SearchResultPage userID={cookies.get("userID")} />} />
             </Route>
           </Route>
-          <Route path="/product/:productId" element={<ProductPageV2 userID={cookies.get("userID")} />} />
+          <Route path="/product/:productID" element={<ProductPageV2 userID={cookies.get("userID")} />} />
         </Routes>
       </BrowserRouter>
       <FooterV2 />

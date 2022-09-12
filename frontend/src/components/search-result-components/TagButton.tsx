@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Divider, IconButton, Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 
 import { motion } from "framer-motion";
 
@@ -26,9 +26,10 @@ export default function TagButton(props: TagButtonProps) {
             color="inherit"
             sx={{
                 width: "auto",
-                padding: 0,
-                borderRadius: "1000px",
                 textAlign: "left",
+                borderRadius: "1000px",
+                padding: 0,
+                marginRight: "10px",
             }}
             component={motion.button}
             whileHover={{
@@ -42,10 +43,4 @@ export default function TagButton(props: TagButtonProps) {
             </Typography>
         </IconButton >
     );
-}
-
-TagButton.defaultProps = {
-    title: "Tag Name",
-    active: false,
-    onClick: () => { },
 }

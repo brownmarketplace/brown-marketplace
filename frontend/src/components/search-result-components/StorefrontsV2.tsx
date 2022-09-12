@@ -1,11 +1,9 @@
 import * as React from "react";
-import { useSearchParams } from 'react-router-dom';
-import { Box, Stack, Paper, Card, Typography, Grid, Pagination } from '@mui/material';
+import { Box, Stack, Paper, Card, Typography, Grid, Pagination, ImageList, ImageListItem } from '@mui/material';
 
 // components
 import ProductPreviewV2 from './ProductPreviewV2';
 import TagButton from './TagButton';
-import SortingDropdown from './SortingDropdown';
 
 // types
 import { ProductInfo } from "../../models/types";
@@ -71,36 +69,24 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 	}, [props.products])
 
 	return (
-		<Stack direction={{ xs: "column", sm: "row" }} spacing={3}>
+		<Stack direction={{ xs: "column", sm: "column", md: "row" }} spacing={3}>
 			{/* Left */}
-			<Box sx={{ width: "250px" }}>
+			<Box sx={{ width: {md: "250px"} }}>
 				<Paper
 					variant="outlined"
 					sx={{
-						minHeight: "90%",
+						height: 1,
 						borderRadius: "10px",
 						padding: "10px"
 					}}>
-					{/* <SortingDropdown /> */}
 					<Box>
-						{/* <Typography variant="h5">Filter by categories</Typography>
-						<Stack alignItems="flex-start">
-							{allCategories.map((tag, idx) =>
-								<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
-							)}
-						</Stack>
-						<Typography variant="h5">Filter by subcategories</Typography>
-						<Stack alignItems="flex-start">
-							{allSubcategories.map((tag, idx) =>
-								<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
-							)}
-						</Stack> */}
 						<Typography variant="h5">Filters</Typography>
-						<Stack alignItems="flex-start">
+						<Grid container>
 							{allTags.map((tag, idx) =>
-								<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
-							)}
-						</Stack>
+								<Grid item xs={4} md={12}>
+									<TagButton key={idx} title={tag} active={selectedTags.has(tag)} onClick={() => toggleTag(tag)}></TagButton>
+								</Grid>)}
+						</Grid>
 					</Box>
 				</Paper>
 			</Box>
@@ -119,49 +105,4 @@ export default function StorefrontV2(props: StoreFrontV2Props) {
 			</Box>
 		</Stack>
 	)
-};
-
-StorefrontV2.defaultProps = {
-	products: Array(5).fill([
-		{
-			id: 1,
-			name: "Luxury Table Set",
-			price: 669.99,
-			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non porttitor dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis ex interdum, convallis erat ac, aliquam tellus. Fusce at ornare libero. Pellentesque ornare, lectus ac luctus vestibulum, massa eros sagittis nibh, ac dignissim quam dui vel massa. Aliquam ultrices ac nisl sit amet facilisis. Sed finibus lectus at eros hendrerit, quis fringilla neque posuere. Aliquam vel molestie est. Sed non commodo lorem, at porta diam. Morbi ac tortor eget arcu blandit interdum ut dictum sem. Fusce imperdiet rhoncus hendrerit.",
-			pictures: ["https://assets.weimgs.com/weimgs/ab/images/wcm/products/202217/0067/tripod-dining-table-walnut-c.jpg"],
-			tags: ["Furniture", "Vintage", "Nature", "Decoration"],
-		},
-		{
-			id: 2,
-			name: "Rocking Chair",
-			price: 6.99,
-			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non porttitor dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis ex interdum, convallis erat ac, aliquam tellus. Fusce at ornare libero. Pellentesque ornare, lectus ac luctus vestibulum, massa eros sagittis nibh, ac dignissim quam dui vel massa. Aliquam ultrices ac nisl sit amet facilisis. Sed finibus lectus at eros hendrerit, quis fringilla neque posuere. Aliquam vel molestie est. Sed non commodo lorem, at porta diam. Morbi ac tortor eget arcu blandit interdum ut dictum sem. Fusce imperdiet rhoncus hendrerit.",
-			pictures: ["https://cdn.shopify.com/s/files/1/2505/7782/products/ND-15-SU_Nanny_4569_1200x.jpg?v=1647915690"],
-			tags: ["Furniture", "Vintage", "Nature", "Decoration", "Rocking Chair"],
-		},
-		{
-			id: 3,
-			name: "Leather Sofa",
-			price: 669.99,
-			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non porttitor dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis ex interdum, convallis erat ac, aliquam tellus. Fusce at ornare libero. Pellentesque ornare, lectus ac luctus vestibulum, massa eros sagittis nibh, ac dignissim quam dui vel massa. Aliquam ultrices ac nisl sit amet facilisis. Sed finibus lectus at eros hendrerit, quis fringilla neque posuere. Aliquam vel molestie est. Sed non commodo lorem, at porta diam. Morbi ac tortor eget arcu blandit interdum ut dictum sem. Fusce imperdiet rhoncus hendrerit.",
-			pictures: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxr5qIE2fBN0dfocC7TQ3VV49Y0-fE0lzexGpAf_1BqdkWrEOzVc9ki8_h1ids-xrglT4&usqp=CAU"],
-			tags: ["Furniture", "Vintage", "Decoration", "Sofa"],
-		},
-		{
-			id: 4,
-			name: "Free Lamp",
-			price: 0.99,
-			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-			pictures: ["https://images.dunelm.com/30674209.jpg?$standardplayerdefault$&img404=noimagedefault"],
-			tags: ["Furniture", "Free"],
-		},
-		{
-			id: 5,
-			name: "Carpet",
-			price: 69.99,
-			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non porttitor dui.",
-			pictures: ["https://stylesatlife.com/wp-content/uploads/2021/03/Best-Floor-Carpet-Designs.jpg"],
-			tags: ["Furniture"],
-		},
-	]).flat(),
 };

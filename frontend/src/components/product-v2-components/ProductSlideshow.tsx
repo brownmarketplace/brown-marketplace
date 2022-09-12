@@ -52,8 +52,8 @@ export default function ProductSlideshow(props: ProductSlideShowProps) {
                         aspectRatio: "4/3",
                     }}><Skeleton variant="rectangular" width="100%" height="100%" sx={{ borderRadius: "10px" }} />
                 </Box>}
-            <ArrowButton direction="left" onClick={() => paginate(-1)} />
-            <ArrowButton direction="right" onClick={() => paginate(1)} />
+            {props.images && props.images?.length !== 1 && <ArrowButton direction="left" onClick={() => paginate(-1)} />}
+            {props.images && props.images?.length !== 1 && <ArrowButton direction="right" onClick={() => paginate(1)} />}
         </Box>
     );
 };

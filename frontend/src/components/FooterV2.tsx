@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { AppBar, Box, Typography } from '@mui/material';
+import { AppBar, Box, Paper, Typography } from '@mui/material';
 
 function FooterText() {
     const footerText = "Copyright © 2022 Brown Marketplace. All rights reserved."
 
     return (
-        <Box >
+        <Box>
             <Typography style={{ display: 'inline-block' }}>
                 {"Copyright © 2022"}&nbsp;
             </Typography>
@@ -30,21 +30,26 @@ function FooterText() {
 }
 
 export default function FooterV2() {
+    // sx={{
+    //     position: "fixed",
+    //     left: 0,
+    //     bottom: 0,
+    // }}
     return (
         // <Paper component="footer" square variant="outlined" color="secondary"
         //     sx={{
         //         border: "1px solid #DBDBDB",
+        //         background: "secondary",
         //         width: "100%",
         //         paddingLeft: "5%",
         //         paddingRight: "5%",
         //         paddingTop: "30px",
         //         paddingBottom: "20px",
         //         position: "fixed",
-        //         buttom: 0,
+        //         left: 0,
+        //         bottom: 0,
         //     }}>
-        //     <Typography>
-        //         {footerText}
-        //     </Typography>
+        //     <FooterText />
         // </Paper >
         <AppBar color="secondary" position="sticky" elevation={0}
             sx={{

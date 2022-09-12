@@ -20,7 +20,8 @@ export default function SellerCardV2(props: SellerCardV2Props) {
           alt={props.sellerInfo?.name} />
         <Stack>
           <Typography variant="h6">{props.sellerInfo?.name}</Typography>
-          <Typography variant="body1">Posted on {props.postDate}</Typography>
+          <Typography variant="body1">{props.sellerInfo?.email}</Typography>
+          {/* <Typography variant="body2">Posted on {props.postDate}</Typography> */}
         </Stack>
       </Stack>
     </Box>

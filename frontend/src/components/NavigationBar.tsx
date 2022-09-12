@@ -5,14 +5,13 @@ import Stack from '@mui/material/Stack';
 // components
 import HomepageButton from './navigation-bar-components/HomepageButton';
 import NavDropdown from './navigation-bar-components/NavDropdown';
-import NavSearchBar from './navigation-bar-components/NavSearchBar';
 import LoginButton from './navigation-bar-components/LoginButton';
 import ProfileButton from './navigation-bar-components/ProfileButton';
 
 type NavigationBarProps = {
     userID: string,
-    loginState: any, // TODO: type this
-    logoutState: any,  // TODO: type this
+    loginState: any,
+    logoutState: any,
 }
 
 export default function NavigationBar(props: NavigationBarProps) {
@@ -34,7 +33,6 @@ export default function NavigationBar(props: NavigationBarProps) {
                 alignItems="center">
                 <HomepageButton />
                 <NavDropdown />
-                {/* <NavSearchBar /> */}
                 {!isLoggedIn && <LoginButton handleLogin={(response) => { props.loginState(response); setIsLoggedIn(true) }} />}
                 {isLoggedIn && <ProfileButton userID={props.userID} handleLogout={(response) => { props.logoutState(response); setIsLoggedIn(false) }} />}
             </Stack>
