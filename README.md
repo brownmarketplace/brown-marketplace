@@ -41,7 +41,7 @@ The website is intended for personal use for Brown students and faculty members,
     - `/userReq` for receiving user id and querying user liked items
     - `/recommend` for generating recommendations and sending the product ids
 
-## Reflection & Futuer Development
+## Reflection & Further Development
 This is a valuable learning experience for us in terms of designing and developing user-oriented project. We also wish to implement the following features if time permits: 
 
 1. Support direct chat between users. 
