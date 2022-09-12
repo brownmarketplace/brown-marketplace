@@ -17,6 +17,15 @@
     margin-top: 12vh;
     margin-bottom: 12vh;
     /* make items in wrapper responsive */
+    /* scale with window size */
+    /* display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; */
+    /* make items responsive */
+    /* scale with window size */
+
     
 }
 
