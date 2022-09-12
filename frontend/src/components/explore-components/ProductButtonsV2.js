@@ -93,7 +93,7 @@ function ProductButtonsV2({ products, currentIndex, canSwipe, canGoBack, canLike
                     // if canLike is false, set color to white, otherwise set to color: #62b4f9 !important;
                     color: (!canLike && 'white') || '#62b4f9',
 
-                }} disabled={!canSwipe || !userID} className="like"
+                }} disabled={!userID} className="like"
                 // When clicked, make the button turn red and disable it and go to the next card
                 onClick={() => {
                     // if canLike is true, add to liked list, otherwise remove from liked list and set canLike to true
