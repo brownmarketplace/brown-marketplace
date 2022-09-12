@@ -14,7 +14,7 @@ const tags = [
     { id: "12", name: "Plus Size" },
     { id: "13", name: "Street Wear" },
     { id: "14", name: "Sports Wear" },
-    { id: "15", name: "Fitness and Sports Equipment" },
+    { id: "15", name: "Fitness" },
     { id: "16", name: "Handmade" },
     { id: "17", name: "Gift" },
     { id: "18", name: "Vintage" },
