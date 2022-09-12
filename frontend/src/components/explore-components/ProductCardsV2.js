@@ -343,6 +343,7 @@ function ProductCardsV2 (props) {
           userID={props.userID}
           goBack={goBack}
           swipe={swipe}
+          isLoggedIn={props.isLoggedIn}
         />
     </div>
   )
