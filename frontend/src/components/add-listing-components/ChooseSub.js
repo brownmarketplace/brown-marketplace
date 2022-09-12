@@ -15,11 +15,11 @@ const furnitureSub = [
 
 const clothingSub = [
     "Tops", "Pants", "Dresses", "Shoes",
-    "Coats and jackets", "Other clothing"
+    "Coats and Jackets", "Other Clothing"
 ]
 
 const accessoriesSub = [
-    "Necklace", "Bracelet", "Earrings",
+    "Necklaces", "Bracelets", "Earrings",
     "Hair clips", "Other accessories"
 ]
 

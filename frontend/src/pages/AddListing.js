@@ -141,7 +141,7 @@ function AddListing(props) {
             }
         });
 
-        
+
 
         [...currentFileList].forEach(f => uploadImageToStorage(newProductId, f))
         
@@ -196,7 +196,7 @@ function AddListing(props) {
     var getCategoryFromSubcategory = (sub) => {
         const roomDecor = ["Plushies", "Plants", "Lights", "Posters", "Tapestries", "Other room decor"];
         const furniture = ["Chairs", "Couches", "Mattresses", "Pillows", "Other furniture"];
-        const clothing = ["Tops", "Pants", "Dresses", "Shoes", "Coats and jackets", "Other clothing"];
+        const clothing = ["Tops", "Pants", "Dresses", "Shoes", "Coats and Jackets", "Other Clothing"];
         const accessories = ["Necklace", "Bracelet", "Earrings", "Hair clips", "Other accessories"];
         const books = ["Textbooks", "Fiction", "Nonfiction", "Poetry", "Other books"];
         const electronics = ["Speakers", "Phones", "Devices", "Other electronics and related"];
