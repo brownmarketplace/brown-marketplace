@@ -11,8 +11,8 @@ Brown Marketplace is designed as a convenient local transaction platform for Bro
 ## Problem & User
 The website is intended for personal use for Brown students and faculty members, who are looking to sell or buy second-hand belongings within the Providence area. The app not only provides a convenient, secure transaction way to trusted buyers and sellers, but also seeks to eliminate environment impacts by promoting second-hand goods reuse.
 
-<<<<<<< HEAD
-### Frontend 
+## Functionality & Implementation
+### Frontend
 - React: we use React as the framework for our frontend development. We also use Typescript and NPM.
 - React-bootstrap: React component library for pre-styled components.
 - Material-UI: React component library for pre-styled components.
@@ -45,11 +45,7 @@ The website is intended for personal use for Brown students and faculty members,
         - `images/`
         - `components/`
         - `App.js`
-=======
-## Functionality & Implementation
-### Frontend
->>>>>>> 460e5a4bbcf60160f33584d6bd79b432492971eb
-
+      
 ### Backend
 - Database: we use Firebase Realtime Database for storing product information, user profiles,
 and buying and selling listings. We use Firebase Storage for uploading and storing images.

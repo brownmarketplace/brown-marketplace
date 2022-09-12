@@ -4,7 +4,6 @@
     <list default="true" id="a6f8f921-6f4d-43ce-a267-7d1fd74757ac" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ModifyDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/backend/Database/ProductDB/ModifyDB.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +71,7 @@
       <workItem from="1660773059781" duration="819000" />
       <workItem from="1660963466509" duration="1495000" />
       <workItem from="1661124440800" duration="2734000" />
-      <workItem from="1662939730319" duration="2991000" />
+      <workItem from="1662939730319" duration="3177000" />
     </task>
     <servers />
   </component>
