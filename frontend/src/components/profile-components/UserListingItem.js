@@ -21,7 +21,6 @@ function UserListingItem(props) {
         const readOneProductInfo = async (productID) => {
             onValue(ref(database, 'products/' + productID), (snapshot) => {
                 const product = snapshot.val()
-                {console.log(product)}
                 if (product != null) {
                     if (product.sold != null) {
                         var isTrue = (product.sold === 'true');
@@ -44,8 +43,6 @@ function UserListingItem(props) {
                         console.log("should not reach this point: no pictures to display")
                         pics = [] // should not reach this place since will alert "form not filled"
                     }
-                } else {
-                    setIsNull(true);
                 }
             })
         }
@@ -53,7 +50,7 @@ function UserListingItem(props) {
         readOneProductInfo(props.prodId).catch(console.error)
     }, [])
 
-    if (isNull) {
+    if (name === "") {
         return
     } else {
         return (
