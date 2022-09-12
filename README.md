@@ -14,48 +14,14 @@ The website is intended for personal use for Brown students and faculty members,
 ## Functionality & Implementation
 ### Frontend
 - React: we use React as the framework for our frontend development. We also use Typescript and NPM.
-- React-bootstrap: React component library for pre-styled components.
 - Material-UI: React component library for pre-styled components.
-
-- **System Features**:
-- `Explore.js` (view)
-    - `BoilerplateHeader.js` (component)
-- `AddListing.js` (view)
-- `ProfilePage.js` (view)
-    - `UserListings.js` (component)
-    - `UserListingItem.js` (component)
-    - `WishList.js` (component)
-    - `ProductPreviewWrapper.js` (component)
-    - `SoldButton.js` (component)
-- `CategoryPage.js` (view)
-    - `StoreFronts.js` (component)
-    - `ProductPreview.js` (component)
-    - `Tag.js` (component)
-- `ProductPage.js` (view)
-    - `AddToLikedList.js` (component)
-    - `CopyToClipboard.js` (component)
-    - `PageBreadcrumbs.js` (component)
-    - `SellerCard.js` (component)
-
-- Potential NPM packages for trivial functionality
 - Express Router for the Multi-Page Web App
-- Frontend Directory Map
-    - `src/`
-        - `pages/`
-        - `images/`
-        - `components/`
-        - `App.js`
       
 ### Backend
-- Database: we use Firebase Realtime Database for storing product information, user profiles,
-and buying and selling listings. We use Firebase Storage for uploading and storing images.
-- Recommendation system: we use Java to create the recommender system. 
-The data provided to the program would be in the form of JSON Objects, represented as maps with each of the product 
-attributes as a key and the corresponding attribute as a value. The recommender program would parse the JSON Object 
-to extract the relevant attributes, pass them into Bloom Filters for each product, generate recommendations based on 
-the XNOR similarity scores, and then return a list of recommended items based on a given product.
-- API: We use the Google User API for creating user accounts. We also set up API endpoints for the frontend to receive 
-data from the backend, such as user data in the database.
+- Database: we use Firebase Realtime Database for storing product information, user profiles, and buying and selling listings. We use Firebase Storage for uploading and storing images.
+- Recommendation system: we use Java to create the recommender system based on bloom filter. 
+- Server: the recommender program is connected to the front end through the Spark Server. The recommender extracts the relevant product attributes through database proxy, pass them into Bloom Filters for each product, and generate recommendations based on XNOR similarity scores compared with the user liked items. The resulting list of recommended items is then sent to the frontend as a Json object.
+- API: We use the Google User API for creating user accounts. We also set up API endpoints for the frontend to receive data from the backend, such as user data in the database.
 
 - **Database Package (Javascript)**:
     - `ProductDB` sub-package
