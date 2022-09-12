@@ -2,7 +2,7 @@
     This class handles all the modifications of the products in the database, including adding a product, adding
     category, sub-category and tags to a product, and modifying the fields of a product.
  */
-import { getDatabase, ref, set, update, get, query, orderByChild, equalTo }
+import { getDatabase, ref, set, update, get, query, orderByChild, equalTo, onValue }
     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 const database = getDatabase();
 
@@ -37,7 +37,7 @@ var validateForm = () => {
 /*
     This method adds a new product to the database with the basic fields. It replaces any existing data at that path.
  */
-var writeBasicInfoToDatabase = (id, name, description, price, seller, pictures, date, sold, numLiked) => {
+var writeBasicInfoToDatabase = (id, name, description, price, seller, pictures, date, sold, numLiked, deleted) => {
     console.log("here")
     set(ref(database, 'products/' + id), {
         id: id,
@@ -49,6 +49,7 @@ var writeBasicInfoToDatabase = (id, name, description, price, seller, pictures, 
         date: date,
         sold: sold,
         numLiked: numLiked,
+        deleted: "false"
     });
     console.log("here")
 }
@@ -100,7 +101,7 @@ var addTagToList = (tagName) => {
 var addTagToProduct = (productID, tagName) => {
     // Add the tag to the list of tags of the product
     const tagRef = ref(database, 'products/' + productID + '/tags/' + tagName)
-        set(tagRef, "true")
+    set(tagRef, "true")
 
     // Add the product id to the list of product ids of the tag
     const tagRef2 = ref(database, 'tags/' + tagName + '/' + productID);
@@ -144,6 +145,33 @@ var updateSoldFlag = (id) => {
     })
 }
 
+/*
+    This method toggles the delete flag of the product. The delete flag is either true of false.
+ */
+var deleteProduct = (id) => {
+    const q = query(ref(database, 'products/'), orderByChild('id'), equalTo(id));
+    get(q).then(snapshot => {
+        snapshot.forEach(function(childSnapshot) {
+            if (childSnapshot.val().deleted === "false") {
+                update(ref(database, 'products/' + id), {
+                    deleted: "true"
+                })
+            }
+        })
+    })
+}
+
+var addDeleteFieldToAllProducts = () => {
+    onValue(ref(database, 'products'), (snapshot) => {
+        snapshot.forEach(function(childSnapshot) {
+            console.log(childSnapshot.val().id)
+            update(ref(database, 'products/' + childSnapshot.val().id), {
+                deleted: "false"
+            })
+        })
+    })
+}
+
 document.querySelector('#product-register').addEventListener("click", () => {
     validateForm();
 })
@@ -159,5 +187,8 @@ document.querySelector('#product-add-liked').addEventListener("click", () => {
 })
 document.querySelector('#product-update-sold').addEventListener("click", () => {
     updateSoldFlag("p1")
+})
+document.querySelector('#product-delete').addEventListener("click", () => {
+    deleteProduct("p0e455401-ea5c-41e9-be6f-75cb4add34a2")
 })
 

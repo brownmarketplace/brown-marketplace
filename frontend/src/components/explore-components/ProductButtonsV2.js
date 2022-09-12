@@ -33,17 +33,29 @@ const LightTooltip = styled(({ className, ...props }) => (
  * 
  * Contains a function to add to the user's liked products.
  */
-function ProductButtonsV2({ products, currentIndex, canSwipe, canGoBack, canLike, setCanLike, userID, goBack, swipe }) {
+function ProductButtonsV2({ products, currentIndex, canSwipe, canGoBack, canLike, setCanLike, userID, goBack, swipe, isLoggedIn }) {
 
     /**
      * Function to add to the user's liked products.
      */
     const addToLikedList = () => {
+        console.log("ISLOGGEDIN: " + isLoggedIn)
         // get produt id of current product
         const pid = products[currentIndex].id
 
         const likedListRef = ref(database, 'users/' + userID + '/liked-items/' + pid);
         set(likedListRef, "true")
+    }
+
+    /**
+     * Function to remove from the user's liked products.
+     */
+    const removeFromLikedList = () => {
+        // get produt id of current product
+        const pid = products[currentIndex].id
+
+        const likedListRef = ref(database, 'users/' + userID + '/liked-items/' + pid);  
+        set(likedListRef, 'false')
     }
 
     return (
@@ -76,16 +88,22 @@ function ProductButtonsV2({ products, currentIndex, canSwipe, canGoBack, canLike
                 >
                 <IconButton style={{ 
                     backgroundColor: 
-                    (!canLike && '#0088ff') || (!canSwipe && '#c3c4d3'),
+                    (!canLike && '#0088ff') || (!canSwipe && '#c3c4d3') || (!userID && '#c3c4d3'),
                     
                     // if canLike is false, set color to white, otherwise set to color: #62b4f9 !important;
                     color: (!canLike && 'white') || '#62b4f9',
-                
-                }} disabled={!canSwipe || !canLike} className="like"
+
+                }} disabled={!userID} className="like"
                 // When clicked, make the button turn red and disable it and go to the next card
                 onClick={() => {
-                    addToLikedList()
-                    setCanLike(false)
+                    // if canLike is true, add to liked list, otherwise remove from liked list and set canLike to true
+                    if (canLike) {
+                        addToLikedList()
+                        setCanLike(false)
+                    } else {
+                        removeFromLikedList()
+                        setCanLike(true)
+                    }
                 }
                 }>
                     <FavoriteIcon fontSize="large" />

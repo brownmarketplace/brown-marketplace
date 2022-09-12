@@ -257,7 +257,7 @@ function ProductCardsV2 (props) {
   }
 
   return (
-    <div>
+    <div className="cardsWrapper">
       <div className='cardContainer'>
         {/* Generate cards for all retrieved products */}
         {products.map((product, index) => (
@@ -288,12 +288,12 @@ function ProductCardsV2 (props) {
                   component="img"
                   height="360"
                   // if the product has a picture, use that, else use a placeholder
-                  image={product.pictures ? product.pictures[0] : 'https://i.picsum.photos/id/1015/6000/4000.jpg?hmac=aHjb0fRa1t14DTIEBcoC12c5rAXOSwnVlaA5ujxPQ0I'}
+                  image={product.pictures ? (Object.prototype.toString.call(product.pictures) === '[object Array]' ? product.pictures[0] : Object.values(product.pictures)[0]) : 'https://i.picsum.photos/id/1015/6000/4000.jpg?hmac=aHjb0fRa1t14DTIEBcoC12c5rAXOSwnVlaA5ujxPQ0I'}
                   alt={product.name}
                   />
                   <div className='price'>
-                    <Typography variant="h5" color="black" style={{ fontWeight: 600 }}>
-                        ${parseInt(product.price).toFixed(0)}
+                    <Typography variant="h5" color="white" style={{ fontWeight: 400 }}>
+                        ${parseFloat(product.price).toFixed(2)}
                     </Typography>
                   </div>
                   <CardContent
@@ -343,6 +343,7 @@ function ProductCardsV2 (props) {
           userID={props.userID}
           goBack={goBack}
           swipe={swipe}
+          isLoggedIn={props.isLoggedIn}
         />
     </div>
   )

@@ -29,12 +29,12 @@ export default function ProfileButton(props: ProfileButtonProps) {
     const [userInfo, setUserInfo] = React.useState<UserInfo>({} as UserInfo);
 
     React.useEffect(() => {
-        async function fetchSellerInfo() {
+        async function fetchUserInfo() {
             const response = await readUserInfo(props.userID);
             setUserInfo(response);
         }
 
-        fetchSellerInfo();
+        fetchUserInfo();
     }, [props.userID]);
 
     return (

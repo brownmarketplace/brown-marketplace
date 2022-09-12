@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import BoilerplateHeader from '../components/BoilerplateHeader'
-import Footer from '../components/Footer'
 import WishList from '../components/profile-components/WishList'
 import UserListings from '../components/profile-components/UserListings'
 import defaultProfilePicture from '../images/pfp.png'
@@ -32,14 +27,6 @@ function ProfilePage(props) {
 
         readOneUserInfo().catch(console.error);  
     }, [props])
-
-    // const Item = styled(Paper)(({ theme }) => ({
-    //     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    //     ...theme.typography.body2,
-    //     padding: theme.spacing(2),
-    //     textAlign: 'left',
-    //     color: theme.palette.text.secondary,
-    // }));
       
 
     return (

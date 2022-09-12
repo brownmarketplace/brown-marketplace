@@ -134,9 +134,14 @@ function AddListing(props) {
         Object.keys(tags).map((id, tagName) => {
             if (formInputData.productTags.has(id)) {
                 const tagName = tags[id].name;
+                console.log("--------")
+                console.log("newProductId: ", newProductId);
+                console.log("tagName: ", tagName);
                 addTagToProduct(newProductId, tagName);
             }
         });
+
+        
 
         [...currentFileList].forEach(f => uploadImageToStorage(newProductId, f))
         
@@ -186,13 +191,7 @@ function AddListing(props) {
                 set(newProductRef, downloadURL);
             });
         }
-    )
-        // uploadBytesResumable(storageRef).then((snapshot) => {
-        //     const percent = Math.round((snapshot.bytesTransferred/ snapshot.totalBytes) * 100);
-        //     console.log(percent)
-        //     console.log("Uploaded a blob or file!");
-        // })
-    }
+    )}
 
     var getCategoryFromSubcategory = (sub) => {
         const roomDecor = ["Plushies", "Plants", "Lights", "Posters", "Tapestries", "Other room decor"];
