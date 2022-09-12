@@ -6,7 +6,7 @@ import database from "../../backend/Database/DBInstance"
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ref, onValue }
+import { ref, update, get, query, orderByChild, equalTo, onValue }
     from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 
 function UserListingItem(props) {
@@ -15,7 +15,24 @@ function UserListingItem(props) {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [picture, setPicture] = useState([]);
-    const [isNull, setIsNull] = useState(false);
+    const [deleted, setDeleted] = useState(false);
+
+    /*
+    This method toggles the delete flag of the product. The delete flag is either true of false.
+    */
+    var deleteProduct = (id) => {
+        const q = query(ref(database, 'products/'), orderByChild('id'), equalTo(id));
+        get(q).then(snapshot => {
+            snapshot.forEach(function(childSnapshot) {
+                if (childSnapshot.val().deleted === "false") {
+                    update(ref(database, 'products/' + id), {
+                        deleted: "true"
+                    })
+                }
+            })
+        })
+        alert("Product deleted! Please refresh.")
+    }
 
     useEffect(() => {
         const readOneProductInfo = async (productID) => {
@@ -35,6 +52,8 @@ function UserListingItem(props) {
                         setPrice(product.price);
                     }
 
+                    setDeleted(product.deleted === "true");                    
+
                     let pics = product.pictures
                     if (pics != null) {
                         pics = (Object.prototype.toString.call(pics) === '[object Array]' ? pics : Object.values(pics))
@@ -50,7 +69,7 @@ function UserListingItem(props) {
         readOneProductInfo(props.prodId).catch(console.error)
     }, [])
 
-    if (name === "") {
+    if (name === "" || deleted) {
         return
     } else {
         return (
@@ -86,9 +105,11 @@ function UserListingItem(props) {
     
                     <Grid container item xs={1.5} alignItems="center">
                         <Grid item display="flex" justify="center">
-                            <IconButton aria-label="delete" size="large">
-                                <DeleteIcon fontSize="inherit" />
-                            </IconButton>
+                            <div onClick={() => deleteProduct(props.prodId)}>
+                                <IconButton aria-label="delete" size="large">
+                                    <DeleteIcon fontSize="inherit" />
+                                </IconButton>
+                            </div>
                         </Grid>
                     </Grid>
                     
